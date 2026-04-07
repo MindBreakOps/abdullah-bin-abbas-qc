@@ -621,7 +621,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  <div class="ph no-print">
 		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-users"/></svg></div><div><h2>قاعدة بيانات الطلاب</h2><p>إدارة معلومات الطلاب المسجلين</p></div></div>
 		<div class="ph-actions">
-		  <button class="btn bg2 bsm" onclick="openModal('m-add-stu')"><svg width="13" height="13"><use href="#i-plus"/></svg> إضافة</button>
+		  <button class="btn bg2 bsm" onclick="openAddStuModal()"><svg width="13" height="13"><use href="#i-plus"/></svg> إضافة</button>
 		  <button class="btn bpr bsm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة</button>
 		</div>
 	  </div>
@@ -911,7 +911,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 			<table id="hq-table">
 			  <thead>
 				<tr>
-				  <th>#</th><th>اسم الطالب</th><th>من</th><th>إلى</th><th>الصورة</th><th>الدرجة</th><th>التقدير</th><th class="no-print">حذف</th>
+				  <th>#</th><th>اسم الطالب</th><th>من</th><th>إلى</th><th>السورة</th><th>الدرجة</th><th>التقدير</th><th class="no-print">حذف</th>
 				</tr>
 			  </thead>
 			  <tbody id="hq-tbody"></tbody>
@@ -1037,7 +1037,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  <div class="fr">
 		<div class="ff"><label>التسميع من</label><input type="text" id="hq-new-from" placeholder="مثال: البقرة 1"></div>
 		<div class="ff"><label>إلى</label><input type="text" id="hq-new-to" placeholder="مثال: البقرة 10"></div>
-		<div class="ff"><label>الصورة / السورة</label><input type="text" id="hq-new-surah" placeholder="مثال: البقرة"></div>
+		<div class="ff"><label>السورة / السورة</label><input type="text" id="hq-new-surah" placeholder="مثال: البقرة"></div>
 	  </div>
 	  <div class="fr">
 		<div class="ff"><label>الدرجة (من 100)</label><input type="number" id="hq-new-grade" placeholder="0" min="0" max="100" dir="ltr"></div>
@@ -1622,19 +1622,154 @@ function showFinTab(name,el) {
   el.classList.add('active');
 }
 
-// ── ACCOUNTS ──
+// ── STUDENTS (النسخة الكاملة مع التعديل) ──
+let editStuId = null;
+
+function openAddStuModal() {
+  editStuId = null;
+  ['s-name','s-age','s-level','s-phone'].forEach(clr);
+  document.getElementById('s-date').value = todayISO();
+  openModal('m-add-stu');
+}
+
+function editStu(id) {
+  const s = SD.find(x => x.id === id);
+  if(!s) return;
+  editStuId = id;
+  document.getElementById('s-name').value = s.name || '';
+  document.getElementById('s-age').value = s.age || '';
+  document.getElementById('s-level').value = s.level || '';
+  document.getElementById('s-phone').value = s.phone || '';
+  document.getElementById('s-date').value = s.registration_date || todayISO();
+  openModal('m-add-stu');
+}
+
+async function loadStu() {
+  const { data, error } = await sb.from('students').select('*').order('name');
+  if(!error) {
+	SD = data || [];
+	renderStu(SD);
+	const sEl = document.getElementById('st-stu');
+	if(sEl) sEl.textContent = SD.length;
+  } else toast('خطأ في تحميل الطلاب', 'error');
+}
+
+function renderStu(data) {
+  const isMobile = window.innerWidth < 900;
+  const list = document.getElementById('stu-list');
+  if(isMobile && list) {
+	if(!data.length) { list.innerHTML = `<div class="es"><p>لا يوجد طلاب مسجلون</p></div>`; return; }
+	list.innerHTML = data.map(s => `
+	  <div class="mobile-card">
+		<div class="mc-avatar">${(s.name||'؟')[0]}</div>
+		<div class="mc-info">
+		  <div class="mc-name">${s.name}</div>
+		  <div class="mc-sub">${s.level ? `<span class="badge bg-g">${s.level}</span>` : ''} ${s.age ? `<span>${s.age} سنة</span>` : ''}</div>
+		</div>
+		<div class="mc-actions">
+		  <button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="14" height="14"><use href="#i-edit"/></svg></button>
+		  <button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="14" height="14"><use href="#i-trash"/></svg></button>
+		</div>
+	  </div>`).join('');
+  }
+  const tb = document.getElementById('tb-stu');
+  if(tb) {
+	if(!data.length) { tb.innerHTML = eRow(8,'لا يوجد طلاب مسجلون'); return; }
+	tb.innerHTML = data.map((s,i) => `<tr>
+	  <td>${i+1}</td><td><strong>${s.name}</strong></td><td>${s.age||'-'}</td>
+	  <td><span class="badge bg-g">${s.level||'-'}</span></td><td dir="ltr">${fmtPhone(s.phone)}</td>
+	  <td>${fmtDate(s.registration_date)}</td>
+	  <td class="no-print"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg></button></td>
+	  <td class="no-print"><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="13" height="13"><use href="#i-trash"/></svg></button></td>
+	</tr>`).join('');
+  }
+}
+
+function filterStu(q) { renderStu(SD.filter(s => s.name.includes(q) || (s.phone||'').includes(q))); }
+
+async function addStu() {
+  if(!CU || CU.type!=='admin') return;
+  const name = g('s-name').trim();
+  if(!name) { toast('الرجاء إدخال اسم الطالب','error'); return; }
+  
+  const payload = { name, age: g('s-age'), level: g('s-level'), phone: g('s-phone'), registration_date: g('s-date') || todayISO() };
+  const btn = event.target; btn.disabled = true;
+  
+  let error;
+  if(editStuId) {
+	const res = await sb.from('students').update(payload).eq('id', editStuId);
+	error = res.error;
+  } else {
+	const res = await sb.from('students').insert([payload]);
+	error = res.error;
+  }
+
+  btn.disabled = false;
+  if(!error) { closeModal('m-add-stu'); toast('تم الحفظ بنجاح ✓','success'); loadStu(); } 
+  else toast('خطأ في الحفظ','error');
+}
+
+async function delStu(id) {
+  if(!CU || CU.type!=='admin') return;
+  if(!confirm('حذف هذا الطالب؟')) return;
+  const { error } = await sb.from('students').delete().eq('id', id);
+  if(!error) { toast('تم الحذف'); loadStu(); } else toast('خطأ في الحذف','error');
+}
+
+// ── ACCOUNTS (النسخة الكاملة للإدارة) ──
 async function loadAccs() {
-  const { data, error } = await sb.from('profiles').select('id, full_name, email, roles(role_name)');
+  const { data, error } = await sb.from('profiles').select('id, full_name, email, account_status, roles(role_name)').order('account_status', {ascending: false});
   if (!error && data) {
 	ACCS_DATA = data.map(p => ({
-	  id: p.id, name: p.full_name, email: p.email, type: p.roles?.role_name || 'user'
+	  id: p.id, name: p.full_name, email: p.email, 
+	  status: p.account_status || 'approved', 
+	  type: p.roles?.role_name || 'user'
 	}));
 	const tb = document.getElementById('tb-accs');
 	if(!tb) return;
 	if(!ACCS_DATA.length) { tb.innerHTML = eRow(6,'لا توجد حسابات'); return; }
-	tb.innerHTML = ACCS_DATA.map((a,i) => `<tr><td>${i+1}</td><td><strong>${a.name||'-'}</strong></td><td dir="ltr" style="font-size:.78rem">${a.email}</td><td><span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span></td><td class="no-print"><button class="btn bo bsm" onclick="editAcc('${a.id}')"><svg width="12" height="12"><use href="#i-edit"/></svg></button></td><td class="no-print"><button class="btn bd bsm" onclick="delAcc()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join('');
+	
+	tb.innerHTML = ACCS_DATA.map((a,i) => `<tr>
+	  <td>${i+1}</td>
+	  <td><strong>${a.name||'-'}</strong></td>
+	  <td dir="ltr" style="font-size:.78rem">${a.email}</td>
+	  <td>
+		${a.status === 'pending' ? '<span class="badge bg-o">قيد المراجعة</span>' :
+		  a.status === 'rejected' ? '<span class="badge bg-r">مرفوض</span>' :
+		  `<span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span>`
+		}
+	  </td>
+	  <td class="no-print">
+		${a.status === 'pending' ? 
+		  `<button class="btn bp bsm" onclick="changeAccStatus('${a.id}', 'approved')">قبول</button>
+		   <button class="btn bd bsm" onclick="changeAccStatus('${a.id}', 'rejected')">رفض</button>` :
+		  `<span style="color:var(--text3);font-size:.75rem">مكتمل</span>`
+		}
+	  </td>
+	  <td class="no-print">
+		${a.id === CU.id ? '-' : `<button class="btn bd bsm" onclick="delAcc('${a.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>`}
+	  </td>
+	</tr>`).join('');
   } else toast('خطأ في تحميل الحسابات','error');
 }
+
+async function changeAccStatus(id, newStatus) {
+  const { error } = await sb.from('profiles').update({ account_status: newStatus }).eq('id', id);
+  if(!error) { toast('تم تحديث حالة الحساب بنجاح', 'success'); loadAccs(); }
+  else toast('خطأ في التحديث', 'error');
+}
+
+function openAddAcc() { 
+  toast('لأسباب أمنية: أرسل رابط النظام للمعلم ليسجل، ثم قم بقبوله من هنا.', 'info'); 
+}
+
+async function delAcc(id) { 
+  if(!confirm('هل أنت متأكد من تعطيل/إيقاف هذا الحساب؟ (لن يتمكن من الدخول للنظام)')) return;
+  const { error } = await sb.from('profiles').update({ account_status: 'rejected' }).eq('id', id);
+  if(!error) { toast('تم إيقاف الحساب', 'success'); loadAccs(); } 
+  else toast('خطأ', 'error');
+}
+
 function teacherName(email) {
   const acc = ACCS_DATA.find(a => a.email === email);
   return acc ? acc.name : email;
@@ -1874,16 +2009,19 @@ function loadHalaqaSession() {
   renderHalaqaTable(rows);
 }
 
+// [تم الإصلاح]: إعادة دالة الإحصائيات للعمل
 function renderHalaqaTable(rows) {
   const tbody=document.getElementById('hq-tbody');
   if(!tbody) return;
   HQ_ROW_COUNT=0;
   if(!rows.length) {
 	tbody.innerHTML=`<tr><td colspan="8"><div class="es"><p>لا توجد بيانات لهذا اليوم<br><small>اضغط "إضافة طالب" لبدء تسجيل الجلسة</small></p></div></td></tr>`;
+	updateHalaqaStats([]); // تصفير الإحصائيات
 	return;
   }
   tbody.innerHTML='';
   rows.forEach(r => addHalaqaRowFromData(r));
+  updateHalaqaStats(rows); // تحديث الإحصائيات
 }
 
 function addHalaqaRow(){ HQ_ROW_COUNT++; addHalaqaRowFromData({student:'',from_verse:'',to_verse:'',surah:'',grade:''}); }
@@ -1893,15 +2031,58 @@ function addHalaqaRowFromData(r) {
   if(!tbody) return;
   const ph=tbody.querySelector('td[colspan]'); if(ph) ph.closest('tr').remove();
   const tr=document.createElement('tr'); tr.dataset.rowid=n;
+  
+  // [تم الإصلاح]: إضافة oninput="onGradeChange(${n})" و id="tq-${n}" ليعمل التحديث التلقائي
   tr.innerHTML=`<td>${n}</td>
 	<td><input class="tasm-inp" type="text" placeholder="الاسم" value="${esc(r.student||'')}" style="width:100px"></td>
 	<td><input class="tasm-inp" type="text" placeholder="من" value="${esc(r.from_verse||'')}" style="width:80px"></td>
 	<td><input class="tasm-inp" type="text" placeholder="إلى" value="${esc(r.to_verse||'')}" style="width:80px"></td>
 	<td><input class="tasm-inp" type="text" placeholder="سورة" value="${esc(r.surah||'')}" style="width:80px"></td>
-	<td><input class="grade-inp" type="number" placeholder="0-100" min="0" max="100" value="${r.grade||''}"></td>
-	<td><span class="badge ${gradeColor(r.grade)}">${gradeLabel(r.grade)}</span></td>
-	<td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`;
+	<td><input class="grade-inp" type="number" placeholder="0-100" min="0" max="100" value="${r.grade||''}" oninput="onGradeChange(${n})"></td>
+	<td id="tq-${n}"><span class="badge ${gradeColor(r.grade)}">${gradeLabel(r.grade)}</span></td>
+	<td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove();recalcStats()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`;
   tbody.appendChild(tr);
+}
+
+// [تم الإصلاح]: إعادة دالة التحديث التلقائي عند كتابة الدرجة
+function onGradeChange(n) {
+  const tr = document.querySelector(`tr[data-rowid="${n}"]`); 
+  if(!tr) return;
+  const gradeInp = tr.querySelectorAll('input')[4]; // الخانة الخامسة هي الدرجة
+  const gv = gradeInp ? gradeInp.value : '';
+  const tqCell = document.getElementById('tq-' + n);
+  if(tqCell) tqCell.innerHTML = `<span class="badge ${gradeColor(gv)}">${gradeLabel(gv)}</span>`;
+  recalcStats();
+}
+
+function recalcStats() {
+  updateHalaqaStats(getTableRows());
+}
+
+// [تم الإصلاح]: إعادة دالة الإحصائيات السفلية (المتوسط، الأعلى درجة)
+function updateHalaqaStats(rows) {
+  const statsEl = document.getElementById('hq-session-stats');
+  if(!statsEl) return;
+  
+  const valid = rows.filter(r => r.student && r.grade !== '');
+  const grades = valid.map(r => parseFloat(r.grade || 0));
+  const avg = grades.length ? grades.reduce((a,b) => a+b, 0) / grades.length : 0;
+  const top = valid.slice().sort((a,b) => parseFloat(b.grade) - parseFloat(a.grade))[0];
+  
+  const countEl = document.getElementById('hq-stat-count');
+  if(countEl) countEl.textContent = rows.length; // عرض جميع الصفوف المضافة
+  
+  const avgEl = document.getElementById('hq-stat-avg');
+  if(avgEl) avgEl.textContent = avg.toFixed(1);
+  
+  const topEl = document.getElementById('hq-stat-top');
+  if(topEl) topEl.textContent = top ? top.student : '-';
+  
+  const mmtazEl = document.getElementById('hq-stat-mmtaz');
+  if(mmtazEl) mmtazEl.textContent = grades.filter(g => g >= 85).length;
+  
+  // إظهار شبكة الإحصائيات إذا كان هناك طلاب
+  statsEl.style.display = rows.length ? 'grid' : 'none';
 }
 
 function getTableRows() {
@@ -1926,7 +2107,12 @@ async function saveHalaqaData() {
   }));
   
   const { error } = await sb.from('halaqat').upsert(payload);
-  if(!error) toast('تم الحفظ ✓','success'); else toast('خطأ في الحفظ','error');
+  if(!error) {
+	toast('تم الحفظ ✓','success');
+	// تحديث البيانات في الخلفية
+	const { data } = await sb.from('halaqat').select('*');
+	HQ_ALL = data || [];
+  } else toast('خطأ في الحفظ','error');
 }
 
 function printHalaqa() { window.print(); }
