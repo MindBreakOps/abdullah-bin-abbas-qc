@@ -1060,13 +1060,17 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  <h3 style="text-align:center; font-size:1rem; color:var(--green2); margin-bottom:12px;">الدخول السريع (بدون كلمة مرور)</h3>
 	  <p style="font-size:0.8rem; color:var(--text2); text-align:center; margin-bottom:20px; line-height:1.6">أدخل بريدك الإلكتروني لاستلام رمز تحقق مكون من 6 أرقام على بريدك.</p>
 	  
-	  <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="otp-email" dir="ltr"></div>
-	  <button class="btn bo" onclick="sendOTP()" style="width:100%; justify-content:center; margin-bottom:16px;">إرسال الرمز للبريد</button>
-	  
-	  <div class="fg" style="margin-top:8px"><label>الرمز السري (OTP)</label><input type="text" id="otp-code" placeholder="------" dir="ltr" style="text-align:center; letter-spacing:8px; font-size:1.4rem; font-weight:700"></div>
-	  <button class="bl" onclick="verifyOTP()">تحقق ودخول</button>
-	  <div class="auth-links"><a onclick="toggleForm('form-login')">← العودة لتسجيل الدخول</a></div>
-	</div>
+<div id="form-otp" class="form-section">
+		<h3 style="text-align:center; font-size:1rem; color:var(--green2); margin-bottom:12px;">الدخول السريع (بدون كلمة مرور)</h3>
+		<p style="font-size:0.8rem; color:var(--text2); text-align:center; margin-bottom:20px; line-height:1.6">أدخل بريدك الإلكتروني لاستلام رمز تحقق مكون من 6 أرقام على بريدك.</p>
+		
+		<div class="fg"><label>البريد الإلكتروني</label><input type="email" id="otp-email" dir="ltr"></div>
+		<button class="btn bo" id="btn-send-otp" onclick="sendOTP()" style="width:100%; justify-content:center; margin-bottom:16px;">إرسال الرمز للبريد</button>
+		
+		<div class="fg" style="margin-top:8px"><label>الرمز السري (OTP)</label><input type="text" id="otp-code" placeholder="------" dir="ltr" style="text-align:center; letter-spacing:8px; font-size:1.4rem; font-weight:700"></div>
+		<button class="bl" id="btn-verify-otp" onclick="verifyOTP()">تحقق ودخول</button>
+		<div class="auth-links"><a onclick="toggleForm('form-login')">← العودة لتسجيل الدخول</a></div>
+	  </div>
 
   </div>
 </div>
@@ -1691,21 +1695,27 @@ window.addEventListener('load', async () => {
 	const { data: { session }, error: sessionError } = await sb.auth.getSession();
 	
 	if (session) {
-	  // محاولة جلب الـ Profile بأمان
-	  try {
-		const { data: profileData } = await sb.from('profiles').select(`full_name, roles (role_name)`).eq('id', session.user.id).single();
-		CU = {
-		  id: session.user.id,
-		  email: session.user.email || '',
-		  name: profileData?.full_name || (session.user.email ? session.user.email.split('@')[0] : 'مستخدم'),
-		  type: (profileData && profileData.roles) ? profileData.roles.role_name : 'user'
-		};
-	  } catch (profileErr) {
-		console.warn("تعذر جلب الملف الشخصي:", profileErr);
-		// Fallback إذا كان الجدول غير موجود
-		CU = { id: session.user.id, email: session.user.email || '', name: session.user.email.split('@')[0], type: 'user' };
-	  }
-	}
+	  // محاولة جلب الـ Profile بأم// محاولة جلب الـ Profile بأمان
+		try {
+		  const { data: profileData } = await sb.from('profiles').select(`account_status, full_name, roles (role_name)`).eq('id', session.user.id).single();
+		  
+		  // --- الحماية القصوى: منع دخول الحسابات المعلقة حتى لو استخدموا OTP ---
+		  if (profileData && (profileData.account_status === 'pending' || profileData.account_status === 'rejected')) {
+			await sb.auth.signOut();
+			const ls = document.getElementById('ls');
+			if(ls) ls.style.display = 'none';
+			document.getElementById('lp').style.display = 'flex';
+			toast('عذراً، حسابك قيد المراجعة أو مرفوض.', 'error');
+			return; // إيقاف إكمال الدخول
+		  }
+		  // -----------------------------------------------------------------
+	  
+		  CU = {
+			id: session.user.id,
+			email: session.user.email || '',
+			name: profileData?.full_name || (session.user.email ? session.user.email.split('@')[0] : 'مستخدم'),
+			type: (profileData && profileData.roles) ? profileData.roles.role_name : 'user'
+		  };
 
 	// 3. إنهاء شاشة التحميل والانتقال
 	const ls = document.getElementById('ls');
@@ -1817,25 +1827,43 @@ async function forgotPassword() {
 }
 
 // 4. الدخول السريع عبر رمز OTP (البريد الإلكتروني)
+// ── الدخول السريع (OTP) ──
 async function sendOTP() {
   const email = g('otp-email').trim();
+  if(!email) return toast('الرجاء إدخال البريد الإلكتروني أولاً', 'error');
+  
+  const btn = document.getElementById('btn-send-otp');
+  btn.textContent = 'جاري الإرسال...'; 
+  btn.disabled = true; // تعطيل الزر لمنع الضغط المتكرر
+
   const { error } = await sb.auth.signInWithOtp({ email });
   
-  if (error) toast(error.message, 'error');
-  else toast('تم إرسال الرمز السري (OTP) لبريدك.', 'success');
+  btn.textContent = 'إرسال الرمز للبريد'; 
+  btn.disabled = false; // إعادة تفعيل الزر
+
+  if (error) toast('تعذر الإرسال: ' + error.message, 'error');
+  else toast('تم إرسال الرمز السري (OTP) لبريدك بنجاح', 'success');
 }
 
 async function verifyOTP() {
   const email = g('otp-email').trim();
-  const token = g('otp-code').trim(); // الرمز المكون من 6 أرقام
+  const token = g('otp-code').trim();
+  if(!email || !token) return toast('الرجاء إدخال البريد والرمز', 'error');
   
+  const btn = document.getElementById('btn-verify-otp');
+  btn.textContent = 'جاري التحقق...'; 
+  btn.disabled = true;
+
   const { data, error } = await sb.auth.verifyOtp({ email, token, type: 'email' });
   
-  if (error) toast('رمز غير صحيح', 'error');
-  else {
-	// يجب التحقق من حالة الحساب هنا أيضاً كما فعلنا في doLoginPro
-	toast('تم التحقق بنجاح', 'success');
-	window.location.reload(); // سيقوم النظام بتسجيل دخوله تلقائياً
+  if (error) {
+	btn.textContent = 'تحقق ودخول'; 
+	btn.disabled = false;
+	toast('الرمز غير صحيح أو منتهي الصلاحية', 'error');
+  } else {
+	toast('تم التحقق بنجاح! جاري الدخول...', 'success');
+	// إعادة تحميل الصفحة لتقوم دالة البدء (Init) بفحص الحساب
+	setTimeout(() => window.location.reload(), 1000); 
   }
 }
 
