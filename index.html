@@ -1267,6 +1267,7 @@ async function doLogin() {
 }
 
 // ── إنشاء حساب جديد ──
+// ── إنشاء حساب جديد (مع توجيه رابط التأكيد) ──
 async function createAccount() {
   const email = g('reg-email').trim();
   const password = g('reg-pass').trim();
@@ -1281,10 +1282,17 @@ async function createAccount() {
 
   btn.textContent = 'جاري الإرسال...'; btn.disabled = true;
   
+  // تحديد رابط العودة الآمن (إذا كان محلي أو مرفوع)
+  let redirectUrl = window.location.origin;
+  if (redirectUrl === 'null' || redirectUrl.includes('file://')) {
+	redirectUrl = 'http://localhost:5500'; // استخدم رابط الـ Live server هنا
+  }
+
   const { data, error } = await sb.auth.signUp({
 	email, password,
 	options: {
-	  data: { full_name: fullName, q1: 'المدرسة الابتدائية', a1: a1, q2: 'اللون المفضل', a2: a2, q3: 'المدينة المفضلة', a3: a3 }
+	  data: { full_name: fullName, q1: 'المدرسة الابتدائية', a1: a1, q2: 'اللون المفضل', a2: a2, q3: 'المدينة المفضلة', a3: a3 },
+	  emailRedirectTo: redirectUrl // مهم جداً بعد تفعيل تأكيد الإيميل
 	}
   });
 
@@ -1294,13 +1302,13 @@ async function createAccount() {
 	if(error.message.includes('already registered')) toast('هذا البريد مسجل مسبقاً', 'error');
 	else toast(error.message, 'error');
   } else {
-	toast('تم استلام طلبك بنجاح! يرجى انتظار موافقة الإدارة.', 'success');
+	toast('تم التسجيل! يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب.', 'success');
 	['reg-email', 'reg-pass', 'reg-name', 'reg-a1', 'reg-a2', 'reg-a3'].forEach(clr);
-	setTimeout(() => toggleForm('form-login'), 2500);
+	setTimeout(() => toggleForm('form-login'), 3500);
   }
 }
 
-// ── استعادة كلمة المرور ──
+// ── استعادة كلمة المرور (مع توجيه الرابط) ──
 async function forgotPassword() {
   const email = g('forgot-email').trim();
   if(!email) return toast('الرجاء إدخال البريد الإلكتروني', 'error');
@@ -1311,7 +1319,7 @@ async function forgotPassword() {
   try {
 	let redirectUrl = window.location.origin;
 	if (redirectUrl === 'null' || redirectUrl.includes('file://')) {
-	  redirectUrl = 'https://tjvfyozhquzzjqbseagw.supabase.co'; 
+	  redirectUrl = 'http://localhost:5500'; // استخدم رابط الـ Live server هنا
 	}
 
 	const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: redirectUrl });
