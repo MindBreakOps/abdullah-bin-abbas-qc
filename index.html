@@ -414,6 +414,18 @@ table tr:active td { background:rgba(30,122,80,0.03); }
   }
   .cert-header img { width: 100px !important; height: 100px !important; }
 }
+/* 🛡️ كود الحماية: لمنع الشعار من التمدد في جميع أنحاء النظام */
+.phr { display: none !important; } /* إخفاء ترويسة الطباعة من الشاشات */
+.hli img { width: 38px !important; height: 38px !important; } /* شعار الشريط العلوي */
+.ll img { width: 86px !important; height: 86px !important; } /* شعار صفحة الدخول */
+.cert-header img { width: 85px !important; height: 85px !important; } /* شعار الشهادة */
+
+/* السماح للترويسة بالظهور في الورق فقط وتحديد حجم الشعار فيها */
+@media print {
+  .phr { display: block !important; }
+  .phr img { width: 60px !important; height: 60px !important; }
+  .cert-header img { width: 100px !important; height: 100px !important; }
+}
 </style>
 </head>
 <body>
