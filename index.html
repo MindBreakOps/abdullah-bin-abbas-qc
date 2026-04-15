@@ -62,43 +62,17 @@ body {
 }
 
 body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-	radial-gradient(ellipse 70% 50% at 20% -5%,rgba(30,122,80,0.07),transparent),
-	radial-gradient(ellipse 50% 40% at 80% 105%,rgba(154,114,48,0.06),transparent);
-  pointer-events:none;
-  z-index:0;
+  content:''; position:fixed; inset:0;
+  background: radial-gradient(ellipse 70% 50% at 20% -5%,rgba(30,122,80,0.07),transparent),
+			  radial-gradient(ellipse 50% 40% at 80% 105%,rgba(154,114,48,0.06),transparent);
+  pointer-events:none; z-index:0;
 }
 
 /* LOADING SCREEN */
-#ls {
-  position:fixed; inset:0;
-  background:var(--bg);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  z-index:9999;
-  transition:opacity .8s cubic-bezier(.4,0,.2,1);
-}
-#ls .logo-ring {
-  width:110px; height:110px; border-radius:50%;
-  border:2px solid rgba(30,122,80,0.25);
-  display:flex; align-items:center; justify-content:center;
-  position:relative;
-  animation:ring-pulse 2s ease-in-out infinite;
-}
-#ls .logo-ring::before {
-  content:''; position:absolute; inset:-8px; border-radius:50%;
-  border:1px solid rgba(30,122,80,0.10);
-  animation:ring-pulse 2s ease-in-out infinite reverse;
-}
-#ls .logo-inner {
-  width:78px; height:78px; border-radius:50%;
-  background:white; box-shadow:0 4px 20px rgba(0,0,0,0.12);
-  border:1px solid rgba(30,122,80,0.2);
-  display:flex; align-items:center; justify-content:center;
-}
+#ls { position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition:opacity .8s cubic-bezier(.4,0,.2,1); }
+#ls .logo-ring { width:110px; height:110px; border-radius:50%; border:2px solid rgba(30,122,80,0.25); display:flex; align-items:center; justify-content:center; position:relative; animation:ring-pulse 2s ease-in-out infinite; }
+#ls .logo-ring::before { content:''; position:absolute; inset:-8px; border-radius:50%; border:1px solid rgba(30,122,80,0.10); animation:ring-pulse 2s ease-in-out infinite reverse; }
+#ls .logo-inner { width:78px; height:78px; border-radius:50%; background:white; box-shadow:0 4px 20px rgba(0,0,0,0.12); border:1px solid rgba(30,122,80,0.2); display:flex; align-items:center; justify-content:center; }
 #ls h2 { color:var(--green2); font-family:'Amiri',serif; font-size:1.4rem; text-align:center; padding:0 24px; margin-top:28px; line-height:1.7; }
 #ls p  { color:var(--text3); font-size:.85rem; margin-top:8px; }
 @keyframes ring-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.05);opacity:.6} }
@@ -122,7 +96,6 @@ body::before {
 .bl:active { transform:translateY(0); }
 .bl:disabled { opacity:.5; cursor:not-allowed; transform:none; }
 .le { background:rgba(192,57,43,0.07); border:1px solid rgba(192,57,43,0.2); color:var(--red); padding:10px 14px; border-radius:10px; margin-top:14px; font-size:.87rem; text-align:center; display:none; }
-
 .auth-links { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; text-align: center; }
 .auth-links a { color: var(--green); font-size: 0.85rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: color 0.2s; padding: 4px; }
 .auth-links a:hover { color: var(--gold); }
@@ -361,7 +334,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
    CERTIFICATE DESIGN
    ══════════════════════════════════════════════ */
 .cert-wrap { 
-  --z: 1; /* المتغير السحري للتحكم بحجم الخط */
+  --z: 1; /* المتغير للتحكم بحجم الخط */
   border: 8px double var(--gold); 
   padding: 40px; 
   background: white; 
@@ -386,46 +359,54 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 .cert-sign span { display: block; margin-top: 45px; font-family: 'Amiri', serif; color: var(--text); font-size: calc(1.3rem * var(--z)); }
 .cert-sign .cs-mgr { font-size: calc(1.4rem * var(--z)); color: var(--green2); }
 
-/* إعدادات الطباعة للشهادة بالعرض الكامل */
-@media print {
-  @page { size: A4 landscape; margin: 0; }
-  body { margin: 0 !important; padding: 0 !important; background: white !important; }
-  
-  /* إخفاء كل الواجهات ما عدا الشهادة */
-  #app > header, #app > nav, .tab-bar, .more-drawer, .more-overlay, .no-print, .toast, .mo { display: none !important; }
-  .pg:not(#pg-certs) { display: none !important; }
-  
-  #pg-certs { display: block !important; }
-  #pg-certs .ph, #pg-certs .card { display: none !important; } 
-  
-  /* الشهادة تملأ ورقة الـ A4 بالكامل مع هامش آمن لمنع القص */
-  .cert-wrap { 
-	border: 12px double #9a7230 !important; 
-	margin: 10mm auto !important; 
-	width: calc(100vw - 20mm) !important;
-	height: calc(100vh - 20mm) !important;
-	padding: 50px !important;
-	box-sizing: border-box !important;
-	display: flex !important; 
-	flex-direction: column !important; 
-	justify-content: center !important; 
-	border-radius: 0 !important;
-	page-break-inside: avoid;
-  }
-  .cert-header img { width: 100px !important; height: 100px !important; }
+/* RESPONSIVE */
+@media (min-width:640px) {
+  .fr { grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
+  .sg { grid-template-columns:repeat(4,1fr); }
+  .hq-grid { grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+  .qa { grid-template-columns:repeat(4,1fr); }
+  .mc { padding:24px 20px; }
+  .sc .sv { font-size:1.8rem; }
+  .card { padding:22px 20px; }
+  table th { padding:12px 14px; }
+  table td { padding:11px 14px; }
+  table { font-size:.87rem; }
 }
-/* 🛡️ كود الحماية: لمنع الشعار من التمدد في جميع أنحاء النظام */
-.phr { display: none !important; } /* إخفاء ترويسة الطباعة من الشاشات */
-.hli img { width: 38px !important; height: 38px !important; } /* شعار الشريط العلوي */
-.ll img { width: 86px !important; height: 86px !important; } /* شعار صفحة الدخول */
-.cert-header img { width: 85px !important; height: 85px !important; } /* شعار الشهادة */
 
-/* السماح للترويسة بالظهور في الورق فقط وتحديد حجم الشعار فيها */
-@media print {
-  .phr { display: block !important; }
-  .phr img { width: 60px !important; height: 60px !important; }
-  .cert-header img { width: 100px !important; height: 100px !important; }
+@media (min-width:900px) {
+  .tab-bar { display:none; }
+  .more-drawer, .more-overlay { display:none !important; }
+  .nt { display:block; }
+  .mc { padding-bottom:24px; }
+  .toast { bottom:24px; transform:translateX(-50%) translateY(60px); }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+  .mo { align-items:center; }
+  .md { border-radius:22px; max-width:560px; animation:fadeScale .25s ease; }
+  .md::before { display:none; }
+  .md-inner { padding:0 28px 24px; }
+  @keyframes fadeScale { from{transform:scale(0.96);opacity:0} to{transform:scale(1);opacity:1} }
 }
+
+.nt { background:rgba(255,255,255,0.75); backdrop-filter:var(--blur2); border-bottom:1px solid var(--border); overflow-x:auto; white-space:nowrap; scrollbar-width:none; }
+.nt::-webkit-scrollbar { display:none; }
+.ni { max-width:1400px; margin:0 auto; display:flex; padding:0 20px; gap:2px; }
+.nta { display:inline-flex; align-items:center; gap:7px; padding:11px 16px; color:var(--text3); font-size:.83rem; font-weight:600; cursor:pointer; border-bottom:2.5px solid transparent; transition:all .2s; white-space:nowrap; font-family:'Tajawal',sans-serif; background:none; border-top:none; border-left:none; border-right:none; flex-shrink:0; min-height:44px; }
+.nta:hover { color:var(--text2); background:rgba(30,122,80,0.05); }
+.nta.active { color:var(--green2); border-bottom-color:var(--green); background:var(--green3); }
+
+/* القواعد الأساسية للطباعة العادية */
+@media print {
+  body { background: white !important; color: black !important; }
+  #ls, #lp, .ah, .nt, .tab-bar, .more-drawer, .more-overlay, .no-print, .toast, .mo { display: none !important; }
+  .pg { display: none !important; }
+  .pg.active { display: block !important; }
+  .card { border: 1px solid #ccc !important; box-shadow: none !important; break-inside: avoid; }
+}
+
+/* 🛡️ حماية الشعار */
+.phr { display: none !important; }
+.hli img { width: 38px !important; height: 38px !important; }
+.ll img { width: 86px !important; height: 86px !important; }
 </style>
 </head>
 <body>
@@ -441,7 +422,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
   <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
   <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol>
-  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2-2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></symbol>
   <symbol id="i-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
   <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></symbol>
@@ -599,7 +580,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-users"/></svg></div><div><h2>قاعدة بيانات الطلاب</h2><p>إدارة معلومات الطلاب المسجلين</p></div></div>
 		<div class="ph-actions">
 		  <button class="btn bg2 bsm" onclick="openAddStuModal()"><svg width="13" height="13"><use href="#i-plus"/></svg> إضافة</button>
-		  <button class="btn bpr bsm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة</button>
+		  <button class="btn bpr bsm" onclick="doPrint('standard')"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة</button>
 		</div>
 	  </div>
 	  <div class="card">
@@ -628,12 +609,15 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 			<option value="9">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option>
 		  </select>
 		  <button class="btn bp bsm" onclick="saveAtt()"><svg width="13" height="13"><use href="#i-save"/></svg> حفظ</button>
-		  <button class="btn bpr bsm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg></button>
+		  <button class="btn bpr bsm" onclick="doPrint('attend')"><svg width="13" height="13"><use href="#i-print"/></svg></button>
 		</div>
 	  </div>
-	  <div class="card" style="padding:12px 8px">
+	  
+	  <div class="card" style="padding:12px 8px" id="att-main-ui">
 		<div class="tw"><table class="att"><thead id="att-head"></thead><tbody id="att-body"><tr><td colspan="22"><div class="sp"></div><div class="lm">جاري التحميل...</div></td></tr></tbody></table></div>
 	  </div>
+	  
+	  <div id="att-print-summary" style="display:none; margin-top:20px;"></div>
 	</div>
 
 	<div id="pg-exam" class="pg">
@@ -648,7 +632,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-file"/></svg></div><div><h2>الاختبار الشهري</h2><p>تسجيل درجات الطلاب لكل حلقة</p></div></div>
 		<div class="ph-actions">
 		  <button class="btn bo bsm" onclick="loadExamData()"><svg width="13" height="13"><use href="#i-refresh"/></svg></button>
-		  <button class="btn bpr bsm" onclick="printExam()"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة</button>
+		  <button class="btn bpr bsm" onclick="doPrint('standard')"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة</button>
 		</div>
 	  </div>
 
@@ -758,7 +742,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		<div class="ph-actions">
 		  <button class="btn bo bsm" onclick="randomNews()"><svg width="13" height="13"><use href="#i-shuffle"/></svg> عشوائي</button>
 		  <button class="btn bp bsm" onclick="openModal('m-add-news')"><svg width="13" height="13"><use href="#i-plus"/></svg> إضافة</button>
-		  <button class="btn bpr bsm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg></button>
+		  <button class="btn bpr bsm" onclick="doPrint('standard')"><svg width="13" height="13"><use href="#i-print"/></svg></button>
 		</div>
 	  </div>
 	  <div class="hc"><div class="htxt" id="news-txt">جاري التحميل...</div><div class="hsrc" id="news-src"></div></div>
@@ -773,7 +757,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  <div class="phr"><img src="https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png" alt="" onerror="this.style.display='none'"><h1>مركز عبدالله بن عباس لتحفيظ القرآن الكريم</h1><p class="phr-sub">حي النسيم / الحاج يوسف</p><p class="phr-date" id="pd-fin"></p></div>
 	  <div class="ph no-print">
 		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-money"/></svg></div><div><h2>الإدارة المالية</h2><p>الميزانية والتبرعات والمصروفات</p></div></div>
-		<button class="btn bpr bsm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg></button>
+		<button class="btn bpr bsm" onclick="doPrint('fin')"><svg width="13" height="13"><use href="#i-print"/></svg></button>
 	  </div>
 	  <div class="bc"><div class="blbl">الرصيد المتاح</div><div class="bval" id="fin-bal">0 ج.س</div><div class="bdt" id="fin-bal-dt"></div></div>
 	  <div class="sg">
@@ -861,7 +845,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		  </div>
 		  <div class="ph-actions">
 			<button class="btn bp bsm" onclick="saveHalaqaData()"><svg width="13" height="13"><use href="#i-save"/></svg> حفظ</button>
-			<button class="btn bpr bsm" onclick="printHalaqa()"><svg width="13" height="13"><use href="#i-print"/></svg></button>
+			<button class="btn bpr bsm" onclick="doPrint('standard')"><svg width="13" height="13"><use href="#i-print"/></svg></button>
 		  </div>
 		</div>
 
@@ -924,9 +908,8 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	<div id="pg-certs" class="pg">
 	  <div class="ph no-print">
 		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-award"/></svg></div><div><h2>إصدار الشهادات</h2><p>طباعة شهادات تقديرية للطلاب</p></div></div>
-		<button class="btn bpr bsm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة الشهادة</button>
+		<button class="btn bpr bsm" onclick="doPrint('cert')"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة الشهادة</button>
 	  </div>
-	
 	  <div class="card no-print">
 		<div class="fr" style="align-items: flex-end;">
 		  <div class="ff">
@@ -941,7 +924,6 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		  <div class="ff"><label>المعلم</label><input type="text" id="c-teacher" placeholder="مثال: الشيخ عبدالله" oninput="updateCert()"></div>
 		  <div class="ff"><label>الحلقة</label><input type="text" id="c-halqa" placeholder="مثال: الحلقة الأولى" oninput="updateCert()"></div>
 		  <div class="ff" id="c-parts-wrap"><label>مقدار الحفظ</label><input type="text" id="c-parts" placeholder="مثال: خمسة أجزاء / جزء عم" oninput="updateCert()"></div>
-		  
 		  <div class="ff">
 			<label>حجم الخط</label>
 			<div style="display:flex; gap:8px;">
@@ -951,7 +933,6 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		  </div>
 		</div>
 	  </div>
-	
 	  <div class="cert-wrap" id="cert-print-area">
 		<div class="cert-header">
 		  <img src="https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png" alt="شعار">
@@ -975,38 +956,18 @@ table tr:active td { background:rgba(30,122,80,0.03); }
   </main>
 
   <nav class="tab-bar" id="tab-bar">
-	<button class="tab-item active" onclick="tabNav('dash')" data-tab="dash">
-	  <svg width="22" height="22"><use href="#i-home"/></svg>
-	  <span>الرئيسية</span>
-	</button>
-	<button class="tab-item" onclick="tabNav('halaqat')" data-tab="halaqat">
-	  <svg width="22" height="22"><use href="#i-book"/></svg>
-	  <span>الحلقات</span>
-	</button>
-	<button class="tab-item" onclick="tabNav('attend')" data-tab="attend">
-	  <svg width="22" height="22"><use href="#i-cal"/></svg>
-	  <span>الحضور</span>
-	</button>
-	<button class="tab-item" onclick="tabNav('exam')" data-tab="exam">
-	  <svg width="22" height="22"><use href="#i-file"/></svg>
-	  <span>الاختبار</span>
-	</button>
-	<button class="tab-item" id="tab-more-btn" onclick="openMoreDrawer()">
-	  <div class="tab-more-dot" id="tab-more-dot"></div>
-	  <svg width="22" height="22"><use href="#i-grid"/></svg>
-	  <span>المزيد</span>
-	</button>
+	<button class="tab-item active" onclick="tabNav('dash')" data-tab="dash"><svg width="22" height="22"><use href="#i-home"/></svg><span>الرئيسية</span></button>
+	<button class="tab-item" onclick="tabNav('halaqat')" data-tab="halaqat"><svg width="22" height="22"><use href="#i-book"/></svg><span>الحلقات</span></button>
+	<button class="tab-item" onclick="tabNav('attend')" data-tab="attend"><svg width="22" height="22"><use href="#i-cal"/></svg><span>الحضور</span></button>
+	<button class="tab-item" onclick="tabNav('exam')" data-tab="exam"><svg width="22" height="22"><use href="#i-file"/></svg><span>الاختبار</span></button>
+	<button class="tab-item" id="tab-more-btn" onclick="openMoreDrawer()"><div class="tab-more-dot" id="tab-more-dot"></div><svg width="22" height="22"><use href="#i-grid"/></svg><span>المزيد</span></button>
   </nav>
-
   <div class="more-overlay" id="more-overlay" onclick="closeMoreDrawer()"></div>
-
   <div class="more-drawer" id="more-drawer">
 	<div class="more-drawer-handle"></div>
 	<div class="more-drawer-title">جميع الأقسام</div>
-	<div class="more-items" id="more-items-grid">
-	  </div>
+	<div class="more-items" id="more-items-grid"></div>
   </div>
-
 </div>
 
 <div class="mo" id="m-add-stu">
@@ -1019,11 +980,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  </div>
 	  <div class="fr">
 		<div class="ff"><label>المستوى الدراسي</label><input type="text" id="s-level" placeholder="مثال: الصف الثالث"></div>
-		<div class="ff">
-		  <label>هاتف ولي الأمر</label>
-		  <input type="tel" id="s-phone" dir="ltr" placeholder="+249xxxxxxxxx">
-		  <small style="color:var(--text3);font-size:.75rem">مثال: +249912345678</small>
-		</div>
+		<div class="ff"><label>هاتف ولي الأمر</label><input type="tel" id="s-phone" dir="ltr" placeholder="+249xxxxxxxxx"><small style="color:var(--text3);font-size:.75rem">مثال: +249912345678</small></div>
 	  </div>
 	  <div class="ff" style="margin-bottom:20px"><label>تاريخ التسجيل</label><input type="date" id="s-date"></div>
 	  <div style="display:flex;gap:10px;justify-content:flex-end">
@@ -1054,14 +1011,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	<div class="md-inner">
 	  <div class="mh"><div class="mti">إضافة طالب في حلقة</div><button class="mcl" onclick="closeModal('m-add-hq-row')">✕</button></div>
 	  <div class="fr">
-		<div class="ff">
-		  <label>الحلقة *</label>
-		  <select id="hq-sel-halqa">
-			<option value="الحلقة-الاولى">الحلقة الأولى</option>
-			<option value="الحلقة-الثانية">الحلقة الثانية</option>
-			<option value="الحلقة-الثالثة">الحلقة الثالثة</option>
-		  </select>
-		</div>
+		<div class="ff"><label>الحلقة *</label><select id="hq-sel-halqa"><option value="الحلقة-الاولى">الحلقة الأولى</option><option value="الحلقة-الثانية">الحلقة الثانية</option><option value="الحلقة-الثالثة">الحلقة الثالثة</option></select></div>
 		<div class="ff"><label>اسم الطالب *</label><input type="text" id="hq-new-student" placeholder="اسم الطالب"></div>
 	  </div>
 	  <div class="fr">
@@ -1083,19 +1033,11 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 <div class="mo" id="m-add-acc">
   <div class="md">
 	<div class="md-inner">
-	  <div class="mh">
-		<div class="mti" id="acc-modal-title">إضافة حساب جديد</div>
-		<button class="mcl" onclick="closeModal('m-add-acc')">✕</button>
-	  </div>
+	  <div class="mh"><div class="mti" id="acc-modal-title">إضافة حساب جديد</div><button class="mcl" onclick="closeModal('m-add-acc')">✕</button></div>
 	  <input type="hidden" id="acc-edit-id">
 	  <div class="fr">
 		<div class="ff"><label>الاسم الكامل *</label><input type="text" id="a-name" placeholder="الاسم الكامل"></div>
-		<div class="ff"><label>نوع الحساب</label>
-		  <select id="a-type">
-			<option value="user">مستخدم (معلم)</option>
-			<option value="admin">مدير</option>
-		  </select>
-		</div>
+		<div class="ff"><label>نوع الحساب</label><select id="a-type"><option value="user">مستخدم (معلم)</option><option value="admin">مدير</option></select></div>
 	  </div>
 	  <div class="ff" style="margin-bottom:14px"><label>البريد الإلكتروني *</label><input type="email" id="a-email" dir="ltr" placeholder="email@example.com"></div>
 	  <div class="ff" style="margin-bottom:8px"><label>كلمة المرور <span id="acc-pass-hint" style="font-weight:400;color:var(--text3)">(اتركها فارغة لعدم التغيير)</span></label><input type="password" id="a-pass" dir="ltr" placeholder="كلمة مرور جديدة"></div>
@@ -1130,7 +1072,6 @@ const HALAQAT = [
   {id:'الحلقة-الثالثة',label:'الحلقة الثالثة',cls:'hq-3'}
 ];
 
-// ── Logo fallback ──
 window.addEventListener('load', () => {
   ['login-logo-img','hdr-logo-img'].forEach(id => {
 	const img = document.getElementById(id);
@@ -1141,34 +1082,16 @@ window.addEventListener('load', () => {
   });
 });
 
-// ── Helpers ──
-function todayStr() {
-  const d = new Date();
-  return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
-}
+function todayStr() { const d = new Date(); return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear(); }
 function todayISO() { return new Date().toISOString().split('T')[0]; }
-function fmtDate(str) {
-  if(!str) return '-';
-  if(/^\d{2}\/\d{2}\/\d{4}$/.test(str)) return str;
-  if(/^\d{4}-\d{2}-\d{2}$/.test(str)) { const [y,m,d]=str.split('-'); return `${d}/${m}/${y}`; }
-  return str;
-}
-function fmtPhone(phone) {
-  if(!phone) return '-';
-  let p = String(phone).replace(/\s/g,'');
-  if(p.startsWith('0') && p.length>=9) p = '+249'+p.slice(1);
-  else if(!p.startsWith('+') && p.length>=9) p = '+249'+p;
-  return p;
-}
+function fmtDate(str) { if(!str) return '-'; if(/^\d{2}\/\d{2}\/\d{4}$/.test(str)) return str; if(/^\d{4}-\d{2}-\d{2}$/.test(str)) { const [y,m,d]=str.split('-'); return `${d}/${m}/${y}`; } return str; }
+function fmtPhone(phone) { if(!phone) return '-'; let p = String(phone).replace(/\s/g,''); if(p.startsWith('0') && p.length>=9) p = '+249'+p.slice(1); else if(!p.startsWith('+') && p.length>=9) p = '+249'+p; return p; }
 function fmt(n) { return parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function g(id)  { return (document.getElementById(id)||{}).value || ''; }
 function clr(id){ const el=document.getElementById(id); if(el) el.value=''; }
 function esc(s) { return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
-function eRow(cols,msg) {
-  return `<tr><td colspan="${cols}"><div class="es"><svg width="32" height="32" color="var(--text3)" style="margin-bottom:8px"><use href="#i-book"/></svg><p>${msg}</p></div></td></tr>`;
-}
+function eRow(cols,msg) { return `<tr><td colspan="${cols}"><div class="es"><svg width="32" height="32" color="var(--text3)" style="margin-bottom:8px"><use href="#i-book"/></svg><p>${msg}</p></div></td></tr>`; }
 
-// ── Init (Robust & Safe) ──
 window.addEventListener('load', async () => {
   try {
 	const today = todayISO();
@@ -1179,12 +1102,10 @@ window.addEventListener('load', async () => {
   } catch(e) { console.error(e); }
 
   try {
-	const { data: { session }, error: sessionError } = await sb.auth.getSession();
-	
+	const { data: { session } } = await sb.auth.getSession();
 	if (session) {
 	  try {
 		const { data: profileData } = await sb.from('profiles').select(`account_status, full_name, roles (role_name)`).eq('id', session.user.id).single();
-		
 		if (profileData && (profileData.account_status === 'pending' || profileData.account_status === 'rejected')) {
 		  await sb.auth.signOut();
 		  const ls = document.getElementById('ls'); if(ls) ls.style.display = 'none';
@@ -1192,10 +1113,8 @@ window.addEventListener('load', async () => {
 		  toast('عذراً، حسابك قيد المراجعة أو مرفوض.', 'error');
 		  return; 
 		}
-		
 		CU = {
-		  id: session.user.id,
-		  email: session.user.email || '',
+		  id: session.user.id, email: session.user.email || '',
 		  name: profileData?.full_name || (session.user.email ? session.user.email.split('@')[0] : 'مستخدم'),
 		  type: (profileData && profileData.roles) ? profileData.roles.role_name : 'user'
 		};
@@ -1204,231 +1123,109 @@ window.addEventListener('load', async () => {
 		CU = { id: session.user.id, email: session.user.email || '', name: session.user.email ? session.user.email.split('@')[0] : 'مستخدم', type: 'user' };
 	  }
 	}
-
-	const ls = document.getElementById('ls');
-	if (ls) ls.style.opacity = '0';
-	
+	const ls = document.getElementById('ls'); if (ls) ls.style.opacity = '0';
 	setTimeout(() => {
 	  if (ls) ls.style.display = 'none';
-	  if (session && CU) {
-		showApp();
-	  } else {
-		const lp = document.getElementById('lp');
-		if (lp) lp.style.display = 'flex';
-	  }
+	  if (session && CU) { showApp(); } else { const lp = document.getElementById('lp'); if (lp) lp.style.display = 'flex'; }
 	}, 700);
-
   } catch (error) {
 	console.error("خطأ حرج في الإقلاع:", error);
 	const ls = document.getElementById('ls'); if (ls) ls.style.display = 'none';
 	const lp = document.getElementById('lp'); if (lp) lp.style.display = 'flex';
   }
 
-  const passInp = document.getElementById('li-pass');
-  if (passInp) passInp.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-  const emailInp = document.getElementById('li-email');
-  if (emailInp) emailInp.addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('li-pass').focus(); });
-  document.querySelectorAll('.mo').forEach(el => {
-	el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); });
-  });
+  const passInp = document.getElementById('li-pass'); if (passInp) passInp.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  const emailInp = document.getElementById('li-email'); if (emailInp) emailInp.addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('li-pass').focus(); });
+  document.querySelectorAll('.mo').forEach(el => { el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); }); });
 });
 
 function toggleForm(formId) {
-  ['form-login', 'form-register', 'form-forgot', 'form-otp'].forEach(id => {
-	document.getElementById(id).classList.remove('active');
-  });
+  ['form-login', 'form-register', 'form-forgot', 'form-otp'].forEach(id => { document.getElementById(id).classList.remove('active'); });
   document.getElementById(formId).classList.add('active');
 }
 
 async function doLogin() {
-  const email = g('li-email').trim().toLowerCase();
-  const password = g('li-pass').trim();
-  const err = document.getElementById('li-err');
-  const btn = document.getElementById('li-btn');
-  
+  const email = g('li-email').trim().toLowerCase(); const password = g('li-pass').trim();
+  const err = document.getElementById('li-err'); const btn = document.getElementById('li-btn');
   err.style.display = 'none';
   if(!email || !password) { err.textContent = 'الرجاء إدخال البريد وكلمة المرور'; err.style.display = 'block'; return; }
-  
   btn.textContent = 'جاري التحقق...'; btn.disabled = true;
-  
   try {
 	const { data: authData, error: authError } = await sb.auth.signInWithPassword({ email, password });
-
-	if (authError) {
-	  btn.textContent = 'دخول'; btn.disabled = false;
-	  err.textContent = "بيانات الدخول غير صحيحة.";
-	  err.style.display = 'block';
-	  return;
-	}
-
-	const { data: profileData, error: profileError } = await sb.from('profiles').select('account_status, full_name, roles(role_name)').eq('id', authData.user.id).single();
-
-	if (profileData && profileData.account_status === 'pending') {
-	  await sb.auth.signOut();
-	  btn.textContent = 'دخول'; btn.disabled = false;
-	  err.textContent = "حسابك قيد المراجعة من قبل الإدارة.";
-	  err.style.display = 'block';
-	  return;
-	}
-
-	if (profileData && profileData.account_status === 'rejected') {
-	  await sb.auth.signOut();
-	  btn.textContent = 'دخول'; btn.disabled = false;
-	  err.textContent = "تم رفض طلب الانضمام من قبل الإدارة.";
-	  err.style.display = 'block';
-	  return;
-	}
-
+	if (authError) { btn.textContent = 'دخول'; btn.disabled = false; err.textContent = "بيانات الدخول غير صحيحة."; err.style.display = 'block'; return; }
+	const { data: profileData } = await sb.from('profiles').select('account_status, full_name, roles(role_name)').eq('id', authData.user.id).single();
+	if (profileData && profileData.account_status === 'pending') { await sb.auth.signOut(); btn.textContent = 'دخول'; btn.disabled = false; err.textContent = "حسابك قيد المراجعة من قبل الإدارة."; err.style.display = 'block'; return; }
+	if (profileData && profileData.account_status === 'rejected') { await sb.auth.signOut(); btn.textContent = 'دخول'; btn.disabled = false; err.textContent = "تم رفض طلب الانضمام من قبل الإدارة."; err.style.display = 'block'; return; }
 	btn.textContent = 'دخول'; btn.disabled = false;
-	CU = { 
-	  id: authData.user.id, 
-	  email: authData.user.email, 
-	  name: profileData?.full_name || authData.user.email.split('@')[0], 
-	  type: profileData?.roles?.role_name || 'user' 
-	};
+	CU = { id: authData.user.id, email: authData.user.email, name: profileData?.full_name || authData.user.email.split('@')[0], type: profileData?.roles?.role_name || 'user' };
 	showApp();
   } catch (e) {
-	btn.textContent = 'دخول'; btn.disabled = false;
-	err.textContent = "حدث خطأ غير متوقع في الاتصال.";
-	err.style.display = 'block';
+	btn.textContent = 'دخول'; btn.disabled = false; err.textContent = "حدث خطأ غير متوقع في الاتصال."; err.style.display = 'block';
   }
 }
 
 async function createAccount() {
-  const email = g('reg-email').trim();
-  const password = g('reg-pass').trim();
-  const fullName = g('reg-name').trim();
-  const a1 = g('reg-a1').trim();
-  const a2 = g('reg-a2').trim();
-  const a3 = g('reg-a3').trim();
+  const email = g('reg-email').trim(), password = g('reg-pass').trim(), fullName = g('reg-name').trim(), a1 = g('reg-a1').trim(), a2 = g('reg-a2').trim(), a3 = g('reg-a3').trim();
   const btn = document.getElementById('reg-btn');
-
   if(!email || !password || !fullName || !a1 || !a2 || !a3) return toast('الرجاء تعبئة جميع الحقول وإجابات الأمان', 'error');
   if(password.length < 6) return toast('كلمة المرور يجب أن لا تقل عن 6 أحرف', 'error');
-
   btn.textContent = 'جاري الإرسال...'; btn.disabled = true;
-  
-  let redirectUrl = window.location.origin;
-  if (redirectUrl === 'null' || redirectUrl.includes('file://')) {
-	redirectUrl = 'http://localhost:5500';
-  }
-
-  const { data, error } = await sb.auth.signUp({
+  let redirectUrl = window.location.origin; if (redirectUrl === 'null' || redirectUrl.includes('file://')) { redirectUrl = 'http://localhost:5500'; }
+  const { error } = await sb.auth.signUp({
 	email, password,
-	options: {
-	  data: { full_name: fullName, q1: 'المدرسة الابتدائية', a1: a1, q2: 'اللون المفضل', a2: a2, q3: 'المدينة المفضلة', a3: a3 },
-	  emailRedirectTo: redirectUrl 
-	}
+	options: { data: { full_name: fullName, q1: 'المدرسة الابتدائية', a1: a1, q2: 'اللون المفضل', a2: a2, q3: 'المدينة المفضلة', a3: a3 }, emailRedirectTo: redirectUrl }
   });
-
   btn.textContent = 'إرسال طلب التسجيل'; btn.disabled = false;
-
-  if (error) {
-	if(error.message.includes('already registered')) toast('هذا البريد مسجل مسبقاً', 'error');
-	else toast(error.message, 'error');
-  } else {
-	toast('تم التسجيل! يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب.', 'success');
-	['reg-email', 'reg-pass', 'reg-name', 'reg-a1', 'reg-a2', 'reg-a3'].forEach(clr);
-	setTimeout(() => toggleForm('form-login'), 3500);
-  }
+  if (error) { if(error.message.includes('already registered')) toast('هذا البريد مسجل مسبقاً', 'error'); else toast(error.message, 'error'); } 
+  else { toast('تم التسجيل! يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب.', 'success'); ['reg-email', 'reg-pass', 'reg-name', 'reg-a1', 'reg-a2', 'reg-a3'].forEach(clr); setTimeout(() => toggleForm('form-login'), 3500); }
 }
 
 async function forgotPassword() {
-  const email = g('forgot-email').trim();
+  const email = g('forgot-email').trim(); const btn = document.getElementById('forgot-btn');
   if(!email) return toast('الرجاء إدخال البريد الإلكتروني', 'error');
-  
-  const btn = document.getElementById('forgot-btn');
   btn.textContent = 'جاري الإرسال...'; btn.disabled = true;
-
   try {
-	let redirectUrl = window.location.origin;
-	if (redirectUrl === 'null' || redirectUrl.includes('file://')) {
-	  redirectUrl = 'http://localhost:5500'; 
-	}
-
+	let redirectUrl = window.location.origin; if (redirectUrl === 'null' || redirectUrl.includes('file://')) { redirectUrl = 'http://localhost:5500'; }
 	const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: redirectUrl });
-
 	btn.textContent = 'إرسال رابط الاستعادة'; btn.disabled = false;
-
-	if (error) toast('تعذر الإرسال: ' + error.message, 'error');
-	else {
-	  toast('تم إرسال رابط استعادة كلمة المرور إلى بريدك', 'success');
-	  clr('forgot-email');
-	}
-  } catch (err) {
-	btn.textContent = 'إرسال رابط الاستعادة'; btn.disabled = false;
-	toast('حدث خطأ في النظام، يرجى المحاولة لاحقاً.', 'error');
-	console.error("Forgot Password Error:", err);
-  }
+	if (error) toast('تعذر الإرسال: ' + error.message, 'error'); else { toast('تم إرسال رابط استعادة كلمة المرور إلى بريدك', 'success'); clr('forgot-email'); }
+  } catch (err) { btn.textContent = 'إرسال رابط الاستعادة'; btn.disabled = false; toast('حدث خطأ في النظام', 'error'); }
 }
 
 async function sendOTP() {
-  const email = g('otp-email').trim();
+  const email = g('otp-email').trim(); const btn = document.getElementById('btn-send-otp');
   if(!email) return toast('الرجاء إدخال البريد الإلكتروني أولاً', 'error');
-  
-  const btn = document.getElementById('btn-send-otp');
   btn.textContent = 'جاري الإرسال...'; btn.disabled = true;
-
   const { error } = await sb.auth.signInWithOtp({ email });
-  
   btn.textContent = 'إرسال الرمز للبريد'; btn.disabled = false;
-
-  if (error) toast('تعذر الإرسال: ' + error.message, 'error');
-  else toast('تم إرسال الرمز السري (OTP) لبريدك بنجاح', 'success');
+  if (error) toast('تعذر الإرسال: ' + error.message, 'error'); else toast('تم إرسال الرمز السري (OTP) لبريدك بنجاح', 'success');
 }
 
 async function verifyOTP() {
-  const email = g('otp-email').trim();
-  const token = g('otp-code').trim();
+  const email = g('otp-email').trim(); const token = g('otp-code').trim(); const btn = document.getElementById('btn-verify-otp');
   if(!email || !token) return toast('الرجاء إدخال البريد والرمز', 'error');
-  
-  const btn = document.getElementById('btn-verify-otp');
   btn.textContent = 'جاري التحقق...'; btn.disabled = true;
-
-  const { data, error } = await sb.auth.verifyOtp({ email, token, type: 'email' });
-  
-  if (error) {
-	btn.textContent = 'تحقق ودخول'; btn.disabled = false;
-	toast('الرمز غير صحيح أو منتهي الصلاحية', 'error');
-  } else {
-	toast('تم التحقق بنجاح! جاري الدخول...', 'success');
-	setTimeout(() => window.location.reload(), 1000); 
-  }
+  const { error } = await sb.auth.verifyOtp({ email, token, type: 'email' });
+  if (error) { btn.textContent = 'تحقق ودخول'; btn.disabled = false; toast('الرمز غير صحيح أو منتهي الصلاحية', 'error'); } 
+  else { toast('تم التحقق بنجاح! جاري الدخول...', 'success'); setTimeout(() => window.location.reload(), 1000); }
 }
 
-async function doLogout() {
-  await sb.auth.signOut(); CU = null;
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('lp').style.display = 'flex';
-  clr('li-email'); clr('li-pass');
-}
+async function doLogout() { await sb.auth.signOut(); CU = null; document.getElementById('app').style.display = 'none'; document.getElementById('lp').style.display = 'flex'; clr('li-email'); clr('li-pass'); }
 
 function showApp() {
-  document.getElementById('lp').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  document.getElementById('u-name').textContent = CU.name;
-  document.getElementById('wc-msg').textContent = `أهلاً ${CU.name}، مرحباً بك في نظام إدارة المركز`;
-
-  const isAdmin = CU.type === 'admin';
-  document.querySelectorAll('.admin-only').forEach(e => e.style.display = isAdmin ? '' : 'none');
-
-  buildQuickActions(isAdmin);
-  buildMoreDrawer(isAdmin);
-  showPage('halaqat');
-  loadNews();
-  if(isAdmin) loadStu();
+  document.getElementById('lp').style.display = 'none'; document.getElementById('app').style.display = 'flex';
+  document.getElementById('u-name').textContent = CU.name; document.getElementById('wc-msg').textContent = `أهلاً ${CU.name}، مرحباً بك في نظام إدارة المركز`;
+  const isAdmin = CU.type === 'admin'; document.querySelectorAll('.admin-only').forEach(e => e.style.display = isAdmin ? '' : 'none');
+  buildQuickActions(isAdmin); buildMoreDrawer(isAdmin); showPage('halaqat'); loadNews(); if(isAdmin) loadStu();
 }
 
 function buildQuickActions(isAdmin) {
-  const qa = document.getElementById('qa-grid');
-  if(!qa) return;
-  let items = '';
+  const qa = document.getElementById('qa-grid'); if(!qa) return; let items = '';
   if(isAdmin) {
 	items += `<div class="qi" onclick="showPage('students')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">الطلاب</div></div>`;
 	items += `<div class="qi" onclick="openAddStuModal()"><svg width="26" height="26" color="var(--gold2)"><use href="#i-plus"/></svg><div class="ql">إضافة طالب</div></div>`;
 	items += `<div class="qi" onclick="showPage('fin')"><svg width="26" height="26" color="var(--gold2)"><use href="#i-heart"/></svg><div class="ql">المالية</div></div>`;
 	items += `<div class="qi" onclick="showPage('accs')"><svg width="26" height="26" color="var(--green2)"><use href="#i-cog"/></svg><div class="ql">الحسابات</div></div>`;
-	// إضافة زر الشهادات للمدير
 	items += `<div class="qi" onclick="showPage('certs'); updateCert();"><svg width="26" height="26" color="var(--gold2)"><use href="#i-award"/></svg><div class="ql">الشهادات</div></div>`;
   }
   items += `<div class="qi" onclick="showPage('halaqat')"><svg width="26" height="26" color="var(--green2)"><use href="#i-book"/></svg><div class="ql">الحلقات</div></div>`;
@@ -1439,806 +1236,302 @@ function buildQuickActions(isAdmin) {
 }
 
 function buildMoreDrawer(isAdmin) {
-  const grid = document.getElementById('more-items-grid');
-  if(!grid) return;
-  let items = '';
+  const grid = document.getElementById('more-items-grid'); if(!grid) return; let items = '';
   const add = (page, icon, label, gold=false) => `<button class="more-item ${gold?'gold-item':''}" onclick="tabNav('${page}');closeMoreDrawer()"><div class="mi-icon"><svg width="22" height="22" color="${gold?'var(--gold2)':'var(--green2)'}"><use href="#i-${icon}"/></svg></div><span>${label}</span></button>`;
   items += add('news','news','النشرة');
-  if(isAdmin) {
-	items += add('students','users','الطلاب','');
-	items += add('fin','money','المالية',true);
-	items += add('certs','award','الشهادات',true);
-	items += add('accs','cog','الحسابات','');
-  }
-  grid.innerHTML = items;
-  const dot = document.getElementById('tab-more-dot');
-  if(isAdmin && dot) dot.classList.add('show');
+  if(isAdmin) { items += add('students','users','الطلاب',''); items += add('fin','money','المالية',true); items += add('certs','award','الشهادات',true); items += add('accs','cog','الحسابات',''); }
+  grid.innerHTML = items; const dot = document.getElementById('tab-more-dot'); if(isAdmin && dot) dot.classList.add('show');
 }
 function openMoreDrawer() { document.getElementById('more-drawer').classList.add('open'); document.getElementById('more-overlay').classList.add('open'); }
 function closeMoreDrawer() { document.getElementById('more-drawer').classList.remove('open'); document.getElementById('more-overlay').classList.remove('open'); }
-
-function tabNav(name) {
-  showPage(name);
-  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-  const tab = document.querySelector(`[data-tab="${name}"]`);
-  if(tab) tab.classList.add('active');
-}
+function tabNav(name) { showPage(name); document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); const tab = document.querySelector(`[data-tab="${name}"]`); if(tab) tab.classList.add('active'); }
 
 function showPage(name) {
-  const isAdmin = CU && CU.type==='admin';
-  const ADMIN_PAGES = ['students','fin','accs','certs'];
+  const isAdmin = CU && CU.type==='admin'; const ADMIN_PAGES = ['students','fin','accs','certs'];
   if(!isAdmin && ADMIN_PAGES.includes(name)) { toast('ليس لديك صلاحية لهذه الصفحة','error'); return; }
-
-  document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nta').forEach(t => t.classList.remove('active'));
-  const pg = document.getElementById('pg-'+name);
-  if(pg) pg.classList.add('active');
-  const navBtn = document.querySelector(`[data-page="${name}"]`);
-  if(navBtn) navBtn.classList.add('active');
-
-  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-  const tabBtn = document.querySelector(`[data-tab="${name}"]`);
-  if(tabBtn) tabBtn.classList.add('active');
-
-  const now = todayStr();
-  ['pd-stu','pd-att','pd-ex','pd-news','pd-fin','pd-dash'].forEach(id => {
-	const el = document.getElementById(id); if(el) el.textContent = 'التاريخ: ' + now;
-  });
-
-  if(name==='students') {
-	const isMobile = window.innerWidth < 900;
-	const sList = document.getElementById('stu-list');
-	const sTable = document.getElementById('stu-table-wrap');
-	if(sList) sList.style.display = isMobile ? '' : 'none';
-	if(sTable) sTable.style.display = isMobile ? 'none' : '';
-	renderStu(SD);
-  }
-
-  if(name==='halaqat') loadHalaqat();
-  if(name==='attend')  loadAtt();
-  if(name==='exam')    loadExamData();
-  if(name==='fin')     loadFin();
-  if(name==='accs')    loadAccs();
-  if(name==='students' && !SD.length) loadStu();
-
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nta').forEach(t => t.classList.remove('active'));
+  const pg = document.getElementById('pg-'+name); if(pg) pg.classList.add('active');
+  const navBtn = document.querySelector(`[data-page="${name}"]`); if(navBtn) navBtn.classList.add('active');
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); const tabBtn = document.querySelector(`[data-tab="${name}"]`); if(tabBtn) tabBtn.classList.add('active');
+  const now = todayStr(); ['pd-stu','pd-att','pd-ex','pd-news','pd-fin','pd-dash'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = 'التاريخ: ' + now; });
+  if(name==='students') { const isMobile = window.innerWidth < 900; const sList = document.getElementById('stu-list'); const sTable = document.getElementById('stu-table-wrap'); if(sList) sList.style.display = isMobile ? '' : 'none'; if(sTable) sTable.style.display = isMobile ? 'none' : ''; renderStu(SD); }
+  if(name==='halaqat') loadHalaqat(); if(name==='attend') loadAtt(); if(name==='exam') loadExamData(); if(name==='fin') loadFin(); if(name==='accs') loadAccs(); if(name==='students' && !SD.length) loadStu();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
 // ── CERTIFICATES ──
 function updateCert() {
-  const type = g('c-type');
-  const stu = g('c-stu') || '.......................';
-  const teacher = g('c-teacher') || '.......................';
-  const halqa = g('c-halqa') || '.......................';
-  const parts = g('c-parts') || '.......................';
-
-  const partsWrap = document.getElementById('c-parts-wrap');
-  if(partsWrap) partsWrap.style.display = (type === 'hifz') ? 'flex' : 'none';
-
-  let title = '';
-  let text = '';
-
+  const type = g('c-type'), stu = g('c-stu') || '.......................', teacher = g('c-teacher') || '.......................', halqa = g('c-halqa') || '.......................', parts = g('c-parts') || '.......................';
+  const partsWrap = document.getElementById('c-parts-wrap'); if(partsWrap) partsWrap.style.display = (type === 'hifz') ? 'flex' : 'none';
+  let title = '', text = '';
   if(type === 'hifz') {
 	  title = 'شهادة حفظ وتفوق';
-	  text = `يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / <strong>${stu}</strong><br>
-			  المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>
-			  قد أتم بحمد الله حفظ ( <strong>${parts}</strong> ) من القرآن الكريم.<br>
-			  سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.`;
+	  text = `يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>قد أتم بحمد الله حفظ ( <strong>${parts}</strong> ) من القرآن الكريم.<br>سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.`;
   } else if(type === 'shokr') {
 	  title = 'شهادة شكر وتقدير';
-	  text = `تتقدم إدارة مركز عبدالله بن عباس بخالص الشكر والتقدير للطالب / <strong>${stu}</strong><br>
-			  المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>
-			  وذلك لجهوده المباركة وتميزه الملحوظ ومثابرته في الحلقات.<br>
-			  نسأل الله أن يبارك فيه وينفع به الإسلام والمسلمين.`;
+	  text = `تتقدم إدارة مركز عبدالله بن عباس بخالص الشكر والتقدير للطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>وذلك لجهوده المباركة وتميزه الملحوظ ومثابرته في الحلقات.<br>نسأل الله أن يبارك فيه وينفع به الإسلام والمسلمين.`;
   } else if(type === 'solok') {
 	  title = 'شهادة حسن سيرة وسلوك';
-	  text = `تشهد إدارة مركز عبدالله بن عباس بأن الطالب / <strong>${stu}</strong><br>
-			  المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>
-			  يتصف بحسن السيرة والسلوك والأخلاق الفاضلة والالتزام بالآداب طيلة فترة دراسته بالمركز.<br>
-			  مع تمنياتنا له بدوام التوفيق والنجاح.`;
+	  text = `تشهد إدارة مركز عبدالله بن عباس بأن الطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>يتصف بحسن السيرة والسلوك والأخلاق الفاضلة والالتزام بالآداب طيلة فترة دراسته بالمركز.<br>مع تمنياتنا له بدوام التوفيق والنجاح.`;
   }
-
   const tEl = document.getElementById('cert-title'); if(tEl) tEl.innerHTML = title;
   const bEl = document.getElementById('cert-text'); if(bEl) bEl.innerHTML = text;
   const sEl = document.getElementById('cert-t-sign'); if(sEl) sEl.innerHTML = teacher !== '.......................' ? teacher : '.......................';
 }
 
+let certZoom = 1;
+function zoomCert(step) { certZoom += step; if(certZoom < 0.6) certZoom = 0.6; if(certZoom > 1.6) certZoom = 1.6; document.getElementById('cert-print-area').style.setProperty('--z', certZoom); }
 
 // ── STUDENTS ──
 let editStuId = null;
-function openAddStuModal() {
-  editStuId = null;
-  ['s-name','s-age','s-level','s-phone'].forEach(clr);
-  document.getElementById('s-date').value = todayISO();
-  openModal('m-add-stu');
-}
-
-function editStu(id) {
-  const s = SD.find(x => x.id === id);
-  if(!s) return;
-  editStuId = id;
-  document.getElementById('s-name').value = s.name || '';
-  document.getElementById('s-age').value = s.age || '';
-  document.getElementById('s-level').value = s.level || '';
-  document.getElementById('s-phone').value = s.phone || '';
-  document.getElementById('s-date').value = s.registration_date || todayISO();
-  openModal('m-add-stu');
-}
-
-async function loadStu() {
-  const { data, error } = await sb.from('students').select('*').order('name');
-  if(!error) {
-	SD = data || [];
-	renderStu(SD);
-	const sEl = document.getElementById('st-stu');
-	if(sEl) sEl.textContent = SD.length;
-  } else toast('خطأ في تحميل الطلاب', 'error');
-}
-
+function openAddStuModal() { editStuId = null; ['s-name','s-age','s-level','s-phone'].forEach(clr); document.getElementById('s-date').value = todayISO(); openModal('m-add-stu'); }
+function editStu(id) { const s = SD.find(x => x.id === id); if(!s) return; editStuId = id; document.getElementById('s-name').value = s.name || ''; document.getElementById('s-age').value = s.age || ''; document.getElementById('s-level').value = s.level || ''; document.getElementById('s-phone').value = s.phone || ''; document.getElementById('s-date').value = s.registration_date || todayISO(); openModal('m-add-stu'); }
+async function loadStu() { const { data, error } = await sb.from('students').select('*').order('name'); if(!error) { SD = data || []; renderStu(SD); const sEl = document.getElementById('st-stu'); if(sEl) sEl.textContent = SD.length; } else toast('خطأ في تحميل الطلاب', 'error'); }
 function renderStu(data) {
-  const isMobile = window.innerWidth < 900;
-  const list = document.getElementById('stu-list');
+  const isMobile = window.innerWidth < 900; const list = document.getElementById('stu-list');
   if(isMobile && list) {
 	if(!data.length) { list.innerHTML = `<div class="es"><p>لا يوجد طلاب مسجلون</p></div>`; return; }
-	list.innerHTML = data.map(s => `
-	  <div class="mobile-card">
-		<div class="mc-avatar">${(s.name||'؟')[0]}</div>
-		<div class="mc-info">
-		  <div class="mc-name">${s.name}</div>
-		  <div class="mc-sub">${s.level ? `<span class="badge bg-g">${s.level}</span>` : ''} ${s.age ? `<span>${s.age} سنة</span>` : ''}</div>
-		</div>
-		<div class="mc-actions">
-		  <button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="14" height="14"><use href="#i-edit"/></svg></button>
-		  <button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="14" height="14"><use href="#i-trash"/></svg></button>
-		</div>
-	  </div>`).join('');
+	list.innerHTML = data.map(s => `<div class="mobile-card"><div class="mc-avatar">${(s.name||'؟')[0]}</div><div class="mc-info"><div class="mc-name">${s.name}</div><div class="mc-sub">${s.level ? `<span class="badge bg-g">${s.level}</span>` : ''} ${s.age ? `<span>${s.age} سنة</span>` : ''}</div></div><div class="mc-actions"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="14" height="14"><use href="#i-edit"/></svg></button><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="14" height="14"><use href="#i-trash"/></svg></button></div></div>`).join('');
   }
   const tb = document.getElementById('tb-stu');
   if(tb) {
 	if(!data.length) { tb.innerHTML = eRow(8,'لا يوجد طلاب مسجلون'); return; }
-	tb.innerHTML = data.map((s,i) => `<tr>
-	  <td>${i+1}</td><td><strong>${s.name}</strong></td><td>${s.age||'-'}</td>
-	  <td><span class="badge bg-g">${s.level||'-'}</span></td><td dir="ltr">${fmtPhone(s.phone)}</td>
-	  <td>${fmtDate(s.registration_date)}</td>
-	  <td class="no-print"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg></button></td>
-	  <td class="no-print"><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="13" height="13"><use href="#i-trash"/></svg></button></td>
-	</tr>`).join('');
+	tb.innerHTML = data.map((s,i) => `<tr><td>${i+1}</td><td><strong>${s.name}</strong></td><td>${s.age||'-'}</td><td><span class="badge bg-g">${s.level||'-'}</span></td><td dir="ltr">${fmtPhone(s.phone)}</td><td>${fmtDate(s.registration_date)}</td><td class="no-print"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg></button></td><td class="no-print"><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="13" height="13"><use href="#i-trash"/></svg></button></td></tr>`).join('');
   }
 }
-
 function filterStu(q) { renderStu(SD.filter(s => s.name.includes(q) || (s.phone||'').includes(q))); }
-
 async function addStu() {
-  if(!CU || CU.type!=='admin') return;
-  const name = g('s-name').trim();
-  if(!name) { toast('الرجاء إدخال اسم الطالب','error'); return; }
-  
-  const payload = { name, age: g('s-age'), level: g('s-level'), phone: g('s-phone'), registration_date: g('s-date') || todayISO() };
-  const btn = event.target; btn.disabled = true;
-  
-  let error;
-  if(editStuId) {
-	const res = await sb.from('students').update(payload).eq('id', editStuId);
-	error = res.error;
-  } else {
-	const res = await sb.from('students').insert([payload]);
-	error = res.error;
-  }
-
-  btn.disabled = false;
-  if(!error) { closeModal('m-add-stu'); toast('تم الحفظ بنجاح ✓','success'); loadStu(); } 
-  else toast('خطأ في الحفظ','error');
+  if(!CU || CU.type!=='admin') return; const name = g('s-name').trim(); if(!name) { toast('الرجاء إدخال اسم الطالب','error'); return; }
+  const payload = { name, age: g('s-age'), level: g('s-level'), phone: g('s-phone'), registration_date: g('s-date') || todayISO() }; const btn = event.target; btn.disabled = true; let error;
+  if(editStuId) { const res = await sb.from('students').update(payload).eq('id', editStuId); error = res.error; } else { const res = await sb.from('students').insert([payload]); error = res.error; }
+  btn.disabled = false; if(!error) { closeModal('m-add-stu'); toast('تم الحفظ بنجاح ✓','success'); loadStu(); } else toast('خطأ في الحفظ','error');
 }
-
-async function delStu(id) {
-  if(!CU || CU.type!=='admin') return;
-  if(!confirm('حذف هذا الطالب؟')) return;
-  const { error } = await sb.from('students').delete().eq('id', id);
-  if(!error) { toast('تم الحذف'); loadStu(); } else toast('خطأ في الحذف','error');
-}
+async function delStu(id) { if(!CU || CU.type!=='admin') return; if(!confirm('حذف هذا الطالب؟')) return; const { error } = await sb.from('students').delete().eq('id', id); if(!error) { toast('تم الحذف'); loadStu(); } else toast('خطأ في الحذف','error'); }
 
 // ── FINANCIALS ──
 async function loadFin() {
-  const { data, error } = await sb.from('financials').select('*');
-  if(error) { toast('خطأ في تحميل البيانات المالية', 'error'); return; }
-  
+  const { data, error } = await sb.from('financials').select('*'); if(error) { toast('خطأ في تحميل البيانات المالية', 'error'); return; }
   FD = { budget: [], donations: [], expenses: [] };
-  if(data) {
-	data.forEach(item => {
-	  if(item.category === 'budget') FD.budget.push(item);
-	  else if(item.category === 'donations') FD.donations.push(item);
-	  else if(item.category === 'expenses') FD.expenses.push(item);
-	});
-  }
-  
+  if(data) { data.forEach(item => { if(item.category === 'budget') FD.budget.push(item); else if(item.category === 'donations') FD.donations.push(item); else if(item.category === 'expenses') FD.expenses.push(item); }); }
   updateFinStats(); renderBudget(); renderDons(); renderExps();
 }
-
 function updateFinStats() {
-  const tD = FD.donations.reduce((s,d)=>s+parseFloat(d.amount||0),0);
-  const tE = FD.expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  const ins = FD.donations.filter(d=>d.type==='inside').reduce((s,d)=>s+parseFloat(d.amount||0),0);
-  const out = FD.donations.filter(d=>d.type==='outside').reduce((s,d)=>s+parseFloat(d.amount||0),0);
-  const bal = tD - tE;
-  
-  const els = {
-	'fin-bal': fmt(bal) + ' ج.س',
-	'fin-bal-dt': 'آخر تحديث: ' + todayStr(),
-	'fin-dons': fmt(tD),
-	'fin-exps': fmt(tE),
-	'fin-in': fmt(ins),
-	'fin-out': fmt(out),
-	'st-bal': fmt(bal) + ' ج.س'
-  };
-  for (const [id, val] of Object.entries(els)) {
-	const el = document.getElementById(id);
-	if(el) el.textContent = val;
-  }
+  const tD = FD.donations.reduce((s,d)=>s+parseFloat(d.amount||0),0), tE = FD.expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0), ins = FD.donations.filter(d=>d.type==='inside').reduce((s,d)=>s+parseFloat(d.amount||0),0), out = FD.donations.filter(d=>d.type==='outside').reduce((s,d)=>s+parseFloat(d.amount||0),0), bal = tD - tE;
+  const els = { 'fin-bal': fmt(bal) + ' ج.س', 'fin-bal-dt': 'آخر تحديث: ' + todayStr(), 'fin-dons': fmt(tD), 'fin-exps': fmt(tE), 'fin-in': fmt(ins), 'fin-out': fmt(out), 'st-bal': fmt(bal) + ' ج.س' };
+  for (const [id, val] of Object.entries(els)) { const el = document.getElementById(id); if(el) el.textContent = val; }
 }
-
-function renderBudget() {
-  const tb = document.getElementById('tb-budget');
-  if(!tb) return;
-  if(!FD.budget.length) { tb.innerHTML = eRow(6,'لا توجد بنود'); return; }
-  tb.innerHTML = FD.budget.map((b,i) => `<tr><td>${i+1}</td><td>${b.item_desc}</td><td><span class="badge ${b.type==='goods'?'bg-g':'bg-b'}">${b.type==='goods'?'سلع':'خدمات'}</span></td><td><strong>${fmt(b.amount)} ج.س</strong></td><td>${fmtDate(b.transaction_date)}</td><td class="no-print"><button class="btn bd bsm" onclick="delFin('${b.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join('');
-}
-function renderDons() {
-  const tb = document.getElementById('tb-dons');
-  if(!tb) return;
-  if(!FD.donations.length) { tb.innerHTML = eRow(6,'لا توجد تبرعات'); return; }
-  tb.innerHTML = FD.donations.map((d,i) => `<tr><td>${i+1}</td><td><strong>${fmt(d.amount)} ج.س</strong></td><td><span class="badge ${d.type==='inside'?'bg-g':'bg-o'}">${d.type==='inside'?'داخلي':'خارجي'}</span></td><td>${d.donor_name||'-'}</td><td>${fmtDate(d.transaction_date)}</td><td class="no-print"><button class="btn bd bsm" onclick="delFin('${d.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join('');
-}
-function renderExps() {
-  const tb = document.getElementById('tb-exps');
-  if(!tb) return;
-  if(!FD.expenses.length) { tb.innerHTML = eRow(5,'لا توجد مصروفات'); return; }
-  tb.innerHTML = FD.expenses.map((e,i) => `<tr><td>${i+1}</td><td>${e.item_desc}</td><td><strong>${fmt(e.amount)} ج.س</strong></td><td>${fmtDate(e.transaction_date)}</td><td class="no-print"><button class="btn bd bsm" onclick="delFin('${e.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join('');
-}
-
-async function addBudget() {
-  const item = g('b-item').trim(), amount = g('b-amt');
-  if(!item || !amount) return toast('الرجاء ملء الحقول','error');
-  const { error } = await sb.from('financials').insert([{ category: 'budget', item_desc: item, type: g('b-type'), amount, transaction_date: g('b-date')||todayISO() }]);
-  if(!error) { toast('تمت الإضافة','success'); clr('b-item'); clr('b-amt'); loadFin(); } else toast('خطأ في الإضافة','error');
-}
-async function addDon() {
-  const amount = g('d-amt');
-  if(!amount) return toast('مبلغ غير صحيح','error');
-  const { error } = await sb.from('financials').insert([{ category: 'donations', amount, type: g('d-type'), donor_name: g('d-donor').trim(), transaction_date: g('d-date')||todayISO() }]);
-  if(!error) { toast('تم التسجيل','success'); clr('d-amt'); clr('d-donor'); loadFin(); } else toast('خطأ في التسجيل','error');
-}
-async function addExp() {
-  const desc = g('e-desc').trim(), amount = g('e-amt');
-  if(!desc || !amount) return toast('مبلغ غير صحيح','error');
-  const { error } = await sb.from('financials').insert([{ category: 'expenses', item_desc: desc, amount, transaction_date: g('e-date')||todayISO() }]);
-  if(!error) { toast('تم التسجيل','success'); clr('e-desc'); clr('e-amt'); loadFin(); } else toast('خطأ في التسجيل','error');
-}
-async function delFin(id) {
-  if(!confirm('حذف هذا البند؟')) return;
-  const { error } = await sb.from('financials').delete().eq('id', id);
-  if(!error) { toast('تم الحذف'); loadFin(); } else toast('خطأ','error');
-}
-function showFinTab(name,el) {
-  document.querySelectorAll('.fta').forEach(t=>t.classList.remove('active'));
-  ['budget','donations','expenses'].forEach(n=>{const e2=document.getElementById('fs-'+n);if(e2)e2.style.display='none';});
-  const tEl = document.getElementById('fs-'+name);
-  if(tEl) tEl.style.display='block';
-  el.classList.add('active');
-}
+function renderBudget() { const tb = document.getElementById('tb-budget'); if(!tb) return; if(!FD.budget.length) { tb.innerHTML = eRow(6,'لا توجد بنود'); return; } tb.innerHTML = FD.budget.map((b,i) => `<tr><td>${i+1}</td><td>${b.item_desc}</td><td><span class="badge ${b.type==='goods'?'bg-g':'bg-b'}">${b.type==='goods'?'سلع':'خدمات'}</span></td><td><strong>${fmt(b.amount)} ج.س</strong></td><td>${fmtDate(b.transaction_date)}</td><td class="no-print"><button class="btn bd bsm" onclick="delFin('${b.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join(''); }
+function renderDons() { const tb = document.getElementById('tb-dons'); if(!tb) return; if(!FD.donations.length) { tb.innerHTML = eRow(6,'لا توجد تبرعات'); return; } tb.innerHTML = FD.donations.map((d,i) => `<tr><td>${i+1}</td><td><strong>${fmt(d.amount)} ج.س</strong></td><td><span class="badge ${d.type==='inside'?'bg-g':'bg-o'}">${d.type==='inside'?'داخلي':'خارجي'}</span></td><td>${d.donor_name||'-'}</td><td>${fmtDate(d.transaction_date)}</td><td class="no-print"><button class="btn bd bsm" onclick="delFin('${d.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join(''); }
+function renderExps() { const tb = document.getElementById('tb-exps'); if(!tb) return; if(!FD.expenses.length) { tb.innerHTML = eRow(5,'لا توجد مصروفات'); return; } tb.innerHTML = FD.expenses.map((e,i) => `<tr><td>${i+1}</td><td>${e.item_desc}</td><td><strong>${fmt(e.amount)} ج.س</strong></td><td>${fmtDate(e.transaction_date)}</td><td class="no-print"><button class="btn bd bsm" onclick="delFin('${e.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td></tr>`).join(''); }
+async function addBudget() { const item = g('b-item').trim(), amount = g('b-amt'); if(!item || !amount) return toast('الرجاء ملء الحقول','error'); const { error } = await sb.from('financials').insert([{ category: 'budget', item_desc: item, type: g('b-type'), amount, transaction_date: g('b-date')||todayISO() }]); if(!error) { toast('تمت الإضافة','success'); clr('b-item'); clr('b-amt'); loadFin(); } else toast('خطأ في الإضافة','error'); }
+async function addDon() { const amount = g('d-amt'); if(!amount) return toast('مبلغ غير صحيح','error'); const { error } = await sb.from('financials').insert([{ category: 'donations', amount, type: g('d-type'), donor_name: g('d-donor').trim(), transaction_date: g('d-date')||todayISO() }]); if(!error) { toast('تم التسجيل','success'); clr('d-amt'); clr('d-donor'); loadFin(); } else toast('خطأ في التسجيل','error'); }
+async function addExp() { const desc = g('e-desc').trim(), amount = g('e-amt'); if(!desc || !amount) return toast('مبلغ غير صحيح','error'); const { error } = await sb.from('financials').insert([{ category: 'expenses', item_desc: desc, amount, transaction_date: g('e-date')||todayISO() }]); if(!error) { toast('تم التسجيل','success'); clr('e-desc'); clr('e-amt'); loadFin(); } else toast('خطأ في التسجيل','error'); }
+async function delFin(id) { if(!confirm('حذف هذا البند؟')) return; const { error } = await sb.from('financials').delete().eq('id', id); if(!error) { toast('تم الحذف'); loadFin(); } else toast('خطأ','error'); }
+function showFinTab(name,el) { document.querySelectorAll('.fta').forEach(t=>t.classList.remove('active')); ['budget','donations','expenses'].forEach(n=>{const e2=document.getElementById('fs-'+n);if(e2)e2.style.display='none';}); const tEl = document.getElementById('fs-'+name); if(tEl) tEl.style.display='block'; el.classList.add('active'); }
 
 // ── ACCOUNTS ──
 async function loadAccs() {
   const { data, error } = await sb.from('profiles').select('id, full_name, email, account_status, roles(role_name)').order('account_status', {ascending: false});
   if (!error && data) {
-	ACCS_DATA = data.map(p => ({
-	  id: p.id, name: p.full_name, email: p.email, 
-	  status: p.account_status || 'approved', 
-	  type: p.roles?.role_name || 'user'
-	}));
-	const tb = document.getElementById('tb-accs');
-	if(!tb) return;
+	ACCS_DATA = data.map(p => ({ id: p.id, name: p.full_name, email: p.email, status: p.account_status || 'approved', type: p.roles?.role_name || 'user' }));
+	const tb = document.getElementById('tb-accs'); if(!tb) return;
 	if(!ACCS_DATA.length) { tb.innerHTML = eRow(6,'لا توجد حسابات'); return; }
-	
-	tb.innerHTML = ACCS_DATA.map((a,i) => `<tr>
-	  <td>${i+1}</td>
-	  <td><strong>${a.name||'-'}</strong></td>
-	  <td dir="ltr" style="font-size:.78rem">${a.email}</td>
-	  <td>
-		${a.status === 'pending' ? '<span class="badge bg-o">قيد المراجعة</span>' :
-		  a.status === 'rejected' ? '<span class="badge bg-r">مرفوض</span>' :
-		  `<span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span>`
-		}
-	  </td>
-	  <td class="no-print">
-		${a.status === 'pending' ? 
-		  `<button class="btn bp bsm" onclick="changeAccStatus('${a.id}', 'approved')">قبول</button>
-		   <button class="btn bd bsm" onclick="changeAccStatus('${a.id}', 'rejected')">رفض</button>` :
-		  `<span style="color:var(--text3);font-size:.75rem">مكتمل</span>`
-		}
-	  </td>
-	  <td class="no-print">
-		${a.id === CU.id ? '-' : `<button class="btn bd bsm" onclick="delAcc('${a.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>`}
-	  </td>
-	</tr>`).join('');
+	tb.innerHTML = ACCS_DATA.map((a,i) => `<tr><td>${i+1}</td><td><strong>${a.name||'-'}</strong></td><td dir="ltr" style="font-size:.78rem">${a.email}</td><td>${a.status === 'pending' ? '<span class="badge bg-o">قيد المراجعة</span>' : a.status === 'rejected' ? '<span class="badge bg-r">مرفوض</span>' : `<span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span>`}</td><td class="no-print">${a.status === 'pending' ? `<button class="btn bp bsm" onclick="changeAccStatus('${a.id}', 'approved')">قبول</button><button class="btn bd bsm" onclick="changeAccStatus('${a.id}', 'rejected')">رفض</button>` : `<span style="color:var(--text3);font-size:.75rem">مكتمل</span>`}</td><td class="no-print">${a.id === CU.id ? '-' : `<button class="btn bd bsm" onclick="delAcc('${a.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>`}</td></tr>`).join('');
   } else toast('خطأ في تحميل الحسابات','error');
 }
-
-async function changeAccStatus(id, newStatus) {
-  const { error } = await sb.from('profiles').update({ account_status: newStatus }).eq('id', id);
-  if(!error) { toast('تم تحديث حالة الحساب بنجاح', 'success'); loadAccs(); }
-  else toast('خطأ في التحديث', 'error');
-}
-
-function openAddAcc() { 
-  toast('لأسباب أمنية: أرسل رابط النظام للمعلم ليسجل، ثم قم بقبوله من هنا.', 'info'); 
-}
-
-async function delAcc(id) { 
-  if(!confirm('هل أنت متأكد من تعطيل/إيقاف هذا الحساب؟ (لن يتمكن من الدخول للنظام)')) return;
-  const { error } = await sb.from('profiles').update({ account_status: 'rejected' }).eq('id', id);
-  if(!error) { toast('تم إيقاف الحساب', 'success'); loadAccs(); } 
-  else toast('خطأ', 'error');
-}
+async function changeAccStatus(id, newStatus) { const { error } = await sb.from('profiles').update({ account_status: newStatus }).eq('id', id); if(!error) { toast('تم تحديث حالة الحساب بنجاح', 'success'); loadAccs(); } else toast('خطأ في التحديث', 'error'); }
+function openAddAcc() { toast('لأسباب أمنية: أرسل رابط النظام للمعلم ليسجل، ثم قم بقبوله من هنا.', 'info'); }
+async function delAcc(id) { if(!confirm('هل أنت متأكد من إيقاف هذا الحساب؟')) return; const { error } = await sb.from('profiles').update({ account_status: 'rejected' }).eq('id', id); if(!error) { toast('تم إيقاف الحساب', 'success'); loadAccs(); } else toast('خطأ', 'error'); }
 
 // ── ATTENDANCE ──
 async function loadAtt() {
-  const month = g('att-month');
-  const { data, error } = await sb.from('attendance').select('*').eq('month', month);
-  AD = {};
-  if(!error && data) data.forEach(row => AD[row.key] = row.status);
-  
-  const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'];
-  let hdr = '<tr><th class="nc">اسم الطالب</th>';
-  for(let w=1;w<=4;w++) days.forEach(d => { hdr+=`<th>أ${w}</th>`; });
-  const head = document.getElementById('att-head');
-  if(head) head.innerHTML = hdr + '<th>المج</th></tr>';
-
+  const month = g('att-month'); const { data, error } = await sb.from('attendance').select('*').eq('month', month); AD = {}; if(!error && data) data.forEach(row => AD[row.key] = row.status);
+  const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس']; let hdr = '<tr><th class="nc">اسم الطالب</th>'; for(let w=1;w<=4;w++) days.forEach(d => { hdr+=`<th>أ${w}</th>`; }); const head = document.getElementById('att-head'); if(head) head.innerHTML = hdr + '<th>المج</th></tr>';
   if(!SD.length) await loadStu();
-  const body = document.getElementById('att-body');
-  if(!body) return;
+  const body = document.getElementById('att-body'); if(!body) return;
   body.innerHTML = SD.map(s => {
 	let cells='', cnt=0;
 	for(let w=1;w<=4;w++) days.forEach((d,di) => {
-	  const key=`${s.id}_w${w}_d${di}`, val=AD[key]||'';
-	  if(val==='P') cnt++;
+	  const key=`${s.id}_w${w}_d${di}`, val=AD[key]||''; if(val==='P') cnt++;
 	  cells+=`<td><button class="ab ${val==='P'?'present':val==='A'?'absent':''}" onclick="togAtt('${s.id}',${w},${di},this)" data-k="${key}">${val==='P'?'ح':val==='A'?'غ':'-'}</button></td>`;
 	});
 	return `<tr><td class="nc"><strong>${s.name}</strong></td>${cells}<td><span class="badge bg-g">${cnt}</span></td></tr>`;
   }).join('');
 }
-function togAtt(sid,w,di,btn) {
-  const key=btn.dataset.k, cur=AD[key]||'';
-  const nxt = cur===''?'P':cur==='P'?'A':'';
-  AD[key]=nxt;
-  btn.className='ab'+(nxt==='P'?' present':nxt==='A'?' absent':'');
-  btn.textContent=nxt==='P'?'ح':nxt==='A'?'غ':'-';
-}
-async function saveAtt() {
-  const month = g('att-month');
-  const records = Object.keys(AD).map(key => ({ key, month, status: AD[key] }));
-  const { error } = await sb.from('attendance').upsert(records);
-  if(!error) toast('تم حفظ الحضور ✓','success'); else toast('خطأ في الحفظ','error');
-}
+function togAtt(sid,w,di,btn) { const key=btn.dataset.k, cur=AD[key]||''; const nxt = cur===''?'P':cur==='P'?'A':''; AD[key]=nxt; btn.className='ab'+(nxt==='P'?' present':nxt==='A'?' absent':''); btn.textContent=nxt==='P'?'ح':nxt==='A'?'غ':'-'; }
+async function saveAtt() { const month = g('att-month'); const records = Object.keys(AD).map(key => ({ key, month, status: AD[key] })); const { error } = await sb.from('attendance').upsert(records); if(!error) toast('تم حفظ الحضور ✓','success'); else toast('خطأ في الحفظ','error'); }
 
 // ── EXAMS ──
-function exGradeLabel(n) {
-  n=parseFloat(n||0);
-  if(n>=95) return {lbl:'ممتاز+',cls:'bg-g'};
-  if(n>=85) return {lbl:'ممتاز',cls:'bg-g'};
-  if(n>=75) return {lbl:'جيد جداً',cls:'bg-o'};
-  if(n>=65) return {lbl:'جيد',cls:'bg-o'};
-  if(n>=50) return {lbl:'مقبول',cls:'bg-b'};
-  return {lbl:'ضعيف',cls:'bg-r'};
-}
-
-async function loadExamData() {
-  const tel = document.getElementById('ex-teacher-disp');
-  if(tel) tel.value = CU ? CU.name : '-';
-  const halqa = g('ex-halqa'), month = g('ex-month');
-  if(!halqa||!month) { renderExamTable([]); return; }
-  
-  const tbody = document.getElementById('tb-ex');
-  if(tbody) tbody.innerHTML=`<tr><td colspan="16"><div class="sp"></div><div class="lm">جاري التحميل...</div></td></tr>`;
-  
-  const { data, error } = await sb.from('monthly_exams').select('*').eq('halqa_name', halqa).eq('exam_month', month);
-  EX_DATA = error ? [] : data;
-  renderExamTable(EX_DATA);
-}
-
-function renderExamTable(rows) {
-  const tbody=document.getElementById('tb-ex');
-  if(!tbody) return;
-  EX_ROW_N=0; tbody.innerHTML='';
-  if(!rows.length) {
-	tbody.innerHTML=`<tr><td colspan="16"><div class="es"><p>لا توجد بيانات لهذه الحلقة<br><small>اضغط <strong>إضافة</strong> لبدء التسجيل</small></p></div></td></tr>`;
-	updateExamSummary([]); return;
-  }
-  rows.forEach(r => appendExamRow(r));
-  updateExamSummary(rows);
-}
-
-function appendExamRow(r) {
-  EX_ROW_N++; const n=EX_ROW_N, tbody=document.getElementById('tb-ex');
-  if(!tbody) return;
-  const ph=tbody.querySelector('td[colspan]'); if(ph) ph.closest('tr').remove();
-  const total=calcExamTotal(r); const g2=exGradeLabel(total);
-  const inp=`style="width:42px;padding:5px 3px;border:1.5px solid var(--border2);border-radius:6px;font-family:'Tajawal',sans-serif;font-size:.8rem;text-align:center;"`;
-  const tr=document.createElement('tr'); tr.dataset.rowid=n;
-  tr.innerHTML=`
-	<td style="color:var(--text3);font-size:.78rem">${n}</td>
-	<td><input class="tasm-inp" type="text" style="width:110px" placeholder="اسم الطالب" value="${esc(r.student_name||'')}"></td>
-	${EX_COLS.map((col)=>`<td><input class="grade-inp ex-score" type="number" min="0" max="10" ${inp} data-col="${col}" data-row="${n}" value="${esc(String(r[col]!==undefined&&r[col]!==null?r[col]:''))}" oninput="onExamInput(${n})"></td>`).join('')}
-	<td style="font-weight:800;" id="ex-tot-${n}">${total||''}</td>
-	<td id="ex-tq-${n}"><span class="badge ${g2.cls}">${total?g2.lbl:'—'}</span></td>
-	<td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove();recalcExamSummary()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`;
-  tbody.appendChild(tr);
-}
-
+function exGradeLabel(n) { n=parseFloat(n||0); if(n>=95) return {lbl:'ممتاز+',cls:'bg-g'}; if(n>=85) return {lbl:'ممتاز',cls:'bg-g'}; if(n>=75) return {lbl:'جيد جداً',cls:'bg-o'}; if(n>=65) return {lbl:'جيد',cls:'bg-o'}; if(n>=50) return {lbl:'مقبول',cls:'bg-b'}; return {lbl:'ضعيف',cls:'bg-r'}; }
+async function loadExamData() { const tel = document.getElementById('ex-teacher-disp'); if(tel) tel.value = CU ? CU.name : '-'; const halqa = g('ex-halqa'), month = g('ex-month'); if(!halqa||!month) { renderExamTable([]); return; } const tbody = document.getElementById('tb-ex'); if(tbody) tbody.innerHTML=`<tr><td colspan="16"><div class="sp"></div><div class="lm">جاري التحميل...</div></td></tr>`; const { data, error } = await sb.from('monthly_exams').select('*').eq('halqa_name', halqa).eq('exam_month', month); EX_DATA = error ? [] : data; renderExamTable(EX_DATA); }
+function renderExamTable(rows) { const tbody=document.getElementById('tb-ex'); if(!tbody) return; EX_ROW_N=0; tbody.innerHTML=''; if(!rows.length) { tbody.innerHTML=`<tr><td colspan="16"><div class="es"><p>لا توجد بيانات لهذه الحلقة<br><small>اضغط <strong>إضافة</strong> لبدء التسجيل</small></p></div></td></tr>`; updateExamSummary([]); return; } rows.forEach(r => appendExamRow(r)); updateExamSummary(rows); }
+function appendExamRow(r) { EX_ROW_N++; const n=EX_ROW_N, tbody=document.getElementById('tb-ex'); if(!tbody) return; const ph=tbody.querySelector('td[colspan]'); if(ph) ph.closest('tr').remove(); const total=calcExamTotal(r); const g2=exGradeLabel(total); const inp=`style="width:42px;padding:5px 3px;border:1.5px solid var(--border2);border-radius:6px;font-family:'Tajawal',sans-serif;font-size:.8rem;text-align:center;"`; const tr=document.createElement('tr'); tr.dataset.rowid=n; tr.innerHTML=`<td style="color:var(--text3);font-size:.78rem">${n}</td><td><input class="tasm-inp" type="text" style="width:110px" placeholder="اسم الطالب" value="${esc(r.student_name||'')}"></td>${EX_COLS.map((col)=>`<td><input class="grade-inp ex-score" type="number" min="0" max="10" ${inp} data-col="${col}" data-row="${n}" value="${esc(String(r[col]!==undefined&&r[col]!==null?r[col]:''))}" oninput="onExamInput(${n})"></td>`).join('')}<td style="font-weight:800;" id="ex-tot-${n}">${total||''}</td><td id="ex-tq-${n}"><span class="badge ${g2.cls}">${total?g2.lbl:'—'}</span></td><td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove();recalcExamSummary()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`; tbody.appendChild(tr); }
 function addExamRow() { appendExamRow({student_name:'',s1:'',s2:'',s3:'',s4:'',s5:'',tajweed:'',tarteel:'',solok:'',mudawama:'',hifz:''}); }
-function calcExamTotal(r) {
-  const hasAny=EX_COLS.some(c=>r[c]!==''&&r[c]!==undefined&&r[c]!==null);
-  if(!hasAny) return '';
-  return EX_COLS.map(c=>parseFloat(r[c]||0)).reduce((a,b)=>a+b,0);
-}
-function onExamInput(rowN) {
-  const tr=document.querySelector(`tr[data-rowid="${rowN}"]`); if(!tr) return;
-  const r={};
-  EX_COLS.forEach(col=>{ const inp=tr.querySelector(`[data-col="${col}"]`); r[col]=inp?inp.value:''; });
-  const total=calcExamTotal(r);
-  const totEl=document.getElementById(`ex-tot-${rowN}`);
-  const tqEl=document.getElementById(`ex-tq-${rowN}`);
-  if(totEl) totEl.textContent=total;
-  const g2=exGradeLabel(total);
-  if(tqEl) tqEl.innerHTML=`<span class="badge ${g2.cls}">${g2.lbl}</span>`;
-  recalcExamSummary();
-}
-function getExamRows() {
-  const rows=[];
-  document.querySelectorAll('#tb-ex tr[data-rowid]').forEach(tr=>{
-	const nameInp=tr.querySelector('.tasm-inp');
-	const student_name=nameInp?nameInp.value.trim():'';
-	const r={student_name};
-	EX_COLS.forEach(col=>{ const inp=tr.querySelector(`[data-col="${col}"]`); r[col]=inp?inp.value:''; });
-	r.total=calcExamTotal(r);
-	r.taqdeer=exGradeLabel(r.total).lbl;
-	rows.push(r);
-  });
-  return rows;
-}
+function calcExamTotal(r) { const hasAny=EX_COLS.some(c=>r[c]!==''&&r[c]!==undefined&&r[c]!==null); if(!hasAny) return ''; return EX_COLS.map(c=>parseFloat(r[c]||0)).reduce((a,b)=>a+b,0); }
+function onExamInput(rowN) { const tr=document.querySelector(`tr[data-rowid="${rowN}"]`); if(!tr) return; const r={}; EX_COLS.forEach(col=>{ const inp=tr.querySelector(`[data-col="${col}"]`); r[col]=inp?inp.value:''; }); const total=calcExamTotal(r); const totEl=document.getElementById(`ex-tot-${rowN}`); const tqEl=document.getElementById(`ex-tq-${rowN}`); if(totEl) totEl.textContent=total; const g2=exGradeLabel(total); if(tqEl) tqEl.innerHTML=`<span class="badge ${g2.cls}">${g2.lbl}</span>`; recalcExamSummary(); }
+function getExamRows() { const rows=[]; document.querySelectorAll('#tb-ex tr[data-rowid]').forEach(tr=>{ const nameInp=tr.querySelector('.tasm-inp'); const student_name=nameInp?nameInp.value.trim():''; const r={student_name}; EX_COLS.forEach(col=>{ const inp=tr.querySelector(`[data-col="${col}"]`); r[col]=inp?inp.value:''; }); r.total=calcExamTotal(r); r.taqdeer=exGradeLabel(r.total).lbl; rows.push(r); }); return rows; }
 function recalcExamSummary() { updateExamSummary(getExamRows()); }
-function updateExamSummary(rows) {
-  const valid=rows.filter(r=>r.student_name);
-  const totals=valid.map(r=>parseFloat(r.total||0));
-  const avg=totals.length?totals.reduce((a,b)=>a+b,0)/totals.length:0;
-  const top=valid.slice().sort((a,b)=>parseFloat(b.total||0)-parseFloat(a.total||0))[0];
-  if(document.getElementById('ex-s-count')) {
-	document.getElementById('ex-s-count').textContent=valid.length;
-	document.getElementById('ex-s-avg').textContent=avg.toFixed(1);
-	document.getElementById('ex-s-top').textContent=top?`${top.student_name} (${top.total})`:'-';
-	document.getElementById('ex-s-mmtaz').textContent=totals.filter(t=>t>=85).length;
-	document.getElementById('ex-s-fail').textContent=totals.filter(t=>t<50).length;
-	document.getElementById('ex-summary').style.display=valid.length?'flex':'none';
-  }
-}
-
-async function saveExam() {
-  const halqa=g('ex-halqa'), month=g('ex-month');
-  if(!halqa||!month) return toast('الرجاء تحديد الحلقة والشهر','error');
-  const rows=getExamRows().filter(r=>r.student_name);
-  if(!rows.length) return toast('لا توجد بيانات لحفظها','error');
-  
-  const payload = rows.map(r => ({
-	halqa_name: halqa, exam_month: month, teacher_id: CU.id,
-	student_name: r.student_name,
-	s1: r.s1||null, s2: r.s2||null, s3: r.s3||null, s4: r.s4||null, s5: r.s5||null,
-	tajweed: r.tajweed||null, tarteel: r.tarteel||null, solok: r.solok||null, mudawama: r.mudawama||null, hifz: r.hifz||null,
-	total: r.total||null, taqdeer: r.taqdeer
-  }));
-
-  const btn=event.target; btn.disabled=true; btn.textContent='جاري الحفظ...';
-  await sb.from('monthly_exams').delete().eq('halqa_name', halqa).eq('exam_month', month);
-  const { error } = await sb.from('monthly_exams').insert(payload);
-  
-  btn.disabled=false; btn.innerHTML='<svg width="13" height="13"><use href="#i-save"/></svg> حفظ';
-  if(!error) { toast('تم حفظ الدرجات ✓','success'); EX_DATA=payload; }
-  else toast('خطأ في الحفظ','error');
-}
-
-function printExam() { window.print(); }
+function updateExamSummary(rows) { const valid=rows.filter(r=>r.student_name); const totals=valid.map(r=>parseFloat(r.total||0)); const avg=totals.length?totals.reduce((a,b)=>a+b,0)/totals.length:0; const top=valid.slice().sort((a,b)=>parseFloat(b.total||0)-parseFloat(a.total||0))[0]; if(document.getElementById('ex-s-count')) { document.getElementById('ex-s-count').textContent=valid.length; document.getElementById('ex-s-avg').textContent=avg.toFixed(1); document.getElementById('ex-s-top').textContent=top?`${top.student_name} (${top.total})`:'-'; document.getElementById('ex-s-mmtaz').textContent=totals.filter(t=>t>=85).length; document.getElementById('ex-s-fail').textContent=totals.filter(t=>t<50).length; document.getElementById('ex-summary').style.display=valid.length?'flex':'none'; } }
+async function saveExam() { const halqa=g('ex-halqa'), month=g('ex-month'); if(!halqa||!month) return toast('الرجاء تحديد الحلقة والشهر','error'); const rows=getExamRows().filter(r=>r.student_name); if(!rows.length) return toast('لا توجد بيانات لحفظها','error'); const payload = rows.map(r => ({ halqa_name: halqa, exam_month: month, teacher_id: CU.id, student_name: r.student_name, s1: r.s1||null, s2: r.s2||null, s3: r.s3||null, s4: r.s4||null, s5: r.s5||null, tajweed: r.tajweed||null, tarteel: r.tarteel||null, solok: r.solok||null, mudawama: r.mudawama||null, hifz: r.hifz||null, total: r.total||null, taqdeer: r.taqdeer })); const btn=event.target; btn.disabled=true; btn.textContent='جاري الحفظ...'; await sb.from('monthly_exams').delete().eq('halqa_name', halqa).eq('exam_month', month); const { error } = await sb.from('monthly_exams').insert(payload); btn.disabled=false; btn.innerHTML='<svg width="13" height="13"><use href="#i-save"/></svg> حفظ'; if(!error) { toast('تم حفظ الدرجات ✓','success'); EX_DATA=payload; } else toast('خطأ في الحفظ','error'); }
 
 // ── HALAQAT ──
-function gradeLabel(g) {
-  const n=parseFloat(g||0);
-  if(n>=95) return 'ممتاز+'; if(n>=85) return 'ممتاز';
-  if(n>=75) return 'جيد جداً'; if(n>=65) return 'جيد';
-  if(n>=50) return 'مقبول'; return 'ضعيف';
-}
-function gradeColor(g) {
-  const n=parseFloat(g||0);
-  if(n>=85) return 'bg-g'; if(n>=65) return 'bg-o';
-  if(n>=50) return 'bg-b'; return 'bg-r';
-}
-
-async function loadHalaqat() {
-  if(!ACCS_DATA.length) await loadAccs();
-  const { data, error } = await sb.from('halaqat').select('*');
-  HQ_ALL = error ? [] : data;
-  renderHalaqatCards();
-}
-
-function renderHalaqatCards() {
-  const container = document.getElementById('hq-cards');
-  if(!container) return;
-  container.innerHTML = HALAQAT.map(hq => {
-	const rows = HQ_ALL.filter(r => r.halqa === hq.id);
-	const students = [...new Set(rows.map(r => r.student).filter(Boolean))];
-	const totalSessions = [...new Set(rows.map(r => r.date).filter(Boolean))].length;
-	return `<div class="hq-card ${hq.cls}">
-	  <div class="hq-card-head"><div class="hq-name">${hq.label}</div></div>
-	  <div class="hq-stats">
-		<div class="hq-stat"><div class="hq-stat-val">${students.length}</div><div class="hq-stat-lbl">طالب</div></div>
-		<div class="hq-stat"><div class="hq-stat-val">${totalSessions}</div><div class="hq-stat-lbl">جلسة</div></div>
-	  </div>
-	  <button class="hq-open-btn" onclick="openHalaqaDetail('${hq.id}','${hq.label}')">فتح الحلقة ←</button>
-	</div>`;
-  }).join('');
-}
-
-function openHalaqaDetail(halqaId,halqaLabel) {
-  HQ_ACTIVE = halqaId;
-  const ov = document.getElementById('hq-overview'); if(ov) ov.style.display='none';
-  const dw = document.getElementById('hq-detail-wrap'); if(dw) dw.classList.add('active');
-  const dt = document.getElementById('hq-detail-title'); if(dt) dt.textContent = halqaLabel;
-  const todayVal = todayISO();
-  const sd = document.getElementById('hq-session-date'); if(sd) sd.value = todayVal;
-  HQ_DATE = todayVal;
-  const ds = document.getElementById('hq-detail-sub'); if(ds) ds.textContent = 'المعلم: ' + (CU?CU.name:'-');
-  loadHalaqaSession();
-}
-
-function closeHalaqaDetail() {
-  HQ_ACTIVE = null;
-  const ov = document.getElementById('hq-overview'); if(ov) ov.style.display='';
-  const dw = document.getElementById('hq-detail-wrap'); if(dw) dw.classList.remove('active');
-  loadHalaqat();
-}
-
-function loadHalaqaSession() {
-  const sd = document.getElementById('hq-session-date');
-  HQ_DATE = sd ? (sd.value || todayISO()) : todayISO();
-  const rows = HQ_ALL.filter(r => r.halqa === HQ_ACTIVE && r.date === HQ_DATE && r.teacher === CU.email);
-  renderHalaqaTable(rows);
-}
-
-function renderHalaqaTable(rows) {
-  const tbody=document.getElementById('hq-tbody');
-  if(!tbody) return;
-  HQ_ROW_COUNT=0;
-  if(!rows.length) {
-	tbody.innerHTML=`<tr><td colspan="8"><div class="es"><p>لا توجد بيانات لهذا اليوم<br><small>اضغط "إضافة طالب" لبدء تسجيل الجلسة</small></p></div></td></tr>`;
-	updateHalaqaStats([]); 
-	return;
-  }
-  tbody.innerHTML='';
-  rows.forEach(r => addHalaqaRowFromData(r));
-  updateHalaqaStats(rows); 
-}
-
+function gradeLabel(g) { const n=parseFloat(g||0); if(n>=95) return 'ممتاز+'; if(n>=85) return 'ممتاز'; if(n>=75) return 'جيد جداً'; if(n>=65) return 'جيد'; if(n>=50) return 'مقبول'; return 'ضعيف'; }
+function gradeColor(g) { const n=parseFloat(g||0); if(n>=85) return 'bg-g'; if(n>=65) return 'bg-o'; if(n>=50) return 'bg-b'; return 'bg-r'; }
+async function loadHalaqat() { if(!ACCS_DATA.length) await loadAccs(); const { data, error } = await sb.from('halaqat').select('*'); HQ_ALL = error ? [] : data; renderHalaqatCards(); }
+function renderHalaqatCards() { const container = document.getElementById('hq-cards'); if(!container) return; container.innerHTML = HALAQAT.map(hq => { const rows = HQ_ALL.filter(r => r.halqa === hq.id); const students = [...new Set(rows.map(r => r.student).filter(Boolean))]; const totalSessions = [...new Set(rows.map(r => r.date).filter(Boolean))].length; return `<div class="hq-card ${hq.cls}"><div class="hq-card-head"><div class="hq-name">${hq.label}</div></div><div class="hq-stats"><div class="hq-stat"><div class="hq-stat-val">${students.length}</div><div class="hq-stat-lbl">طالب</div></div><div class="hq-stat"><div class="hq-stat-val">${totalSessions}</div><div class="hq-stat-lbl">جلسة</div></div></div><button class="hq-open-btn" onclick="openHalaqaDetail('${hq.id}','${hq.label}')">فتح الحلقة ←</button></div>`; }).join(''); }
+function openHalaqaDetail(halqaId,halqaLabel) { HQ_ACTIVE = halqaId; const ov = document.getElementById('hq-overview'); if(ov) ov.style.display='none'; const dw = document.getElementById('hq-detail-wrap'); if(dw) dw.classList.add('active'); const dt = document.getElementById('hq-detail-title'); if(dt) dt.textContent = halqaLabel; const todayVal = todayISO(); const sd = document.getElementById('hq-session-date'); if(sd) sd.value = todayVal; HQ_DATE = todayVal; const ds = document.getElementById('hq-detail-sub'); if(ds) ds.textContent = 'المعلم: ' + (CU?CU.name:'-'); loadHalaqaSession(); }
+function closeHalaqaDetail() { HQ_ACTIVE = null; const ov = document.getElementById('hq-overview'); if(ov) ov.style.display=''; const dw = document.getElementById('hq-detail-wrap'); if(dw) dw.classList.remove('active'); loadHalaqat(); }
+function loadHalaqaSession() { const sd = document.getElementById('hq-session-date'); HQ_DATE = sd ? (sd.value || todayISO()) : todayISO(); const rows = HQ_ALL.filter(r => r.halqa === HQ_ACTIVE && r.date === HQ_DATE && r.teacher === CU.email); renderHalaqaTable(rows); }
+function renderHalaqaTable(rows) { const tbody=document.getElementById('hq-tbody'); if(!tbody) return; HQ_ROW_COUNT=0; if(!rows.length) { tbody.innerHTML=`<tr><td colspan="8"><div class="es"><p>لا توجد بيانات لهذا اليوم<br><small>اضغط "إضافة طالب" لبدء تسجيل الجلسة</small></p></div></td></tr>`; updateHalaqaStats([]); return; } tbody.innerHTML=''; rows.forEach(r => addHalaqaRowFromData(r)); updateHalaqaStats(rows); }
 function addHalaqaRow(){ HQ_ROW_COUNT++; addHalaqaRowFromData({student:'',from_verse:'',to_verse:'',surah:'',grade:''}); }
-
-function addHalaqaRowFromData(r) {
-  HQ_ROW_COUNT++; const n=HQ_ROW_COUNT, tbody=document.getElementById('hq-tbody');
-  if(!tbody) return;
-  const ph=tbody.querySelector('td[colspan]'); if(ph) ph.closest('tr').remove();
-  const tr=document.createElement('tr'); tr.dataset.rowid=n;
-  
-  tr.innerHTML=`<td>${n}</td>
-	<td><input class="tasm-inp" type="text" placeholder="الاسم" value="${esc(r.student||'')}" style="width:100px"></td>
-	<td><input class="tasm-inp" type="text" placeholder="من" value="${esc(r.from_verse||'')}" style="width:80px"></td>
-	<td><input class="tasm-inp" type="text" placeholder="إلى" value="${esc(r.to_verse||'')}" style="width:80px"></td>
-	<td><input class="tasm-inp" type="text" placeholder="سورة" value="${esc(r.surah||'')}" style="width:80px"></td>
-	<td><input class="grade-inp" type="number" placeholder="0-100" min="0" max="100" value="${r.grade||''}" oninput="onGradeChange(${n})"></td>
-	<td id="tq-${n}"><span class="badge ${gradeColor(r.grade)}">${gradeLabel(r.grade)}</span></td>
-	<td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove();recalcStats()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`;
-  tbody.appendChild(tr);
-}
-
-function onGradeChange(n) {
-  const tr = document.querySelector(`tr[data-rowid="${n}"]`); 
-  if(!tr) return;
-  const gradeInp = tr.querySelectorAll('input')[4];
-  const gv = gradeInp ? gradeInp.value : '';
-  const tqCell = document.getElementById('tq-' + n);
-  if(tqCell) tqCell.innerHTML = `<span class="badge ${gradeColor(gv)}">${gradeLabel(gv)}</span>`;
-  recalcStats();
-}
-
-function recalcStats() {
-  updateHalaqaStats(getTableRows());
-}
-
-function updateHalaqaStats(rows) {
-  const statsEl = document.getElementById('hq-session-stats');
-  if(!statsEl) return;
-  
-  const valid = rows.filter(r => r.student && r.grade !== '');
-  const grades = valid.map(r => parseFloat(r.grade || 0));
-  const avg = grades.length ? grades.reduce((a,b) => a+b, 0) / grades.length : 0;
-  const top = valid.slice().sort((a,b) => parseFloat(b.grade) - parseFloat(a.grade))[0];
-  
-  const countEl = document.getElementById('hq-stat-count');
-  if(countEl) countEl.textContent = rows.length; 
-  
-  const avgEl = document.getElementById('hq-stat-avg');
-  if(avgEl) avgEl.textContent = avg.toFixed(1);
-  
-  const topEl = document.getElementById('hq-stat-top');
-  if(topEl) topEl.textContent = top ? top.student : '-';
-  
-  const mmtazEl = document.getElementById('hq-stat-mmtaz');
-  if(mmtazEl) mmtazEl.textContent = grades.filter(g => g >= 85).length;
-  
-  statsEl.style.display = rows.length ? 'grid' : 'none';
-}
-
-function getTableRows() {
-  const rows=[];
-  const tbody = document.getElementById('hq-tbody');
-  if(!tbody) return rows;
-  tbody.querySelectorAll('tr[data-rowid]').forEach(tr=>{
-	const inputs=tr.querySelectorAll('input');
-	rows.push({student:inputs[0]?.value||'',from:inputs[1]?.value||'',to:inputs[2]?.value||'',surah:inputs[3]?.value||'',grade:inputs[4]?.value||''});
-  });
-  return rows;
-}
-
-async function saveHalaqaData() {
-  if(!HQ_ACTIVE||!HQ_DATE) return toast('الرجاء تحديد الحلقة والتاريخ','error');
-  const rows=getTableRows().filter(r=>r.student.trim());
-  if(!rows.length) return toast('لا توجد بيانات لحفظها','error');
-  
-  const payload=rows.map(r=>({
-	halqa: HQ_ACTIVE, date: HQ_DATE, teacher: CU.email, teacher_id: CU.id,
-	student: r.student, from_verse: r.from, to_verse: r.to, surah: r.surah, grade: r.grade||null
-  }));
-  
-  const { error } = await sb.from('halaqat').upsert(payload);
-  if(!error) {
-	toast('تم الحفظ ✓','success');
-	const { data } = await sb.from('halaqat').select('*');
-	HQ_ALL = data || [];
-  } else toast('خطأ في الحفظ','error');
-}
-
-function printHalaqa() { window.print(); }
-
-async function submitHalaqaRow() {
-  const halqa=g('hq-sel-halqa'), student=g('hq-new-student').trim();
-  if(!student) return toast('الرجاء إدخال اسم الطالب','error');
-  const grade=g('hq-new-grade');
-  const payload = [{
-	halqa, teacher: CU.email, teacher_id: CU.id, date: todayISO(),
-	student, from_verse: g('hq-new-from').trim(), to_verse: g('hq-new-to').trim(), surah: g('hq-new-surah').trim(), grade: grade||null
-  }];
-  
-  const { error } = await sb.from('halaqat').upsert(payload);
-  if(!error) {
-	closeModal('m-add-hq-row'); toast('تمت الإضافة ✓','success');
-	['hq-new-student','hq-new-from','hq-new-to','hq-new-surah','hq-new-grade'].forEach(clr);
-	loadHalaqat();
-  } else toast('خطأ في الإضافة','error');
-}
+function addHalaqaRowFromData(r) { HQ_ROW_COUNT++; const n=HQ_ROW_COUNT, tbody=document.getElementById('hq-tbody'); if(!tbody) return; const ph=tbody.querySelector('td[colspan]'); if(ph) ph.closest('tr').remove(); const tr=document.createElement('tr'); tr.dataset.rowid=n; tr.innerHTML=`<td>${n}</td><td><input class="tasm-inp" type="text" placeholder="الاسم" value="${esc(r.student||'')}" style="width:100px"></td><td><input class="tasm-inp" type="text" placeholder="من" value="${esc(r.from_verse||'')}" style="width:80px"></td><td><input class="tasm-inp" type="text" placeholder="إلى" value="${esc(r.to_verse||'')}" style="width:80px"></td><td><input class="tasm-inp" type="text" placeholder="السورة" value="${esc(r.surah||'')}" style="width:80px"></td><td><input class="grade-inp" type="number" placeholder="0-100" min="0" max="100" value="${r.grade||''}" oninput="onGradeChange(${n})"></td><td id="tq-${n}"><span class="badge ${gradeColor(r.grade)}">${gradeLabel(r.grade)}</span></td><td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove();recalcStats()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`; tbody.appendChild(tr); }
+function onGradeChange(n) { const tr = document.querySelector(`tr[data-rowid="${n}"]`); if(!tr) return; const gradeInp = tr.querySelectorAll('input')[4]; const gv = gradeInp ? gradeInp.value : ''; const tqCell = document.getElementById('tq-' + n); if(tqCell) tqCell.innerHTML = `<span class="badge ${gradeColor(gv)}">${gradeLabel(gv)}</span>`; recalcStats(); }
+function recalcStats() { updateHalaqaStats(getTableRows()); }
+function updateHalaqaStats(rows) { const statsEl = document.getElementById('hq-session-stats'); if(!statsEl) return; const valid = rows.filter(r => r.student && r.grade !== ''); const grades = valid.map(r => parseFloat(r.grade || 0)); const avg = grades.length ? grades.reduce((a,b) => a+b, 0) / grades.length : 0; const top = valid.slice().sort((a,b) => parseFloat(b.grade) - parseFloat(a.grade))[0]; const countEl = document.getElementById('hq-stat-count'); if(countEl) countEl.textContent = rows.length; const avgEl = document.getElementById('hq-stat-avg'); if(avgEl) avgEl.textContent = avg.toFixed(1); const topEl = document.getElementById('hq-stat-top'); if(topEl) topEl.textContent = top ? top.student : '-'; const mmtazEl = document.getElementById('hq-stat-mmtaz'); if(mmtazEl) mmtazEl.textContent = grades.filter(g => g >= 85).length; statsEl.style.display = rows.length ? 'grid' : 'none'; }
+function getTableRows() { const rows=[]; const tbody = document.getElementById('hq-tbody'); if(!tbody) return rows; tbody.querySelectorAll('tr[data-rowid]').forEach(tr=>{ const inputs=tr.querySelectorAll('input'); rows.push({student:inputs[0]?.value||'',from:inputs[1]?.value||'',to:inputs[2]?.value||'',surah:inputs[3]?.value||'',grade:inputs[4]?.value||''}); }); return rows; }
+async function saveHalaqaData() { if(!HQ_ACTIVE||!HQ_DATE) return toast('الرجاء تحديد الحلقة والتاريخ','error'); const rows=getTableRows().filter(r=>r.student.trim()); if(!rows.length) return toast('لا توجد بيانات لحفظها','error'); const payload=rows.map(r=>({ halqa: HQ_ACTIVE, date: HQ_DATE, teacher: CU.email, teacher_id: CU.id, student: r.student, from_verse: r.from, to_verse: r.to, surah: r.surah, grade: r.grade||null })); const { error } = await sb.from('halaqat').upsert(payload); if(!error) { toast('تم الحفظ ✓','success'); const { data } = await sb.from('halaqat').select('*'); HQ_ALL = data || []; } else toast('خطأ في الحفظ','error'); }
+async function submitHalaqaRow() { const halqa=g('hq-sel-halqa'), student=g('hq-new-student').trim(); if(!student) return toast('الرجاء إدخال اسم الطالب','error'); const grade=g('hq-new-grade'); const payload = [{ halqa, teacher: CU.email, teacher_id: CU.id, date: todayISO(), student, from_verse: g('hq-new-from').trim(), to_verse: g('hq-new-to').trim(), surah: g('hq-new-surah').trim(), grade: grade||null }]; const { error } = await sb.from('halaqat').upsert(payload); if(!error) { closeModal('m-add-hq-row'); toast('تمت الإضافة ✓','success'); ['hq-new-student','hq-new-from','hq-new-to','hq-new-surah','hq-new-grade'].forEach(clr); loadHalaqat(); } else toast('خطأ في الإضافة','error'); }
 
 // ── NEWSPAPER ──
-async function loadNews() {
-  const { data, error } = await sb.from('newspaper').select('*').order('created_at', { ascending: false });
-  ND = error ? [] : data;
-  if(ND.length) renderCurNews();
-  renderNewsList();
-}
-function renderCurNews() {
-  if(!ND.length) return;
-  const item=ND[newsIdx%ND.length];
-  const tEl = document.getElementById('news-txt');
-  if(tEl) tEl.innerHTML=`<div style="font-size:.78rem;color:var(--gold);margin-bottom:10px">${item.type==='feqh'?'درس فقهي':'حديث شريف'}</div>${item.text}`;
-  const sEl = document.getElementById('news-src');
-  if(sEl) sEl.textContent=item.source||'';
-}
-function renderNewsList() {
-  const tb=document.getElementById('tb-news');
-  if(!tb) return;
-  if(!ND.length){tb.innerHTML=eRow(6,'لا يوجد محتوى');return;}
-  tb.innerHTML=ND.map((n,i)=>`<tr><td>${i+1}</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.text}</td><td><span class="badge ${n.type==='feqh'?'bg-b':'bg-g'}">${n.type==='feqh'?'فقه':'حديث'}</span></td><td>${n.source||'-'}</td><td>${fmtDate(n.date)||'-'}</td><td><button class="btn bo bsm" onclick="newsIdx=${i};renderCurNews();toast('تم التغيير')">عرض</button></td></tr>`).join('');
-}
-function randomNews() {
-  if(!ND.length) return toast('لا يوجد محتوى','error');
-  newsIdx=Math.floor(Math.random()*ND.length); renderCurNews();
-}
-async function addNews() {
-  const text = g('n-content').trim();
-  if(!text) return toast('الرجاء إدخال المحتوى','error');
-  const { error } = await sb.from('newspaper').insert([{ text, type: g('n-type'), source: g('n-source').trim(), date: todayStr() }]);
-  if(!error){ closeModal('m-add-news'); toast('تمت الإضافة ✓','success'); clr('n-content'); clr('n-source'); loadNews(); } else toast('خطأ','error');
-}
+async function loadNews() { const { data, error } = await sb.from('newspaper').select('*').order('created_at', { ascending: false }); ND = error ? [] : data; if(ND.length) renderCurNews(); renderNewsList(); }
+function renderCurNews() { if(!ND.length) return; const item=ND[newsIdx%ND.length]; const tEl = document.getElementById('news-txt'); if(tEl) tEl.innerHTML=`<div style="font-size:.78rem;color:var(--gold);margin-bottom:10px">${item.type==='feqh'?'درس فقهي':'حديث شريف'}</div>${item.text}`; const sEl = document.getElementById('news-src'); if(sEl) sEl.textContent=item.source||''; }
+function renderNewsList() { const tb=document.getElementById('tb-news'); if(!tb) return; if(!ND.length){tb.innerHTML=eRow(6,'لا يوجد محتوى');return;} tb.innerHTML=ND.map((n,i)=>`<tr><td>${i+1}</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.text}</td><td><span class="badge ${n.type==='feqh'?'bg-b':'bg-g'}">${n.type==='feqh'?'فقه':'حديث'}</span></td><td>${n.source||'-'}</td><td>${fmtDate(n.date)||'-'}</td><td><button class="btn bo bsm" onclick="newsIdx=${i};renderCurNews();toast('تم التغيير')">عرض</button></td></tr>`).join(''); }
+function randomNews() { if(!ND.length) return toast('لا يوجد محتوى','error'); newsIdx=Math.floor(Math.random()*ND.length); renderCurNews(); }
+async function addNews() { const text = g('n-content').trim(); if(!text) return toast('الرجاء إدخال المحتوى','error'); const { error } = await sb.from('newspaper').insert([{ text, type: g('n-type'), source: g('n-source').trim(), date: todayStr() }]); if(!error){ closeModal('m-add-news'); toast('تمت الإضافة ✓','success'); clr('n-content'); clr('n-source'); loadNews(); } else toast('خطأ','error'); }
 
 // ── MODALS & TOASTS ──
 function openModal(id){ const el = document.getElementById(id); if(el) el.classList.add('open'); }
 function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('open'); }
 let toastT;
-function toast(msg,type) {
-  const t=document.getElementById('toast');
-  if(!t) return;
-  t.textContent=msg; t.className='toast'+(type?' '+type:''); t.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000);
-}
-function printCert() {
-  // إنشاء ستايل مؤقت ومحكم لجبر الطابعة على مقاس A4 بالعرض (Landscape)
-  const style = document.createElement('style');
-  style.id = 'print-landscape-style';
-  style.innerHTML = `
-	@media print { 
-	  @page { 
-		size: A4 landscape !important; 
-		margin: 0 !important; /* إزالة هوامش الطابعة الافتراضية */
-	  } 
-	  body, html { 
-		margin: 0 !important; 
-		padding: 0 !important; 
-		width: 100% !important;
-		height: 100% !important;
-		background: white !important;
-	  }
-	  /* إخفاء كل شيء باستثناء صفحة الشهادات */
-	  #app > header, #app > nav, .tab-bar, .pg:not(#pg-certs) { display: none !important; }
-	  
-	  /* تنسيق حاوية الشهادة لملء الورقة تماماً */
-	  #pg-certs { display: block !important; }
-	  .cert-wrap { 
-		border: 12px double #9a7230 !important; 
-		padding: 40px 60px !important; /* تقليل الحشوة الداخلية قليلاً لمنع القص */
-		margin: 10mm !important; /* إضافة هامش آمن حول الإطار لضمان ظهوره بالكامل */
-		width: calc(297mm - 20mm) !important; /* عرض A4 ناقص الهامش */
-		height: calc(210mm - 20mm) !important; /* ارتفاع A4 ناقص الهامش */
-		box-sizing: border-box !important;
-		display: flex !important; 
-		flex-direction: column !important; 
-		justify-content: center !important; 
-		border-radius: 0 !important;
-		background: white !important;
-		page-break-inside: avoid;
-		position: relative;
-	  }
-	  
-	  /* ضبط أحجام العناصر للطباعة */
-	  .cert-header img { width: 90px !important; height: 90px !important; margin-bottom: 15px !important; }
-	  .cert-header div:nth-child(2) { font-size: 1.6rem !important; }
-	  .cert-header div:nth-child(3) { font-size: 1.1rem !important; margin-bottom: 10px !important; }
-	  .cert-title { font-size: 3.2rem !important; margin-bottom: 30px !important; }
-	  .cert-body { font-size: 1.6rem !important; line-height: 2.2 !important; margin-bottom: 40px !important; padding: 0 20px !important; }
-	  .cert-footer { margin-top: auto !important; font-size: 1.3rem !important; padding: 0 40px !important; }
+function toast(msg,type) { const t=document.getElementById('toast'); if(!t) return; t.textContent=msg; t.className='toast'+(type?' '+type:''); t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000); }
+
+// ══════════════════════════════════════════════
+// ── نظام الطباعة الذكي والمنفصل ──
+// ══════════════════════════════════════════════
+
+function doPrint(type) {
+	// 1. تحضير البيانات إذا كانت الطباعة للحضور
+	if (type === 'attend') {
+		const container = document.getElementById('att-print-summary');
+		const monthSelect = document.getElementById('att-month');
+		const monthName = monthSelect.options[monthSelect.selectedIndex].text;
+		
+		let html = `
+			<div style="text-align:center; margin-bottom:20px; font-family:'Tajawal', sans-serif;">
+				<h2 style="font-family:'Amiri',serif; font-size:1.8rem; color:#166040; margin-bottom:5px;">ملخص الحضور والغياب الشهري</h2>
+				<p style="font-size:1rem; color:#444;">الشهر: <strong>${monthName}</strong></p>
+			</div>
+			<table style="width:100%; border-collapse:collapse; text-align:center;" border="1" cellpadding="8">
+				<thead>
+					<tr style="background:#e8ede8;">
+						<th style="text-align:right;">م</th>
+						<th style="text-align:right;">اسم الطالب</th>
+						<th>أيام الحضور</th>
+						<th>أيام الغياب</th>
+					</tr>
+				</thead>
+				<tbody>
+		`;
+		
+		SD.forEach((s, idx) => {
+			let p = 0, a = 0;
+			for(let w=1; w<=4; w++) {
+				for(let di=0; di<5; di++) {
+					const key = `${s.id}_w${w}_d${di}`;
+					if(AD[key] === 'P') p++;
+					if(AD[key] === 'A') a++;
+				}
+			}
+			html += `
+			<tr>
+				<td style="text-align:right; width:40px;">${idx+1}</td>
+				<td style="text-align:right; font-weight:bold;">${s.name}</td>
+				<td style="color:#1e7a50; font-weight:bold; font-size:1.1rem;">${p}</td>
+				<td style="color:#c0392b; font-weight:bold; font-size:1.1rem;">${a}</td>
+			</tr>`;
+		});
+		html += `</tbody></table>`;
+		container.innerHTML = html;
 	}
-  `;
-  document.head.appendChild(style);
-  
-  // تأخير بسيط لضمان تطبيق الستايل قبل فتح نافذة الطباعة
-  setTimeout(() => {
-	window.print();
-	// إزالة الستايل المؤقت بعد الإغلاق
+
+	// 2. حقن أكواد CSS المخصصة لكل نوع من الطباعة
+	const style = document.createElement('style');
+	style.id = 'dynamic-print-style';
+	let css = '';
+
+	if (type === 'cert') {
+		// طباعة الشهادة: ورقة A4 بالعرض (Landscape)
+		css = `
+			@page { size: A4 landscape; margin: 0; }
+			body, html { width: 100%; height: 100%; background: white !important; }
+			#pg-certs .ph, #pg-certs .card { display: none !important; }
+			.cert-wrap { 
+				border: 12px double #9a7230 !important; 
+				margin: 10mm auto !important; 
+				width: calc(297mm - 20mm) !important;
+				height: calc(210mm - 20mm) !important;
+				padding: 40px !important;
+				display: flex !important; 
+				flex-direction: column !important; 
+				justify-content: center !important; 
+				box-sizing: border-box !important;
+				page-break-inside: avoid;
+				border-radius: 0 !important;
+			}
+			.cert-header img { width: 100px !important; height: 100px !important; }
+		`;
+	} 
+	else if (type === 'fin') {
+		// طباعة المالية: كإيصالات (Slip Statement) عرض 80mm
+		css = `
+			@page { size: 80mm auto; margin: 5mm; }
+			body { font-size: 10pt !important; color: black !important; background: white !important; }
+			.phr { display: block !important; border-bottom: 2px dashed #000 !important; padding-bottom: 10px; margin-bottom: 10px; text-align: center; }
+			.phr img { width: 45px !important; height: 45px !important; border: none !important; margin: 0 auto; display: block; }
+			.phr h1 { font-size: 13pt !important; color: black !important; line-height: 1.4 !important; }
+			.phr p { font-size: 9pt !important; color: #333 !important; }
+			.bc, .sg, .ft, .ph { display: none !important; }
+			.card { border: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; }
+			.ct { font-size: 12pt !important; text-align: center; border-bottom: 1px dashed #000; padding-bottom: 5px; margin-bottom: 10px !important; }
+			.tw { border: none !important; background: none !important; overflow: visible !important; }
+			table { width: 100% !important; font-size: 9pt !important; }
+			table th { background: transparent !important; color: black !important; border-bottom: 1px dashed #000 !important; padding: 4px 2px !important; text-align: right !important; }
+			table td { border-bottom: 1px dotted #ccc !important; padding: 4px 2px !important; white-space: normal !important; }
+			table tr:nth-child(even) td { background: transparent !important; }
+			.badge { border: none !important; background: transparent !important; padding: 0 !important; color: black !important; font-weight: bold !important; font-size: 8pt !important; }
+		`;
+	} 
+	else if (type === 'attend') {
+		// طباعة الحضور: تقرير ملخص طولي
+		css = `
+			@page { size: A4 portrait; margin: 10mm; }
+			#att-main-ui { display: none !important; }
+			#att-print-summary { display: block !important; }
+		`;
+	} 
+	else {
+		// طباعة عادية (للطلاب، الاختبار، النشرة): A4 طولي
+		css = `
+			@page { size: A4 portrait; margin: 10mm; }
+			.tw { overflow: visible !important; }
+			table { font-size: 10pt !important; }
+		`;
+	}
+
+	style.innerHTML = `@media print { ${css} }`;
+	document.head.appendChild(style);
+
+	// 3. فتح نافذة الطباعة بعد التأكد من تطبيق الأنماط
 	setTimeout(() => {
-	  const injectedStyle = document.getElementById('print-landscape-style');
-	  if (injectedStyle) injectedStyle.remove();
-	}, 1000);
-  }, 100);
-}
-let certZoom = 1;
-function zoomCert(step) {
-  certZoom += step;
-  // حدود التكبير والتصغير المسموح بها حتى لا يخرج النص عن الإطار
-  if(certZoom < 0.6) certZoom = 0.6;
-  if(certZoom > 1.6) certZoom = 1.6;
-  
-  // تطبيق المتغير على التصميم
-  document.getElementById('cert-print-area').style.setProperty('--z', certZoom);
+		window.print();
+		
+		// 4. تنظيف الأنماط المؤقتة وإخفاء التقرير الملخص ليعود النظام لحالته الطبيعية
+		setTimeout(() => {
+			if (document.getElementById('dynamic-print-style')) {
+				document.getElementById('dynamic-print-style').remove();
+			}
+		}, 500);
+	}, 100);
 }
 </script>
 </body>
