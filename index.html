@@ -431,6 +431,25 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 .phr { display: none !important; }
 .hli img { width: 38px !important; height: 38px !important; }
 .ll img { width: 86px !important; height: 86px !important; }
+
+/* ════════ تعديل حجم بطاقات الإحصائيات لتصبح أكثر أناقة ════════ */
+.sc { 
+  padding: 10px 8px !important; /* تقليل الحشوة الداخلية */
+}
+.sc .sv { 
+  font-size: 1.25rem !important; /* تصغير حجم الرقم */
+  margin: 4px 0 2px !important; 
+}
+.sc svg { 
+  width: 18px !important; /* تصغير حجم الأيقونة */
+  height: 18px !important; 
+}
+.sc .sl { 
+  font-size: 0.68rem !important; /* تصغير حجم النص السفلي */
+}
+@media (min-width:640px) { 
+  .sc .sv { font-size: 1.4rem !important; } 
+}
 </style>
 </head>
 <body>
@@ -1383,7 +1402,20 @@ async function loadAtt() {
   }).join('');
 }
 function togAtt(sid,w,di,btn) { const key=btn.dataset.k, cur=AD[key]||''; const nxt = cur===''?'P':cur==='P'?'A':''; AD[key]=nxt; btn.className='ab'+(nxt==='P'?' present':nxt==='A'?' absent':''); btn.textContent=nxt==='P'?'ح':nxt==='A'?'غ':'-'; }
-async function saveAtt() { const month = g('att-month'); const records = Object.keys(AD).map(key => ({ key, month, status: AD[key] })); const { error } = await sb.from('attendance').upsert(records); if(!error) toast('تم حفظ الحضور ✓','success'); else toast('خطأ في الحفظ','error'); }
+async function saveAtt() {
+  const month = g('att-month');
+  const records = Object.keys(AD).map(key => ({ key, month, status: AD[key] }));
+  
+  // 💡 التعديل هنا: أضفنا { onConflict: 'key' } لحل مشكلة 409
+  const { error } = await sb.from('attendance').upsert(records, { onConflict: 'key' });
+  
+  if(!error) {
+	toast('تم حفظ الحضور ✓', 'success');
+  } else {
+	toast('خطأ في الحفظ', 'error');
+	console.error(error); // لطباعة أي خطأ آخر في الكونسول لتسهيل تتبعه
+  }
+}
 
 // ── EXAMS ──
 function exGradeLabel(n) { n=parseFloat(n||0); if(n>=95) return {lbl:'ممتاز+',cls:'bg-g'}; if(n>=85) return {lbl:'ممتاز',cls:'bg-g'}; if(n>=75) return {lbl:'جيد جداً',cls:'bg-o'}; if(n>=65) return {lbl:'جيد',cls:'bg-o'}; if(n>=50) return {lbl:'مقبول',cls:'bg-b'}; return {lbl:'ضعيف',cls:'bg-r'}; }
@@ -1405,7 +1437,21 @@ async function loadHalaqat() { if(!ACCS_DATA.length) await loadAccs(); const { d
 function renderHalaqatCards() { const container = document.getElementById('hq-cards'); if(!container) return; container.innerHTML = HALAQAT.map(hq => { const rows = HQ_ALL.filter(r => r.halqa === hq.id); const students = [...new Set(rows.map(r => r.student).filter(Boolean))]; const totalSessions = [...new Set(rows.map(r => r.date).filter(Boolean))].length; return `<div class="hq-card ${hq.cls}"><div class="hq-card-head"><div class="hq-name">${hq.label}</div></div><div class="hq-stats"><div class="hq-stat"><div class="hq-stat-val">${students.length}</div><div class="hq-stat-lbl">طالب</div></div><div class="hq-stat"><div class="hq-stat-val">${totalSessions}</div><div class="hq-stat-lbl">جلسة</div></div></div><button class="hq-open-btn" onclick="openHalaqaDetail('${hq.id}','${hq.label}')">فتح الحلقة ←</button></div>`; }).join(''); }
 function openHalaqaDetail(halqaId,halqaLabel) { HQ_ACTIVE = halqaId; const ov = document.getElementById('hq-overview'); if(ov) ov.style.display='none'; const dw = document.getElementById('hq-detail-wrap'); if(dw) dw.classList.add('active'); const dt = document.getElementById('hq-detail-title'); if(dt) dt.textContent = halqaLabel; const todayVal = todayISO(); const sd = document.getElementById('hq-session-date'); if(sd) sd.value = todayVal; HQ_DATE = todayVal; const ds = document.getElementById('hq-detail-sub'); if(ds) ds.textContent = 'المعلم: ' + (CU?CU.name:'-'); loadHalaqaSession(); }
 function closeHalaqaDetail() { HQ_ACTIVE = null; const ov = document.getElementById('hq-overview'); if(ov) ov.style.display=''; const dw = document.getElementById('hq-detail-wrap'); if(dw) dw.classList.remove('active'); loadHalaqat(); }
-function loadHalaqaSession() { const sd = document.getElementById('hq-session-date'); HQ_DATE = sd ? (sd.value || todayISO()) : todayISO(); const rows = HQ_ALL.filter(r => r.halqa === HQ_ACTIVE && r.date === HQ_DATE && r.teacher === CU.email); renderHalaqaTable(rows); }
+function loadHalaqaSession() {
+  const sd = document.getElementById('hq-session-date');
+  HQ_DATE = sd ? (sd.value || todayISO()) : todayISO();
+  
+  // التعديل هنا: السماح للمدير برؤية كل السجلات، بينما يرى المعلم سجلاته فقط
+  const rows = HQ_ALL.filter(r => {
+	const isSameHalqaAndDate = r.halqa === HQ_ACTIVE && r.date === HQ_DATE;
+	const isAuthorized = (CU.type === 'admin') ? true : (r.teacher === CU.email);
+	
+	return isSameHalqaAndDate && isAuthorized;
+  });
+  
+  renderHalaqaTable(rows);
+}
+
 function renderHalaqaTable(rows) { const tbody=document.getElementById('hq-tbody'); if(!tbody) return; HQ_ROW_COUNT=0; if(!rows.length) { tbody.innerHTML=`<tr><td colspan="8"><div class="es"><p>لا توجد بيانات لهذا اليوم<br><small>اضغط "إضافة طالب" لبدء تسجيل الجلسة</small></p></div></td></tr>`; updateHalaqaStats([]); return; } tbody.innerHTML=''; rows.forEach(r => addHalaqaRowFromData(r)); updateHalaqaStats(rows); }
 function addHalaqaRow(){ HQ_ROW_COUNT++; addHalaqaRowFromData({student:'',from_verse:'',to_verse:'',surah:'',grade:''}); }
 function addHalaqaRowFromData(r) { HQ_ROW_COUNT++; const n=HQ_ROW_COUNT, tbody=document.getElementById('hq-tbody'); if(!tbody) return; const ph=tbody.querySelector('td[colspan]'); if(ph) ph.closest('tr').remove(); const tr=document.createElement('tr'); tr.dataset.rowid=n; tr.innerHTML=`<td>${n}</td><td><input class="tasm-inp" type="text" placeholder="الاسم" value="${esc(r.student||'')}" style="width:100px"></td><td><input class="tasm-inp" type="text" placeholder="من" value="${esc(r.from_verse||'')}" style="width:80px"></td><td><input class="tasm-inp" type="text" placeholder="إلى" value="${esc(r.to_verse||'')}" style="width:80px"></td><td><input class="tasm-inp" type="text" placeholder="السورة" value="${esc(r.surah||'')}" style="width:80px"></td><td><input class="grade-inp" type="number" placeholder="0-100" min="0" max="100" value="${r.grade||''}" oninput="onGradeChange(${n})"></td><td id="tq-${n}"><span class="badge ${gradeColor(r.grade)}">${gradeLabel(r.grade)}</span></td><td class="no-print"><button class="btn bd bsm" style="padding:6px" onclick="this.closest('tr').remove();recalcStats()"><svg width="12" height="12"><use href="#i-trash"/></svg></button></td>`; tbody.appendChild(tr); }
@@ -1413,7 +1459,35 @@ function onGradeChange(n) { const tr = document.querySelector(`tr[data-rowid="${
 function recalcStats() { updateHalaqaStats(getTableRows()); }
 function updateHalaqaStats(rows) { const statsEl = document.getElementById('hq-session-stats'); if(!statsEl) return; const valid = rows.filter(r => r.student && r.grade !== ''); const grades = valid.map(r => parseFloat(r.grade || 0)); const avg = grades.length ? grades.reduce((a,b) => a+b, 0) / grades.length : 0; const top = valid.slice().sort((a,b) => parseFloat(b.grade) - parseFloat(a.grade))[0]; const countEl = document.getElementById('hq-stat-count'); if(countEl) countEl.textContent = rows.length; const avgEl = document.getElementById('hq-stat-avg'); if(avgEl) avgEl.textContent = avg.toFixed(1); const topEl = document.getElementById('hq-stat-top'); if(topEl) topEl.textContent = top ? top.student : '-'; const mmtazEl = document.getElementById('hq-stat-mmtaz'); if(mmtazEl) mmtazEl.textContent = grades.filter(g => g >= 85).length; statsEl.style.display = rows.length ? 'grid' : 'none'; }
 function getTableRows() { const rows=[]; const tbody = document.getElementById('hq-tbody'); if(!tbody) return rows; tbody.querySelectorAll('tr[data-rowid]').forEach(tr=>{ const inputs=tr.querySelectorAll('input'); rows.push({student:inputs[0]?.value||'',from:inputs[1]?.value||'',to:inputs[2]?.value||'',surah:inputs[3]?.value||'',grade:inputs[4]?.value||''}); }); return rows; }
-async function saveHalaqaData() { if(!HQ_ACTIVE||!HQ_DATE) return toast('الرجاء تحديد الحلقة والتاريخ','error'); const rows=getTableRows().filter(r=>r.student.trim()); if(!rows.length) return toast('لا توجد بيانات لحفظها','error'); const payload=rows.map(r=>({ halqa: HQ_ACTIVE, date: HQ_DATE, teacher: CU.email, teacher_id: CU.id, student: r.student, from_verse: r.from, to_verse: r.to, surah: r.surah, grade: r.grade||null })); const { error } = await sb.from('halaqat').upsert(payload); if(!error) { toast('تم الحفظ ✓','success'); const { data } = await sb.from('halaqat').select('*'); HQ_ALL = data || []; } else toast('خطأ في الحفظ','error'); }
+async function saveHalaqaData() {
+  if(!HQ_ACTIVE||!HQ_DATE) return toast('الرجاء تحديد الحلقة والتاريخ','error');
+  const rows = getTableRows().filter(r=>r.student.trim());
+  if(!rows.length) return toast('لا توجد بيانات لحفظها','error');
+  
+  // العثور على المعلم الأصلي لهذه الحلقة في هذا اليوم (إن وجد)
+  const existingRecord = HQ_ALL.find(r => r.halqa === HQ_ACTIVE && r.date === HQ_DATE);
+  const finalTeacherEmail = existingRecord ? existingRecord.teacher : CU.email;
+  const finalTeacherId = existingRecord ? existingRecord.teacher_id : CU.id;
+  
+  const payload = rows.map(r=>({
+	halqa: HQ_ACTIVE, 
+	date: HQ_DATE, 
+	teacher: finalTeacherEmail,    // يحافظ على اسم المعلم الأصلي
+	teacher_id: finalTeacherId,    // يحافظ على ID المعلم الأصلي
+	student: r.student, 
+	from_verse: r.from, 
+	to_verse: r.to, 
+	surah: r.surah, 
+	grade: r.grade || null
+  }));
+  
+  const { error } = await sb.from('halaqat').upsert(payload);
+  if(!error) {
+	toast('تم الحفظ ✓','success');
+	const { data } = await sb.from('halaqat').select('*');
+	HQ_ALL = data || [];
+  } else toast('خطأ في الحفظ','error');
+}
 async function submitHalaqaRow() { const halqa=g('hq-sel-halqa'), student=g('hq-new-student').trim(); if(!student) return toast('الرجاء إدخال اسم الطالب','error'); const grade=g('hq-new-grade'); const payload = [{ halqa, teacher: CU.email, teacher_id: CU.id, date: todayISO(), student, from_verse: g('hq-new-from').trim(), to_verse: g('hq-new-to').trim(), surah: g('hq-new-surah').trim(), grade: grade||null }]; const { error } = await sb.from('halaqat').upsert(payload); if(!error) { closeModal('m-add-hq-row'); toast('تمت الإضافة ✓','success'); ['hq-new-student','hq-new-from','hq-new-to','hq-new-surah','hq-new-grade'].forEach(clr); loadHalaqat(); } else toast('خطأ في الإضافة','error'); }
 
 // ── NEWSPAPER ──
