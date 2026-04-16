@@ -592,6 +592,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  <button class="nta admin-only" onclick="showPage('students')" data-page="students" style="display:none"><svg width="14" height="14"><use href="#i-users"/></svg> الطلاب</button>
 	  <button class="nta admin-only" onclick="showPage('fin')" data-page="fin" style="display:none"><svg width="14" height="14"><use href="#i-money"/></svg> المالية</button>
 	  <button class="nta admin-only" onclick="showPage('accs')" data-page="accs" style="display:none"><svg width="14" height="14"><use href="#i-cog"/></svg> الحسابات</button>
+	  <button class="nta admin-only" onclick="showPage('teachers')" data-page="teachers" style="display:none"><svg width="14" height="14"><use href="#i-users"/></svg> المعلمون</button>
 	  <button class="nta" onclick="showPage('halaqat')" data-page="halaqat"><svg width="14" height="14"><use href="#i-book"/></svg> الحلقات</button>
 	  <button class="nta" onclick="showPage('attend')" data-page="attend"><svg width="14" height="14"><use href="#i-cal"/></svg> الحضور</button>
 	  <button class="nta" onclick="showPage('exam')" data-page="exam"><svg width="14" height="14"><use href="#i-file"/></svg> الاختبار الشهري</button>
@@ -931,7 +932,26 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		</div>
 	  </div>
 	</div>
-
+<div id="pg-teachers" class="pg">
+	  <div class="phr"><img src="https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png" alt=""><h1>مركز عبدالله بن عباس</h1><p class="phr-date" id="pd-teach"></p></div>
+	  <div class="ph no-print">
+		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-users"/></svg></div><div><h2>هيئة التدريس</h2><p>إدارة بيانات المعلمين التفصيلية</p></div></div>
+		
+		<div class="ph-actions">
+		  <button class="btn bo bsm" onclick="syncExistingTeachers()"><svg width="13" height="13"><use href="#i-refresh"/></svg> مزامنة الحسابات</button>
+		  <button class="btn bpr bsm" onclick="doPrint('standard')"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة</button>
+		</div>
+		
+	  </div>
+	  <div class="card">
+		<div class="tw">
+		  <table>
+			<thead><tr><th>#</th><th>الاسم</th><th>البريد الإلكتروني</th><th>رقم الهاتف</th><th>التخصص</th><th>مقدار الحفظ</th><th class="no-print">تعديل الإضافيات</th></tr></thead>
+			<tbody id="tb-teachers"></tbody>
+		  </table>
+		</div>
+	  </div>
+	</div>
 	<div id="pg-accs" class="pg">
 	  <div class="ph no-print">
 		<div class="pt"><div class="pi"><svg width="20" height="20" color="var(--green2)"><use href="#i-cog"/></svg></div><div><h2>إدارة الحسابات</h2><p>مستخدمو النظام</p></div></div>
@@ -1091,7 +1111,43 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	</div>
   </div>
 </div>
-
+<div class="mo" id="m-edit-teacher">
+  <div class="md">
+	<div class="md-inner">
+	  <div class="mh"><div class="mti">بيانات المعلم الإضافية</div><button class="mcl" onclick="closeModal('m-edit-teacher')">✕</button></div>
+	  <input type="hidden" id="t-id">
+	  
+	  <div class="ff" style="margin-bottom:14px"><label>الاسم (يُسحب من الحساب)</label><input type="text" id="t-name" readonly style="background:var(--bg2); cursor:not-allowed;"></div>
+	  
+	  <div class="fr">
+		<div class="ff"><label>رقم الهاتف</label><input type="tel" id="t-phone" dir="ltr" placeholder="+249..."></div>
+		<div class="ff"><label>التخصص / الحلقة</label><input type="text" id="t-spec" placeholder="مثال: حلقة عثمان بن عفان"></div>
+	  </div>
+	  
+	  <div class="fr">
+		<div class="ff"><label>مقدار الحفظ</label><input type="text" id="t-quran" placeholder="مثال: 15 جزء / كاملاً"></div>
+		<div class="ff"><label>العمر</label><input type="number" id="t-age" placeholder="العمر بالسنوات" min="15"></div>
+	  </div>
+	  
+	  <div class="fr">
+		<div class="ff">
+		  <label>الحالة الاجتماعية</label>
+		  <select id="t-marital">
+			<option value="">غير محدد</option><option value="أعزب">أعزب</option><option value="متزوج">متزوج</option>
+		  </select>
+		</div>
+		<div class="ff"><label>عدد الأبناء</label><input type="number" id="t-children" placeholder="0" min="0"></div>
+	  </div>
+	  
+	  <div class="ff" style="margin-bottom:14px"><label>مكان السكن</label><input type="text" id="t-residence" placeholder="الحي / المربع / الشارع..."></div>
+	  
+	  <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+		<button class="btn bo" onclick="closeModal('m-edit-teacher')">إلغاء</button>
+		<button class="btn bp" onclick="saveTeacher()"><svg width="14" height="14"><use href="#i-save"/></svg> حفظ</button>
+	  </div>
+	</div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1275,7 +1331,11 @@ function buildQuickActions(isAdmin) {
   const qa = document.getElementById('qa-grid'); if(!qa) return; let items = '';
   if(isAdmin) {
 	items += `<div class="qi" onclick="showPage('students')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">الطلاب</div></div>`;
-	items += `<div class="qi" onclick="openAddStuModal()"><svg width="26" height="26" color="var(--gold2)"><use href="#i-plus"/></svg><div class="ql">إضافة طالب</div></div>`;
+	items += `<div class="qi" onclick="openAddStuModal()"><svg width="26" height="26" 
+	color="var(--gold2)"><use href="#i-plus"/></svg><div class="ql">إضافة طالب</div></div>`;
+	
+	items += `<div class="qi" onclick="showPage('teachers')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">المعلمون</div></div>`;
+	
 	items += `<div class="qi" onclick="showPage('fin')"><svg width="26" height="26" color="var(--gold2)"><use href="#i-heart"/></svg><div class="ql">المالية</div></div>`;
 	items += `<div class="qi" onclick="showPage('accs')"><svg width="26" height="26" color="var(--green2)"><use href="#i-cog"/></svg><div class="ql">الحسابات</div></div>`;
 	items += `<div class="qi" onclick="showPage('certs'); updateCert();"><svg width="26" height="26" color="var(--gold2)"><use href="#i-award"/></svg><div class="ql">الشهادات</div></div>`;
@@ -1291,7 +1351,10 @@ function buildMoreDrawer(isAdmin) {
   const grid = document.getElementById('more-items-grid'); if(!grid) return; let items = '';
   const add = (page, icon, label, gold=false) => `<button class="more-item ${gold?'gold-item':''}" onclick="tabNav('${page}');closeMoreDrawer()"><div class="mi-icon"><svg width="22" height="22" color="${gold?'var(--gold2)':'var(--green2)'}"><use href="#i-${icon}"/></svg></div><span>${label}</span></button>`;
   items += add('news','news','النشرة');
-  if(isAdmin) { items += add('students','users','الطلاب',''); items += add('fin','money','المالية',true); items += add('certs','award','الشهادات',true); items += add('accs','cog','الحسابات',''); }
+  if(isAdmin) {
+   items += add('students','users','الطلاب','');
+   items += add('teachers','users','المعلمون','');
+   items += add('fin','money','المالية',true); items += add('certs','award','الشهادات',true); items += add('accs','cog','الحسابات',''); }
   grid.innerHTML = items; const dot = document.getElementById('tab-more-dot'); if(isAdmin && dot) dot.classList.add('show');
 }
 function openMoreDrawer() { document.getElementById('more-drawer').classList.add('open'); document.getElementById('more-overlay').classList.add('open'); }
@@ -1299,7 +1362,7 @@ function closeMoreDrawer() { document.getElementById('more-drawer').classList.re
 function tabNav(name) { showPage(name); document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); const tab = document.querySelector(`[data-tab="${name}"]`); if(tab) tab.classList.add('active'); }
 
 function showPage(name) {
-  const isAdmin = CU && CU.type==='admin'; const ADMIN_PAGES = ['students','fin','accs','certs'];
+  const isAdmin = CU && CU.type==='admin'; const ADMIN_PAGES = ['students','fin','accs','certs','teachers'];
   if(!isAdmin && ADMIN_PAGES.includes(name)) { toast('ليس لديك صلاحية لهذه الصفحة','error'); return; }
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nta').forEach(t => t.classList.remove('active'));
   const pg = document.getElementById('pg-'+name); if(pg) pg.classList.add('active');
@@ -1308,6 +1371,7 @@ function showPage(name) {
   const now = todayStr(); ['pd-stu','pd-att','pd-ex','pd-news','pd-fin','pd-dash'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = 'التاريخ: ' + now; });
   if(name==='students') { const isMobile = window.innerWidth < 900; const sList = document.getElementById('stu-list'); const sTable = document.getElementById('stu-table-wrap'); if(sList) sList.style.display = isMobile ? '' : 'none'; if(sTable) sTable.style.display = isMobile ? 'none' : ''; renderStu(SD); }
   if(name==='halaqat') loadHalaqat(); if(name==='attend') loadAtt(); if(name==='exam') loadExamData(); if(name==='fin') loadFin(); if(name==='accs') loadAccs(); if(name==='students' && !SD.length) loadStu();
+  if(name==='teachers') loadTeachers();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -1409,10 +1473,143 @@ async function loadAccs() {
 	tb.innerHTML = ACCS_DATA.map((a,i) => `<tr><td>${i+1}</td><td><strong>${a.name||'-'}</strong></td><td dir="ltr" style="font-size:.78rem">${a.email}</td><td>${a.status === 'pending' ? '<span class="badge bg-o">قيد المراجعة</span>' : a.status === 'rejected' ? '<span class="badge bg-r">مرفوض</span>' : `<span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span>`}</td><td class="no-print">${a.status === 'pending' ? `<button class="btn bp bsm" onclick="changeAccStatus('${a.id}', 'approved')">قبول</button><button class="btn bd bsm" onclick="changeAccStatus('${a.id}', 'rejected')">رفض</button>` : `<span style="color:var(--text3);font-size:.75rem">مكتمل</span>`}</td><td class="no-print">${a.id === CU.id ? '-' : `<button class="btn bd bsm" onclick="delAcc('${a.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>`}</td></tr>`).join('');
   } else toast('خطأ في تحميل الحسابات','error');
 }
-async function changeAccStatus(id, newStatus) { const { error } = await sb.from('profiles').update({ account_status: newStatus }).eq('id', id); if(!error) { toast('تم تحديث حالة الحساب بنجاح', 'success'); loadAccs(); } else toast('خطأ في التحديث', 'error'); }
-function openAddAcc() { toast('لأسباب أمنية: أرسل رابط النظام للمعلم ليسجل، ثم قم بقبوله من هنا.', 'info'); }
+async function changeAccStatus(id, newStatus) { 
+  const { error } = await sb.from('profiles').update({ account_status: newStatus }).eq('id', id); 
+  if(!error) { 
+	toast('تم التحديث', 'success'); 
+	if(newStatus === 'approved') await sb.from('teachers').upsert([{ id: id }], { onConflict: 'id' });
+	loadAccs(); 
+	if(document.getElementById('pg-teachers') && document.getElementById('pg-teachers').classList.contains('active')) loadTeachers();
+  } else toast('خطأ في التحديث', 'error'); 
+}
 async function delAcc(id) { if(!confirm('هل أنت متأكد من إيقاف هذا الحساب؟')) return; const { error } = await sb.from('profiles').update({ account_status: 'rejected' }).eq('id', id); if(!error) { toast('تم إيقاف الحساب', 'success'); loadAccs(); } else toast('خطأ', 'error'); }
 
+
+
+// ── TEACHERS ──
+let TD = [];
+
+async function loadTeachers() {
+  const { data, error } = await sb.from('teachers').select('id, phone, specialization, quran_parts, age, marital_status, children, residence, hire_date, profiles(full_name, email)');
+  
+  if(!error && data) {
+	TD = data;
+	const tb = document.getElementById('tb-teachers');
+	if(!tb) return;
+	
+	// إذا كان الجدول فارغاً، نعرض رسالة مع زر "مزامنة المعلمين الحاليين"
+	if(!TD.length) { 
+	  tb.innerHTML = `<tr><td colspan="7"><div class="es"><p>لا توجد بيانات معلمين بعد.<br><br><button class="btn bp" onclick="syncExistingTeachers()">مزامنة المعلمين من الحسابات 🔄</button></p></div></td></tr>`; 
+	  return; 
+	}
+	
+	tb.innerHTML = TD.map((t, i) => `<tr>
+	  <td>${i+1}</td>
+	  <td><strong>${t.profiles?.full_name || '-'}</strong></td>
+	  <td dir="ltr" style="font-size:.75rem">${t.profiles?.email || '-'}</td>
+	  <td dir="ltr">${t.phone || '-'}</td>
+	  <td><span class="badge bg-g">${t.specialization || 'لم يُحدد'}</span></td>
+	  <td><span class="badge bg-o">${t.quran_parts || '-'}</span></td>
+	  <td class="no-print"><button class="btn bo bsm" onclick="openEditTeacher('${t.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg> إكمال البيانات</button></td>
+	</tr>`).join('');
+  } else { 
+	toast('خطأ في جلب المعلمين', 'error'); 
+  }
+}
+
+// 💡 دالة سحرية جديدة: تقوم بجلب كل الحسابات (المقبولة) وإضافتها لجدول المعلمين
+async function syncExistingTeachers() {
+  const btn = event.target;
+  btn.disabled = true;
+  btn.textContent = 'جاري المزامنة...';
+  
+  // 1. جلب كل الحسابات المقبولة (والتي ليست حسابات مدير إن أردت)
+  const { data: profiles, error: pError } = await sb.from('profiles').select('id').eq('account_status', 'approved');
+  
+  if(pError || !profiles || !profiles.length) {
+	toast('لا يوجد معلمين معتمدين للمزامنة', 'error');
+	btn.disabled = false;
+	btn.textContent = 'مزامنة المعلمين من الحسابات 🔄';
+	return;
+  }
+  
+  // 2. تحضير البيانات للإدخال في جدول المعلمين
+  const payload = profiles.map(p => ({ id: p.id }));
+  
+  // 3. إدخال البيانات (upsert تضمن عدم التكرار)
+  const { error: tError } = await sb.from('teachers').upsert(payload, { onConflict: 'id' });
+  
+  if(!tError) {
+	toast('تمت المزامنة بنجاح ✓', 'success');
+	loadTeachers(); // إعادة تحميل الجدول ليظهر المعلمون
+  } else {
+	toast('حدث خطأ أثناء المزامنة', 'error');
+	console.error(tError);
+	btn.disabled = false;
+	btn.textContent = 'مزامنة المعلمين من الحسابات 🔄';
+  }
+}
+
+function openEditTeacher(id) {
+  const t = TD.find(x => x.id === id);
+  if(!t) return;
+  document.getElementById('t-id').value = t.id;
+  document.getElementById('t-name').value = t.profiles?.full_name || '';
+  document.getElementById('t-phone').value = t.phone || '';
+  document.getElementById('t-spec').value = t.specialization || '';
+  document.getElementById('t-quran').value = t.quran_parts || '';
+  document.getElementById('t-age').value = t.age || '';
+  document.getElementById('t-marital').value = t.marital_status || '';
+  document.getElementById('t-children').value = t.children || '';
+  document.getElementById('t-residence').value = t.residence || '';
+  
+  openModal('m-edit-teacher');
+}
+
+async function saveTeacher() {
+  const id = g('t-id');
+  const payload = { 
+	phone: g('t-phone'), 
+	specialization: g('t-spec'),
+	quran_parts: g('t-quran'),
+	age: g('t-age') ? parseInt(g('t-age')) : null,
+	marital_status: g('t-marital'),
+	children: g('t-children') ? parseInt(g('t-children')) : null,
+	residence: g('t-residence')
+  };
+  
+  const btn = event.target; btn.disabled = true; btn.textContent = 'جاري الحفظ...';
+  const { error } = await sb.from('teachers').update(payload).eq('id', id);
+  btn.disabled = false; btn.innerHTML = '<svg width="14" height="14"><use href="#i-save"/></svg> حفظ';
+  
+  if(!error) {
+	toast('تم التحديث ✓', 'success');
+	closeModal('m-edit-teacher');
+	loadTeachers();
+  } else {
+	toast('خطأ في الحفظ', 'error');
+  }
+}
+
+function openEditTeacher(id) {
+  const t = TD.find(x => x.id === id); if(!t) return;
+  document.getElementById('t-id').value = t.id; document.getElementById('t-name').value = t.profiles?.full_name || '';
+  document.getElementById('t-phone').value = t.phone || ''; document.getElementById('t-spec').value = t.specialization || '';
+  document.getElementById('t-quran').value = t.quran_parts || ''; document.getElementById('t-age').value = t.age || '';
+  document.getElementById('t-marital').value = t.marital_status || ''; document.getElementById('t-children').value = t.children || '';
+  document.getElementById('t-residence').value = t.residence || '';
+  openModal('m-edit-teacher');
+}
+
+async function saveTeacher() {
+  const id = g('t-id');
+  const payload = { phone: g('t-phone'), specialization: g('t-spec'), quran_parts: g('t-quran'), age: g('t-age') ? parseInt(g('t-age')) : null, marital_status: g('t-marital'), children: g('t-children') ? parseInt(g('t-children')) : null, residence: g('t-residence') };
+  const btn = event.target; btn.disabled = true; btn.textContent = 'جاري الحفظ...';
+  const { error } = await sb.from('teachers').update(payload).eq('id', id);
+  btn.disabled = false; btn.innerHTML = '<svg width="14" height="14"><use href="#i-save"/></svg> حفظ';
+  if(!error) { toast('تم التحديث ✓', 'success'); closeModal('m-edit-teacher'); loadTeachers(); } 
+  else toast('خطأ في الحفظ', 'error');
+}
 // ── ATTENDANCE ──
 async function loadAtt() {
   const month = g('att-month'); const { data, error } = await sb.from('attendance').select('*').eq('month', month); AD = {}; if(!error && data) data.forEach(row => AD[row.key] = row.status);
