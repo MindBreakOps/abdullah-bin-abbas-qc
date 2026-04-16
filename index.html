@@ -225,8 +225,32 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 
 /* ATTENDANCE */
 .att th, .att td { padding:7px 5px; text-align:center; font-size:.75rem; white-space:nowrap; }
-.att .nc { text-align:right; min-width:120px; padding-right:14px; position:sticky; right:0; background:white; z-index:2; }
-.att thead .nc { background:rgba(30,122,80,0.07); z-index:3; }
+/* إصلاح اختفاء عمود الأسماء في الهواتف */
+.att .nc { 
+  text-align:right; 
+  min-width:120px; 
+  padding-right:14px; 
+  position:-webkit-sticky; /* لدعم هواتف أبل القديمة */
+  position:sticky; 
+  right:0; 
+  background:white; 
+  z-index:2; 
+  /* إجبار المعالج الرسومي (GPU) على معالجة العمود لمنع اختفائه */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  /* خط فاصل لضمان عدم تداخل الألوان */
+  border-left: 1px solid var(--border); 
+}
+
+.att thead .nc { 
+  background:rgba(30,122,80,0.07); 
+  z-index:4; 
+}
+
+/* إغلاق ظلال التمرير الثقيلة في هذا الجدول تحديداً لأنها تسبب بطء وتتداخل مع العمود الثابت */
+#pg-attend .tw {
+  background: white !important;
+}
 .ab { width:32px; height:32px; border-radius:50%; border:1.5px solid var(--border2); cursor:pointer; font-size:.72rem; font-weight:700; transition:all .15s; background:white; color:var(--text3); display:inline-flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent; }
 .ab:active { transform:scale(0.9); }
 .ab.present { background:rgba(30,122,80,0.12); border-color:var(--green); color:var(--green2); }
@@ -532,7 +556,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		  <img src="https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png" alt="شعار" id="hdr-logo-img">
 		</div>
 		<div class="ht">
-		  <h1>مركز ابن عباس للقرآن</h1>
+		  <h1>مركز عبدالله بن عباس</h1>
 		  <p>حي النسيم / الحاج يوسف</p>
 		</div>
 	  </div>
