@@ -594,6 +594,7 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 	  <button class="nta admin-only" onclick="showPage('accs')" data-page="accs" style="display:none"><svg width="14" height="14"><use href="#i-cog"/></svg> الحسابات</button>
 	  <button class="nta admin-only" onclick="showPage('teachers')" data-page="teachers" style="display:none"><svg width="14" height="14"><use href="#i-users"/></svg> المعلمون</button>
 	  <button class="nta" onclick="showPage('halaqat')" data-page="halaqat"><svg width="14" height="14"><use href="#i-book"/></svg> الحلقات</button>
+	  <button class="nta" onclick="showPage('teacher-rev')" data-page="teacher-rev"><svg width="14" height="14"><use href="#i-book"/></svg> مقرأة المعلمين</button>
 	  <button class="nta" onclick="showPage('attend')" data-page="attend"><svg width="14" height="14"><use href="#i-cal"/></svg> الحضور</button>
 	  <button class="nta" onclick="showPage('exam')" data-page="exam"><svg width="14" height="14"><use href="#i-file"/></svg> الاختبار الشهري</button>
 	  <button class="nta" onclick="showPage('news')" data-page="news"><svg width="14" height="14"><use href="#i-news"/></svg> النشرة الأسبوعية</button>
@@ -929,6 +930,48 @@ table tr:active td { background:rgba(30,122,80,0.03); }
 		  <div class="sc"><div><svg width="20" height="20" color="var(--gold2)"><use href="#i-check"/></svg></div><div class="sv" id="hq-stat-avg">0</div><div class="sl">متوسط الدرجات</div></div>
 		  <div class="sc"><div><svg width="20" height="20" color="var(--green2)"><use href="#i-book"/></svg></div><div class="sv" id="hq-stat-top">-</div><div class="sl">الأعلى درجة</div></div>
 		  <div class="sc"><div><svg width="20" height="20" color="var(--blue)"><use href="#i-shuffle"/></svg></div><div class="sv" id="hq-stat-mmtaz">0</div><div class="sl">ممتاز</div></div>
+		</div>
+	  </div>
+	</div>
+	<div id="pg-teacher-rev" class="pg">
+	  <div class="phr"><img src="https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png" alt=""><h1>مركز عبدالله بن عباس</h1><p class="phr-date" id="pd-trev"></p></div>
+	  <div class="ph no-print">
+		<div class="pt">
+		  <div class="pi"><svg width="20" height="20" color="var(--gold2)"><use href="#i-book"/></svg></div>
+		  <div><h2>مقرأة المعلمين</h2><p>جلسات المراجعة والتسميع المتبادل للكادر</p></div>
+		</div>
+		<div class="ph-actions">
+		  <button class="btn bpr bsm" onclick="doPrint('standard')"><svg width="13" height="13"><use href="#i-print"/></svg> طباعة السجل</button>
+		</div>
+	  </div>
+	
+	  <div class="card no-print">
+		<div class="ct" style="margin-bottom:14px">تسجيل جلسة مراجعة جديدة</div>
+		<div class="fr">
+		  <div class="ff">
+			<label>المعلم المقرئ (الذي يسمّع)</label>
+			<input type="text" id="tr-reciter" list="teacher-list" placeholder="اختر المعلم...">
+		  </div>
+		  <div class="ff"><label>التاريخ</label><input type="date" id="tr-date"></div>
+		</div>
+		<div class="fr">
+		  <div class="ff"><label>من</label><input type="text" id="tr-from" placeholder="مثال: يونس 1"></div>
+		  <div class="ff"><label>إلى</label><input type="text" id="tr-to" placeholder="مثال: المرسلات 50"></div>
+		  <div class="ff"><label>السورة / الأجزاء</label><input type="text" id="tr-surah" placeholder="مثال: جزء تبارك"></div>
+		  <div class="ff"><label>الدرجة (من 100)</label><input type="number" id="tr-grade" placeholder="0" min="0" max="100" dir="ltr"></div>
+		</div>
+		<button class="btn bp" onclick="saveTeacherRevision()"><svg width="14" height="14"><use href="#i-save"/></svg> حفظ الجلسة</button>
+	  </div>
+	
+	  <div class="card">
+		<div class="ct" style="margin-bottom:14px">سجل المراجعات (اليومية)</div>
+		<div class="tw">
+		  <table>
+			<thead>
+			  <tr><th>#</th><th>المقرئ</th><th>المستمع (المقيّم)</th><th>من</th><th>إلى</th><th>السورة/الأجزاء</th><th>الدرجة</th><th>التاريخ</th><th class="no-print">حذف</th></tr>
+			</thead>
+			<tbody id="tb-teacher-rev"></tbody>
+		  </table>
 		</div>
 	  </div>
 	</div>
@@ -1354,7 +1397,8 @@ function buildMoreDrawer(isAdmin) {
   if(isAdmin) {
    items += add('students','users','الطلاب','');
    items += add('teachers','users','المعلمون','');
-   items += add('fin','money','المالية',true); items += add('certs','award','الشهادات',true); items += add('accs','cog','الحسابات',''); }
+   items += add('fin','money','المالية',true); items += add('certs','award','الشهادات',true); items += add('accs','cog','الحسابات',''); 
+   items += add('teacher-rev','book','مقرأة الكادر','');}
   grid.innerHTML = items; const dot = document.getElementById('tab-more-dot'); if(isAdmin && dot) dot.classList.add('show');
 }
 function openMoreDrawer() { document.getElementById('more-drawer').classList.add('open'); document.getElementById('more-overlay').classList.add('open'); }
@@ -1372,6 +1416,7 @@ function showPage(name) {
   if(name==='students') { const isMobile = window.innerWidth < 900; const sList = document.getElementById('stu-list'); const sTable = document.getElementById('stu-table-wrap'); if(sList) sList.style.display = isMobile ? '' : 'none'; if(sTable) sTable.style.display = isMobile ? 'none' : ''; renderStu(SD); }
   if(name==='halaqat') loadHalaqat(); if(name==='attend') loadAtt(); if(name==='exam') loadExamData(); if(name==='fin') loadFin(); if(name==='accs') loadAccs(); if(name==='students' && !SD.length) loadStu();
   if(name==='teachers') loadTeachers();
+  if(name==='teacher-rev') loadTeacherRevisions();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -1547,6 +1592,104 @@ async function syncExistingTeachers() {
 	console.error(tError);
 	btn.disabled = false;
 	btn.textContent = 'مزامنة المعلمين من الحسابات 🔄';
+  }
+}
+
+// ── TEACHER REVISIONS (مقرأة المعلمين) ──
+
+async function loadTeacherRevisions() {
+  // 1. تعيين تاريخ اليوم في خانة الإدخال
+  const dateInput = document.getElementById('tr-date');
+  if(dateInput && !dateInput.value) dateInput.value = todayISO();
+
+  // 2. تغذية القائمة المنسدلة بأسماء المعلمين (لتسهيل الاختيار)
+  let tl = document.getElementById('teacher-list');
+  if (!tl) {
+	tl = document.createElement('datalist');
+	tl.id = 'teacher-list';
+	document.body.appendChild(tl);
+  }
+  // استخدمنا مصفوفة الحسابات ACCS_DATA التي جلبناها مسبقاً (أو يمكنك استخدام TD)
+  if(ACCS_DATA && ACCS_DATA.length > 0) {
+	tl.innerHTML = ACCS_DATA.map(a => `<option value="${a.name}">`).join('');
+  }
+
+  // 3. جلب سجل المراجعات من قاعدة البيانات
+  const { data, error } = await sb.from('teacher_revisions').select('*').order('date', { ascending: false }).order('id', { ascending: false });
+  
+  const tb = document.getElementById('tb-teacher-rev');
+  if(!tb) return;
+  
+  if(!error && data) {
+	if(!data.length) { tb.innerHTML = eRow(9, 'لا توجد جلسات مراجعة مسجلة بعد'); return; }
+	
+	tb.innerHTML = data.map((r, i) => {
+	  const gColor = gradeColor(r.grade);
+	  const gLabel = gradeLabel(r.grade);
+	  return `<tr>
+		<td>${i+1}</td>
+		<td><strong>${r.reciter_name}</strong></td>
+		<td style="font-size:0.8rem; color:var(--text3)">${r.listener_email.split('@')[0]}</td>
+		<td>${r.from_verse || '-'}</td>
+		<td>${r.to_verse || '-'}</td>
+		<td>${r.surah || '-'}</td>
+		<td><span class="badge ${gColor}">${r.grade} (${gLabel})</span></td>
+		<td dir="ltr">${fmtDate(r.date)}</td>
+		<td class="no-print">
+		  <button class="btn bd bsm" style="padding:6px" onclick="deleteTeacherRevision('${r.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>
+		</td>
+	  </tr>`;
+	}).join('');
+  } else {
+	toast('خطأ في جلب سجل المراجعات', 'error');
+  }
+}
+
+async function saveTeacherRevision() {
+  const reciter = g('tr-reciter').trim();
+  const grade = g('tr-grade');
+  const date = g('tr-date');
+  
+  if(!reciter) return toast('الرجاء اختيار المعلم المقرئ', 'error');
+  if(!grade) return toast('الرجاء إدخال الدرجة', 'error');
+
+  const payload = {
+	reciter_name: reciter,
+	listener_email: CU.email, // المستمع هو من قام بتسجيل الدخول الآن
+	date: date || todayISO(),
+	from_verse: g('tr-from').trim(),
+	to_verse: g('tr-to').trim(),
+	surah: g('tr-surah').trim(),
+	grade: parseInt(grade)
+  };
+
+  const btn = event.target; 
+  btn.disabled = true; 
+  btn.textContent = 'جاري الحفظ...';
+
+  const { error } = await sb.from('teacher_revisions').insert([payload]);
+  
+  btn.disabled = false; 
+  btn.innerHTML = '<svg width="14" height="14"><use href="#i-save"/></svg> حفظ الجلسة';
+
+  if(!error) {
+	toast('تم تسجيل جلسة المراجعة ✓', 'success');
+	['tr-reciter', 'tr-from', 'tr-to', 'tr-surah', 'tr-grade'].forEach(clr);
+	loadTeacherRevisions();
+  } else {
+	toast('خطأ في الحفظ', 'error');
+	console.error(error);
+  }
+}
+
+async function deleteTeacherRevision(id) {
+  if(!confirm('هل أنت متأكد من حذف هذه الجلسة؟')) return;
+  const { error } = await sb.from('teacher_revisions').delete().eq('id', id);
+  if(!error) {
+	toast('تم الحذف', 'success');
+	loadTeacherRevisions();
+  } else {
+	toast('خطأ في الحذف', 'error');
   }
 }
 
