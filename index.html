@@ -1985,7 +1985,7 @@ async function loadTeacherRevisions() {
 	  return `<tr>
 		<td>${i+1}</td>
 		<td><strong>${r.reciter_name}</strong></td>
-		<td style="font-size:0.8rem; color:var(--text3)">${r.listener_email.split('@')[0]}</td>
+		<td style="font-size:0.8rem; color:var(--text3)">${r.listener_name || '-'}</td>
 		<td>${r.from_verse || '-'}</td>
 		<td>${r.to_verse || '-'}</td>
 		<td>${r.surah || '-'}</td>
@@ -2009,15 +2009,15 @@ async function saveTeacherRevision() {
   if(!reciter) return toast('الرجاء اختيار المعلم المقرئ', 'error');
   if(!grade) return toast('الرجاء إدخال الدرجة', 'error');
 
-  const payload = {
-	reciter_name: reciter,
-	listener_email: CU.email, 
-	date: date || todayISO(),
-	from_verse: g('tr-from').trim(),
-	to_verse: g('tr-to').trim(),
-	surah: g('tr-surah').trim(),
-	grade: parseInt(grade)
-  };
+const payload = {
+	  reciter_name: reciter,
+	  listener_name: CU.name, // 💡 التعديل هنا: استخدام CU.name بدلاً من CU.email
+	  date: date || todayISO(),
+	  from_verse: g('tr-from').trim(),
+	  to_verse: g('tr-to').trim(),
+	  surah: g('tr-surah').trim(),
+	  grade: parseInt(grade)
+	};
 
   const btn = event.target; 
   btn.disabled = true; 
