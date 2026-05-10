@@ -1765,7 +1765,10 @@
         background: var(--green3);
         border-color: rgba(30, 122, 80, 0.25);
         color: var(--green2);
-    }/* DASHBOARD */
+    }
+    
+
+    /* DASHBOARD */
     .wb {
         background: linear-gradient(135deg, rgba(30, 122, 80, 0.09), rgba(30, 122, 80, 0.03));
         border: 1px solid rgba(30, 122, 80, 0.15);
@@ -2100,7 +2103,7 @@
         font-family: 'Tajawal', sans-serif;
         font-size: .82rem;
         background: white;
-        color: var(--text);
+        color: var(text);
         text-align: center;
         min-height: 36px;
     }
@@ -2737,6 +2740,40 @@
             <line x1="9" y1="16" x2="15" y2="16"/>
             <polyline points="14 2 14 8 20 8"/>
         </symbol>
+        <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </symbol>
+        <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </symbol>
+        <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        </symbol>
+        <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </symbol>
+        <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+        </symbol>
+        <symbol id="i-mosque" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 21h20M6 21V10M18 21V10M12 3C9 3 7 6 7 8c0 1 .5 2 1 2h8c.5 0 1-1 1-2 0-2-2-5-5-5z"/>
+            <path d="M10 10v11M14 10v11M3 10h18"/>
+            <path d="M12 3V1M9 4l-2-2M15 4l2-2"/>
+        </symbol>
     </svg>
 
     <div id="ls">
@@ -2865,11 +2902,15 @@
                 </div>
                 <div class="ha">
                     <button class="theme-btn" onclick="toggleTheme()" id="theme-toggle-btn" title="تبديل المظهر">
-                        <span id="theme-icon">🌙</span>
+                        <svg width="16" height="16" id="theme-icon-svg">
+                            <use id="theme-icon-use" href="#i-moon"/>
+                        </svg>
                     </button>
-                    <button class="blo" onclick="openModal('m-reminders')" title="التذكيرات">
-                        <span style="font-size:.85rem">🔔</span>
-                        <span id="reminder-dot" class="reminder-badge" style="display:none;padding:2px 6px;font-size:.62rem">!</span>
+                    <button class="blo" onclick="openModal('m-reminders')" title="التذكيرات" style="position:relative">
+                        <svg width="15" height="15">
+                            <use href="#i-bell"/>
+                        </svg>
+                        <span id="reminder-dot" class="reminder-badge" style="display:none;padding:2px 6px;font-size:.58rem;position:absolute;top:-4px;left:-4px">!</span>
                     </button>
                     <div class="ub">
                         <svg width="12" height="12">
@@ -2962,30 +3003,42 @@
             <!-- DASHBOARD -->
             <div id="pg-dash" class="pg active">
                 <div class="wb">
-                    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px">
-                        <div>
-                            <h2>بسم الله الرحمن الرحيم</h2>
-                            <p id="wc-msg">أهلاً بك في نظام مركز عبدالله بن عباس لتحفيظ القرآن الكريم</p>
-                            <div class="islamic-sep">✦ ✦ ✦</div>
-                            <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:4px">
-                                <div class="hijri-date" id="hijri-display">—</div>
-                                <div style="font-size:.75rem;color:var(--text3)" id="dash-gregorian">—</div>
+                    <!-- Arabesque top bar is via CSS ::before -->
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
+                        <div style="flex:1;min-width:0">
+                            <!-- Basmala -->
+                            <div style="font-family:'Amiri',serif;font-size:1.45rem;color:var(--green2);font-weight:700;letter-spacing:.02em;margin-bottom:8px;line-height:1.5">بسم الله الرحمن الرحيم</div>
+                            <!-- Welcome message -->
+                            <p id="wc-msg" style="font-size:.88rem;color:var(--text2);margin-bottom:12px">أهلاً بك في نظام مركز عبدالله بن عباس لتحفيظ القرآن الكريم</p>
+                            <!-- Islamic separator with stars -->
+                            <div class="islamic-sep" style="margin:10px 0">✦ ✦ ✦</div>
+                            <!-- Dates row -->
+                            <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:8px">
+                                <div class="hijri-date" id="hijri-display" style="font-size:.92rem;font-weight:700">—</div>
+                                <div style="width:1px;height:16px;background:var(--gold);opacity:.3"></div>
+                                <div style="font-size:.78rem;color:var(--text3)" id="dash-gregorian">—</div>
                             </div>
                         </div>
-                        <div style="text-align:center">
-                            <svg width="50" height="50" viewBox="0 0 100 100" style="opacity:.25">
-                                <!-- 8-pointed star -->
-                                <polygon points="50,5 61,35 93,35 68,57 79,87 50,68 21,87 32,57 7,35 39,35" fill="var(--gold)" stroke="none"/>
+                        <!-- Decorative 8-pointed star -->
+                        <div style="flex-shrink:0;opacity:.18;margin-top:4px">
+                            <svg width="54" height="54" viewBox="0 0 100 100">
+                                <polygon points="50,0 59,35 93,35 66,57 76,90 50,70 24,90 34,57 7,35 41,35" fill="var(--gold)"/>
+                                <polygon points="50,15 56,38 80,38 60,53 68,75 50,62 32,75 40,53 20,38 44,38" fill="var(--green2)" opacity=".5"/>
                             </svg>
                         </div>
                     </div>
+                    <!-- Bottom geometric band -->
+                    <div style="margin-top:14px;height:1px;background:linear-gradient(90deg,transparent,rgba(154,114,48,.35),rgba(30,122,80,.25),rgba(154,114,48,.35),transparent)"></div>
+                    <div style="text-align:center;margin-top:6px;font-size:.62rem;letter-spacing:6px;color:var(--gold);opacity:.55">❖ ❖ ❖ ❖ ❖</div>
                 </div>
 
                 <!-- Prayer Times & Reminders -->
                 <div id="reminders-bar">
                     <div style="flex:1">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-                            <span style="font-size:1.1rem">🕌</span>
+                            <svg width="18" height="18" color="var(--gold2)">
+                                <use href="#i-mosque"/>
+                            </svg>
                             <span style="font-size:.85rem;font-weight:700;color:var(--gold2)">مواقيت الصلاة</span>
                             <span class="reminder-badge" id="next-prayer-badge" style="font-size:.65rem"></span>
                         </div>
@@ -3097,9 +3150,11 @@
                         </div>
                     </div>
                     <button class="btn bo bsm" onclick="initQibla()" style="width:100%;justify-content:center;margin-top:12px">
-                        <span>📍</span>
+                        <svg width="14" height="14" color="var(--green2)">
+                            <use href="#i-compass"/>
+                        </svg>
                          تحديث الموقع
-                        		
+                                
                     </button>
                 </div>
 
@@ -3277,7 +3332,7 @@
                             <div style="font-weight:700;color:var(--gold2);font-size:.88rem;margin-bottom:8px">تعليمات إعداد ورقة الاختبار</div>
                             <div style="font-size:.8rem;color:var(--text2);line-height:2.0">
 
-                                			 التسميع ٥ فقرات × ١٠ = ٥٠ + التجويد ١٠ + الترتيل ١٠ + السلوك ١٠ + المداومة ١٠ + الحفظ الإجمالي ١٠ = 
+                                             التسميع ٥ فقرات × ١٠ = ٥٠ + التجويد ١٠ + الترتيل ١٠ + السلوك ١٠ + المداومة ١٠ + الحفظ الإجمالي ١٠ = 
                                 <strong>١٠٠</strong>
                             </div>
                         </div>
@@ -4071,15 +4126,23 @@
                             <p>طباعة شهادات تقديرية للطلاب</p>
                         </div>
                     </div>
-                    <button class="btn bp bsm" onclick="doPrint('cert')">
-                        <svg width="13" height="13">
-                            <use href="#i-print"/>
-                        </svg>
-                         طباعة الشهادة
-                    </button>
+                    <div class="ph-actions">
+                        <button class="btn bp bsm" onclick="doPrint('cert')">
+                            <svg width="13" height="13">
+                                <use href="#i-print"/>
+                            </svg>
+                             حفظ PDF
+                        </button>
+                        <button class="btn bsm" style="background:linear-gradient(135deg,#25D366,#128C7E);color:white;border:none;box-shadow:0 3px 12px rgba(37,211,102,0.35)" onclick="sendCertWhatsApp()">
+                            <svg width="13" height="13">
+                                <use href="#i-whatsapp"/>
+                            </svg>
+                             واتساب
+                        </button>
+                    </div>
                 </div>
                 <div class="card no-print">
-                    <div class="fr" style="align-items: flex-end;">
+                    <div class="fr" style="align-items:flex-end">
                         <div class="ff">
                             <label>نوع الشهادة</label>
                             <select id="c-type" onchange="updateCert()">
@@ -4106,14 +4169,14 @@
                         </div>
                         <div class="ff">
                             <label>حجم الخط</label>
-                            <div style="display:flex; gap:8px;">
-                                <button class="btn bo bsm" onclick="zoomCert(0.1)" style="flex:1; justify-content:center; font-size:1rem; font-family:serif;">A+</button>
-                                <button class="btn bo bsm" onclick="zoomCert(-0.1)" style="flex:1; justify-content:center; font-size:1rem; font-family:serif;">A-</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn bo bsm" onclick="zoomCert(0.1)" style="flex:1;justify-content:center;font-family:serif;font-size:1rem">A+</button>
+                                <button class="btn bo bsm" onclick="zoomCert(-0.1)" style="flex:1;justify-content:center;font-family:serif;font-size:1rem">A-</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- معاينة الشهادة فقط - الطباعة تفتح في نافذة منفصلة -->
+                <!-- معاينة الشهادة -->
                 <div class="cert-wrap" id="cert-print-area">
                     <div class="cert-header">
                         <img src="https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png" alt="شعار">
@@ -4123,23 +4186,23 @@
                     <div class="cert-title" id="cert-title">شهادة حفظ وتفوق</div>
                     <div class="cert-body" id="cert-text">
 
-                        		  يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / 
-                        <strong>.......................</strong>
+                                  يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / 
+                        <strong id="disp-stu">.......................</strong>
                         <br>
 
-                        		  المقيد في 
-                        <strong>.......................</strong>
+                                  المقيد في 
+                        <strong id="disp-halqa">.......................</strong>
                          عند المعلم / 
-                        <strong>.......................</strong>
+                        <strong id="disp-teacher">.......................</strong>
                         <br>
 
-                        		  قد أتم حفظ ( 
-                        <strong>.......................</strong>
+                                  قد أتم حفظ ( 
+                        <strong id="disp-parts">.......................</strong>
                          ) من القرآن الكريم.
                         <br>
 
-                        		  سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.
-                        		
+                                  سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.
+                                
                     </div>
                     <div class="cert-footer">
                         <div class="cert-sign">
@@ -4147,7 +4210,7 @@
                             <br>
                             <span id="cert-t-sign">.......................</span>
                         </div>
-                        <div class="cert-sign" style="text-align:left;">
+                        <div class="cert-sign" style="text-align:left">
                             المدير العام
                             <br>
                             <span class="cs-mgr">النذير صديق مخير</span>
@@ -4450,7 +4513,12 @@
                 <div id="reminders-modal-content">
                     <!-- Prayer reminder -->
                     <div style="margin-bottom:14px">
-                        <div style="font-size:.78rem;font-weight:700;color:var(--green2);margin-bottom:8px">🕌 أوقات الصلاة اليوم</div>
+                        <div style="font-size:.78rem;font-weight:700;color:var(--green2);margin-bottom:8px">
+                            <svg width="14" height="14" color="var(--gold2)" style="vertical-align:middle;margin-left:4px">
+                                <use href="#i-mosque"/>
+                            </svg>
+                             أوقات الصلاة اليوم
+                        </div>
                         <div class="prayer-times-grid" id="prayer-times-modal">
                             <div class="prayer-time-item">
                                 <div class="pt-name">الفجر</div>
@@ -4509,8 +4577,8 @@
                     </div>
                     <div class="islamic-sep" style="margin-top:12px">✦ ذكر اليوم ✦</div>
                     <div id="dhikr-of-day" style="font-family:'Amiri',serif;font-size:1.05rem;color:var(--gold2);text-align:center;padding:14px;line-height:2;direction:rtl;background:var(--gold3);border-radius:10px;margin-top:10px;border:1px solid rgba(154,114,48,0.2)">
-                    		سبحان الله وبحمده سبحان الله العظيم
-                    	  </div>
+                            سبحان الله وبحمده سبحان الله العظيم
+                          </div>
                 </div>
                 <div style="margin-top:16px">
                     <button class="btn bp" style="width:100%;justify-content:center" onclick="closeModal('m-reminders')">حسناً</button>
@@ -4568,20 +4636,20 @@
     const PRINT_HEAD = `<meta charset="UTF-8">
       <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
       <style>
-    	*{margin:0;padding:0;box-sizing:border-box;}
-    	body{font-family:'Tajawal',sans-serif;background:white;color:#111;direction:rtl;}
-    	table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:16px;}
-    	th{background:#e8f5e9;color:#166040;padding:10px 12px;text-align:center;border:1px solid #c8e6c9;font-weight:700;}
-    	td{padding:9px 12px;border:1px solid #e0e0e0;text-align:center;}
-    	tr:nth-child(even) td{background:#fafff8;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Tajawal',sans-serif;background:white;color:#111;direction:rtl;}
+        table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:16px;}
+        th{background:#e8f5e9;color:#166040;padding:10px 12px;text-align:center;border:1px solid #c8e6c9;font-weight:700;}
+        td{padding:9px 12px;border:1px solid #e0e0e0;text-align:center;}
+        tr:nth-child(even) td{background:#fafff8;}
       </style>`;
 
     function openPrintWin(size, content) {
       const win = window.open('','_blank');
       win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    	<title>طباعة</title>
-    	<style>@page{size:${size};margin:0;}</style>
-    	<style>${ISLAMIC_PRINT_CSS}</style>
+        <title>طباعة</title>
+        <style>@page{size:${size};margin:0;}</style>
+        <style>${ISLAMIC_PRINT_CSS}</style>
       </head><body><div class="page-wrap">${content}<div class="print-footer">${CENTER_NAME} — ${todayStr()}</div></div></body></html>`);
       win.document.close();
       win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
@@ -4626,287 +4694,287 @@
 
       // ─── شهادة: A4 landscape في نافذة مستقلة ───
       if (type === 'cert') {
-    	const certInner = document.getElementById('cert-print-area').innerHTML;
-    	const win = window.open('','_blank');
-    	win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    	  <title>شهادة</title>
-    	  <meta charset="UTF-8">
-    	  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    	  <style>
-    		*{margin:0;padding:0;box-sizing:border-box;}
-    		@page{size:A4 landscape;margin:0;}
-    		html,body{width:297mm;height:210mm;overflow:hidden;background:white;}
-    		body{display:flex;align-items:center;justify-content:center;font-family:'Tajawal',sans-serif;}
-    		:root{
-    		  --gold:#9a7230;--gold2:#7a5a20;--green:#1e7a50;--green2:#166040;
-    		  --text:#111a14;--text2:#3d5244;--text3:#7a9482;
-    		}
-    		.cert-wrap{
-    		  --z:1;
-    		  width:275mm;height:192mm;
-    		  border:10px double var(--gold);
-    		  padding:16mm 20mm;
-    		  background:white;
-    		  text-align:center;
-    		  position:relative;overflow:hidden;
-    		  display:flex;flex-direction:column;
-    		  justify-content:center;align-items:center;
-    		  page-break-inside:avoid;
-    		}
-    		.cert-wrap::before{
-    		  content:'';position:absolute;inset:0;
-    		  background:url('${LOGO}') center/280px no-repeat;
-    		  opacity:.04;pointer-events:none;
-    		}
-    		.cert-header{display:flex;flex-direction:column;align-items:center;margin-bottom:12px;position:relative;z-index:1;}
-    		.cert-header img{width:72px;height:72px;margin-bottom:10px;}
-    		.ch-1{font-family:'Amiri',serif;font-size:calc(1.15rem * var(--z));font-weight:700;color:var(--green2);}
-    		.ch-2{font-size:calc(0.82rem * var(--z));color:var(--gold);font-weight:700;}
-    		.cert-title{font-family:'Amiri',serif;font-size:calc(2rem * var(--z));color:var(--green2);font-weight:700;margin-bottom:22px;position:relative;z-index:1;}
-    		.cert-body{font-family:'Amiri',serif;font-size:calc(1.22rem * var(--z));color:var(--text);line-height:2.1;margin-bottom:28px;position:relative;z-index:1;}
-    		.cert-body strong{color:var(--green2);border-bottom:1px dashed var(--gold);padding:0 6px;}
-    		.cert-footer{display:flex;justify-content:space-between;width:100%;font-family:'Tajawal',sans-serif;font-size:calc(0.95rem * var(--z));color:var(--text2);font-weight:700;padding:0 16mm;position:relative;z-index:1;}
-    		.cert-sign{text-align:center;}
-    		.cert-sign span{display:block;margin-top:32px;font-family:'Amiri',serif;color:var(--text);font-size:calc(1.05rem * var(--z));}
-    		.cert-sign .cs-mgr{font-size:calc(1.1rem * var(--z));color:var(--green2);}
-    	  </style>
-    	</head><body>
-    	  <div class="cert-wrap" style="--z:${certZoom};">${certInner.replace(/<div class="cert-wrap[^>]*>/,'').replace(/<\/div>\s*$/,'')}</div>
-    	</body></html>`);
-    	win.document.close();
-    	// نستخدم الـinner HTML فقط لأن الـwrap نفسه اتعاد بناؤه بالـCSS
-    	win.onload = () => setTimeout(() => { win.print(); win.close(); }, 600);
-    	return;
+        const certInner = document.getElementById('cert-print-area').innerHTML;
+        const win = window.open('','_blank');
+        win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+          <title>شهادة</title>
+          <meta charset="UTF-8">
+          <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+          <style>
+            *{margin:0;padding:0;box-sizing:border-box;}
+            @page{size:A4 landscape;margin:0;}
+            html,body{width:297mm;height:210mm;overflow:hidden;background:white;}
+            body{display:flex;align-items:center;justify-content:center;font-family:'Tajawal',sans-serif;}
+            :root{
+              --gold:#9a7230;--gold2:#7a5a20;--green:#1e7a50;--green2:#166040;
+              --text:#111a14;--text2:#3d5244;--text3:#7a9482;
+            }
+            .cert-wrap{
+              --z:1;
+              width:275mm;height:192mm;
+              border:10px double var(--gold);
+              padding:16mm 20mm;
+              background:white;
+              text-align:center;
+              position:relative;overflow:hidden;
+              display:flex;flex-direction:column;
+              justify-content:center;align-items:center;
+              page-break-inside:avoid;
+            }
+            .cert-wrap::before{
+              content:'';position:absolute;inset:0;
+              background:url('${LOGO}') center/280px no-repeat;
+              opacity:.04;pointer-events:none;
+            }
+            .cert-header{display:flex;flex-direction:column;align-items:center;margin-bottom:12px;position:relative;z-index:1;}
+            .cert-header img{width:72px;height:72px;margin-bottom:10px;}
+            .ch-1{font-family:'Amiri',serif;font-size:calc(1.15rem * var(--z));font-weight:700;color:var(--green2);}
+            .ch-2{font-size:calc(0.82rem * var(--z));color:var(--gold);font-weight:700;}
+            .cert-title{font-family:'Amiri',serif;font-size:calc(2rem * var(--z));color:var(--green2);font-weight:700;margin-bottom:22px;position:relative;z-index:1;}
+            .cert-body{font-family:'Amiri',serif;font-size:calc(1.22rem * var(--z));color:var(--text);line-height:2.1;margin-bottom:28px;position:relative;z-index:1;}
+            .cert-body strong{color:var(--green2);border-bottom:1px dashed var(--gold);padding:0 6px;}
+            .cert-footer{display:flex;justify-content:space-between;width:100%;font-family:'Tajawal',sans-serif;font-size:calc(0.95rem * var(--z));color:var(--text2);font-weight:700;padding:0 16mm;position:relative;z-index:1;}
+            .cert-sign{text-align:center;}
+            .cert-sign span{display:block;margin-top:32px;font-family:'Amiri',serif;color:var(--text);font-size:calc(1.05rem * var(--z));}
+            .cert-sign .cs-mgr{font-size:calc(1.1rem * var(--z));color:var(--green2);}
+          </style>
+        </head><body>
+          <div class="cert-wrap" style="--z:${certZoom};">${certInner.replace(/<div class="cert-wrap[^>]*>/,'').replace(/<\/div>\s*$/,'')}</div>
+        </body></html>`);
+        win.document.close();
+        // نستخدم الـinner HTML فقط لأن الـwrap نفسه اتعاد بناؤه بالـCSS
+        win.onload = () => setTimeout(() => { win.print(); win.close(); }, 600);
+        return;
       }
 
       // ─── فاتورة مالية الكترونية ───
       if (type === 'fin-invoice') {
-    	const tDons = FD.donations.reduce((s,d)=>s+parseFloat(d.amount||0),0);
-    	const tExps = FD.expenses.reduce((s,d)=>s+parseFloat(d.amount||0),0);
-    	const bal   = tDons - tExps;
-    	const invNum = 'INV-' + Date.now().toString().slice(-6);
+        const tDons = FD.donations.reduce((s,d)=>s+parseFloat(d.amount||0),0);
+        const tExps = FD.expenses.reduce((s,d)=>s+parseFloat(d.amount||0),0);
+        const bal   = tDons - tExps;
+        const invNum = 'INV-' + Date.now().toString().slice(-6);
 
-    	const dRows = FD.donations.map((d,i)=>`<tr>
-    	  <td>${i+1}</td><td>${d.donor_name||'غير معروف'}</td>
-    	  <td><span style="padding:2px 8px;border-radius:10px;font-size:.8rem;background:${d.type==='inside'?'#e8f5e9':'#fff8e1'};color:${d.type==='inside'?'#1e7a50':'#9a7230'}">${d.type==='inside'?'داخلي':'خارجي'}</span></td>
-    	  <td style="font-weight:700;color:#1e7a50">${fmt(d.amount)} ج.س</td>
-    	  <td>${fmtDate(d.transaction_date)}</td>
-    	</tr>`).join('');
+        const dRows = FD.donations.map((d,i)=>`<tr>
+          <td>${i+1}</td><td>${d.donor_name||'غير معروف'}</td>
+          <td><span style="padding:2px 8px;border-radius:10px;font-size:.8rem;background:${d.type==='inside'?'#e8f5e9':'#fff8e1'};color:${d.type==='inside'?'#1e7a50':'#9a7230'}">${d.type==='inside'?'داخلي':'خارجي'}</span></td>
+          <td style="font-weight:700;color:#1e7a50">${fmt(d.amount)} ج.س</td>
+          <td>${fmtDate(d.transaction_date)}</td>
+        </tr>`).join('');
 
-    	const eRows = FD.expenses.map((e,i)=>`<tr>
-    	  <td>${i+1}</td><td>${e.item_desc}</td>
-    	  <td style="font-weight:700;color:#c0392b">${fmt(e.amount)} ج.س</td>
-    	  <td>${fmtDate(e.transaction_date)}</td>
-    	</tr>`).join('');
+        const eRows = FD.expenses.map((e,i)=>`<tr>
+          <td>${i+1}</td><td>${e.item_desc}</td>
+          <td style="font-weight:700;color:#c0392b">${fmt(e.amount)} ج.س</td>
+          <td>${fmtDate(e.transaction_date)}</td>
+        </tr>`).join('');
 
-    	const win = window.open('','_blank');
-    	win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-    	  <title>فاتورة مالية</title>
-    	  <meta charset="UTF-8">
-    	  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    	  <style>
-    		*{margin:0;padding:0;box-sizing:border-box;}
-    		@page{size:A4 portrait;margin:12mm;}
-    		body{font-family:'Tajawal',sans-serif;background:white;color:#111;direction:rtl;font-size:11pt;}
-    		.inv-hdr{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:3px double #1e7a50;padding-bottom:16px;margin-bottom:20px;}
-    		.inv-logo{display:flex;align-items:center;gap:14px;}
-    		.inv-logo img{width:68px;height:68px;border-radius:50%;border:2px solid #1e7a50;}
-    		.org-name h1{font-family:'Amiri',serif;font-size:1.25rem;color:#166040;}
-    		.org-name p{font-size:.78rem;color:#7a5a20;margin-top:3px;}
-    		.inv-meta{text-align:left;}
-    		.inv-meta h2{font-family:'Amiri',serif;font-size:1.7rem;color:#1e7a50;margin-bottom:6px;}
-    		.inv-num{display:inline-block;background:#e8f5e9;color:#166040;padding:4px 12px;border-radius:20px;font-weight:700;font-size:.82rem;}
-    		.sec-ttl{font-family:'Amiri',serif;font-size:1.05rem;color:#166040;border-right:4px solid #1e7a50;padding-right:10px;margin:20px 0 10px;}
-    		table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:14px;}
-    		th{background:#e8f5e9;color:#166040;padding:9px 12px;text-align:right;border:1px solid #c8e6c9;font-weight:700;}
-    		td{padding:8px 12px;border:1px solid #e0e0e0;text-align:right;}
-    		tr:nth-child(even) td{background:#fafff8;}
-    		.summary{border:2px solid #1e7a50;border-radius:12px;padding:18px 22px;margin-top:22px;}
-    		.sum-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed #c8e6c9;}
-    		.sum-row:last-child{border-bottom:none;}
-    		.sum-row .lbl{font-size:.88rem;color:#555;}
-    		.sum-row .val{font-weight:700;font-size:1rem;}
-    		.bal-row{background:#1e7a50;color:white;border-radius:8px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
-    		.bal-row .lbl{font-family:'Amiri',serif;font-size:1rem;}
-    		.bal-row .val{font-family:'Amiri',serif;font-size:1.5rem;font-weight:900;}
-    		.footer{display:flex;justify-content:space-between;margin-top:40px;font-size:.82rem;color:#555;}
-    		.stamp{text-align:center;border-top:1px solid #aaa;padding-top:8px;width:140px;}
-    	  </style>
-    	</head><body>
-    	  <div class="inv-hdr">
-    		<div class="inv-logo">
-    		  <img src="${LOGO}" onerror="this.style.display='none'">
-    		  <div class="org-name"><h1>${CENTER_NAME}</h1><p>${CENTER_SUB} — السودان</p></div>
-    		</div>
-    		<div class="inv-meta">
-    		  <h2>كشف حساب مالي</h2>
-    		  <div class="inv-num">${invNum}</div>
-    		  <p style="margin-top:8px;font-size:.82rem">تاريخ الإصدار: <strong>${todayStr()}</strong></p>
-    		  <p style="font-size:.82rem">أعدّه: <strong>${CU?CU.name:'-'}</strong></p>
-    		</div>
-    	  </div>
+        const win = window.open('','_blank');
+        win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+          <title>فاتورة مالية</title>
+          <meta charset="UTF-8">
+          <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+          <style>
+            *{margin:0;padding:0;box-sizing:border-box;}
+            @page{size:A4 portrait;margin:12mm;}
+            body{font-family:'Tajawal',sans-serif;background:white;color:#111;direction:rtl;font-size:11pt;}
+            .inv-hdr{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:3px double #1e7a50;padding-bottom:16px;margin-bottom:20px;}
+            .inv-logo{display:flex;align-items:center;gap:14px;}
+            .inv-logo img{width:68px;height:68px;border-radius:50%;border:2px solid #1e7a50;}
+            .org-name h1{font-family:'Amiri',serif;font-size:1.25rem;color:#166040;}
+            .org-name p{font-size:.78rem;color:#7a5a20;margin-top:3px;}
+            .inv-meta{text-align:left;}
+            .inv-meta h2{font-family:'Amiri',serif;font-size:1.7rem;color:#1e7a50;margin-bottom:6px;}
+            .inv-num{display:inline-block;background:#e8f5e9;color:#166040;padding:4px 12px;border-radius:20px;font-weight:700;font-size:.82rem;}
+            .sec-ttl{font-family:'Amiri',serif;font-size:1.05rem;color:#166040;border-right:4px solid #1e7a50;padding-right:10px;margin:20px 0 10px;}
+            table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:14px;}
+            th{background:#e8f5e9;color:#166040;padding:9px 12px;text-align:right;border:1px solid #c8e6c9;font-weight:700;}
+            td{padding:8px 12px;border:1px solid #e0e0e0;text-align:right;}
+            tr:nth-child(even) td{background:#fafff8;}
+            .summary{border:2px solid #1e7a50;border-radius:12px;padding:18px 22px;margin-top:22px;}
+            .sum-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed #c8e6c9;}
+            .sum-row:last-child{border-bottom:none;}
+            .sum-row .lbl{font-size:.88rem;color:#555;}
+            .sum-row .val{font-weight:700;font-size:1rem;}
+            .bal-row{background:#1e7a50;color:white;border-radius:8px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
+            .bal-row .lbl{font-family:'Amiri',serif;font-size:1rem;}
+            .bal-row .val{font-family:'Amiri',serif;font-size:1.5rem;font-weight:900;}
+            .footer{display:flex;justify-content:space-between;margin-top:40px;font-size:.82rem;color:#555;}
+            .stamp{text-align:center;border-top:1px solid #aaa;padding-top:8px;width:140px;}
+          </style>
+        </head><body>
+          <div class="inv-hdr">
+            <div class="inv-logo">
+              <img src="${LOGO}" onerror="this.style.display='none'">
+              <div class="org-name"><h1>${CENTER_NAME}</h1><p>${CENTER_SUB} — السودان</p></div>
+            </div>
+            <div class="inv-meta">
+              <h2>كشف حساب مالي</h2>
+              <div class="inv-num">${invNum}</div>
+              <p style="margin-top:8px;font-size:.82rem">تاريخ الإصدار: <strong>${todayStr()}</strong></p>
+              <p style="font-size:.82rem">أعدّه: <strong>${CU?CU.name:'-'}</strong></p>
+            </div>
+          </div>
 
-    	  <div class="sec-ttl">سجل التبرعات</div>
-    	  <table><thead><tr><th>#</th><th>المانح</th><th>النوع</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
-    	  <tbody>${dRows||'<tr><td colspan="5" style="text-align:center;color:#aaa">لا توجد تبرعات</td></tr>'}</tbody></table>
+          <div class="sec-ttl">سجل التبرعات</div>
+          <table><thead><tr><th>#</th><th>المانح</th><th>النوع</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
+          <tbody>${dRows||'<tr><td colspan="5" style="text-align:center;color:#aaa">لا توجد تبرعات</td></tr>'}</tbody></table>
 
-    	  <div class="sec-ttl">سجل المصروفات</div>
-    	  <table><thead><tr><th>#</th><th>البيان</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
-    	  <tbody>${eRows||'<tr><td colspan="4" style="text-align:center;color:#aaa">لا توجد مصروفات</td></tr>'}</tbody></table>
+          <div class="sec-ttl">سجل المصروفات</div>
+          <table><thead><tr><th>#</th><th>البيان</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
+          <tbody>${eRows||'<tr><td colspan="4" style="text-align:center;color:#aaa">لا توجد مصروفات</td></tr>'}</tbody></table>
 
-    	  <div class="summary">
-    		<div class="sum-row"><span class="lbl">إجمالي التبرعات</span><span class="val" style="color:#1e7a50">${fmt(tDons)} ج.س</span></div>
-    		<div class="sum-row"><span class="lbl">إجمالي المصروفات</span><span class="val" style="color:#c0392b">${fmt(tExps)} ج.س</span></div>
-    	  </div>
-    	  <div class="bal-row"><span class="lbl">الرصيد المتاح</span><span class="val">${fmt(bal)} ج.س</span></div>
+          <div class="summary">
+            <div class="sum-row"><span class="lbl">إجمالي التبرعات</span><span class="val" style="color:#1e7a50">${fmt(tDons)} ج.س</span></div>
+            <div class="sum-row"><span class="lbl">إجمالي المصروفات</span><span class="val" style="color:#c0392b">${fmt(tExps)} ج.س</span></div>
+          </div>
+          <div class="bal-row"><span class="lbl">الرصيد المتاح</span><span class="val">${fmt(bal)} ج.س</span></div>
 
-    	  <div class="footer">
-    		<div class="stamp">المحاسب المسؤول<br>${CU?CU.name:'...............'}</div>
-    		<div style="font-size:.72rem;color:#aaa;text-align:center;align-self:flex-end">
-    		  <p>نظام مركز ابن عباس — ${todayStr()} — ${invNum}</p>
-    		</div>
-    		<div class="stamp">مدير المركز<br>النذير صديق مخير</div>
-    	  </div>
-    	</body></html>`);
-    	win.document.close();
-    	win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
-    	return;
+          <div class="footer">
+            <div class="stamp">المحاسب المسؤول<br>${CU?CU.name:'...............'}</div>
+            <div style="font-size:.72rem;color:#aaa;text-align:center;align-self:flex-end">
+              <p>نظام مركز ابن عباس — ${todayStr()} — ${invNum}</p>
+            </div>
+            <div class="stamp">مدير المركز<br>النذير صديق مخير</div>
+          </div>
+        </body></html>`);
+        win.document.close();
+        win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
+        return;
       }
 
       // ─── حضور ───
       if (type === 'attend') {
-    	const monthEl = document.getElementById('att-month');
-    	const monthName = monthEl.options[monthEl.selectedIndex].text;
-    	const rows = SD.map((s,i)=>{
-    	  let p=0,a=0;
-    	  for(let w=1;w<=4;w++) for(let di=0;di<5;di++) {
-    		const k=`${s.id}_w${w}_d${di}`;
-    		if(AD[k]==='P') p++; if(AD[k]==='A') a++;
-    	  }
-    	  const pct=Math.round((p/20)*100);
-    	  return `<tr><td>${i+1}</td><td style="text-align:right;font-weight:700">${s.name}</td>
-    		<td style="color:#1e7a50;font-weight:800">${p}</td>
-    		<td style="color:#c0392b;font-weight:800">${a}</td>
-    		<td>${20-p-a}</td>
-    		<td>${pct}%</td></tr>`;
-    	}).join('');
-    	openPrintWin('A4 portrait', buildPrintHeader(`كشف الحضور — شهر ${monthName} ${new Date().getFullYear()}`, `تاريخ الطباعة: ${todayStr()}`) +
-    	  `<table><thead><tr><th>#</th><th>اسم الطالب</th><th>أيام الحضور</th><th>أيام الغياب</th><th>لم يُسجَّل</th><th>نسبة الحضور</th></tr></thead><tbody>${rows}</tbody></table>`);
-    	return;
+        const monthEl = document.getElementById('att-month');
+        const monthName = monthEl.options[monthEl.selectedIndex].text;
+        const rows = SD.map((s,i)=>{
+          let p=0,a=0;
+          for(let w=1;w<=4;w++) for(let di=0;di<5;di++) {
+            const k=`${s.id}_w${w}_d${di}`;
+            if(AD[k]==='P') p++; if(AD[k]==='A') a++;
+          }
+          const pct=Math.round((p/20)*100);
+          return `<tr><td>${i+1}</td><td style="text-align:right;font-weight:700">${s.name}</td>
+            <td style="color:#1e7a50;font-weight:800">${p}</td>
+            <td style="color:#c0392b;font-weight:800">${a}</td>
+            <td>${20-p-a}</td>
+            <td>${pct}%</td></tr>`;
+        }).join('');
+        openPrintWin('A4 portrait', buildPrintHeader(`كشف الحضور — شهر ${monthName} ${new Date().getFullYear()}`, `تاريخ الطباعة: ${todayStr()}`) +
+          `<table><thead><tr><th>#</th><th>اسم الطالب</th><th>أيام الحضور</th><th>أيام الغياب</th><th>لم يُسجَّل</th><th>نسبة الحضور</th></tr></thead><tbody>${rows}</tbody></table>`);
+        return;
       }
 
       // ─── اختبار ───
       if (type === 'exam') {
-    	const halqaEl = document.getElementById('ex-halqa');
-    	const halqaName = halqaEl.options[halqaEl.selectedIndex].text;
-    	const month = document.getElementById('ex-month').value;
-    	const teacher = document.getElementById('ex-teacher-disp').value;
-    	const s1=g('ex-surah-1'),s2=g('ex-surah-2'),s3=g('ex-surah-3'),s4=g('ex-surah-4'),s5=g('ex-surah-5');
-    	const rows = getExamRows().map((r,i)=>{
-    	  const total=r.total||''; const g2=total!==''?exGradeLabel(total):{lbl:'—',cls:''};
-    	  return `<tr><td>${i+1}</td><td style="text-align:right;font-weight:700">${r.student_name||''}</td>
-    		<td>${r.s1||''}</td><td>${r.s2||''}</td><td>${r.s3||''}</td><td>${r.s4||''}</td><td>${r.s5||''}</td>
-    		<td>${r.tajweed||''}</td><td>${r.tarteel||''}</td><td>${r.solok||''}</td><td>${r.mudawama||''}</td><td>${r.hifz||''}</td>
-    		<td style="font-weight:900;font-size:1rem">${total}</td><td>${g2.lbl}</td></tr>`;
-    	}).join('');
-    	const win = window.open('','_blank');
-    	win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><title>كشف الاختبار</title>
-    	  <style>@page{size:A4 landscape;margin:8mm;}</style>${PRINT_HEAD.replace('font-size:.9rem','font-size:.78rem')}
-    	  <style>th{font-size:.74rem;padding:7px 5px;}td{padding:6px 5px;}</style>
-    	</head><body>
-    	  ${buildPrintHeader(`كشف الاختبار الشهري — ${halqaName}`, `شهر: ${month} | المعلم: ${teacher}`)}
-    	  <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;font-size:.8rem">
-    		${[s1,s2,s3,s4,s5].map((s,i)=>`<span style="background:#e8f5e9;padding:3px 10px;border-radius:12px;color:#166040">ف${i+1}: ${s||'—'}</span>`).join('')}
-    	  </div>
-    	  <table style="min-width:700px"><thead>
-    		<tr>
-    		  <th rowspan="2">#</th><th rowspan="2" style="min-width:80px">اسم الطالب</th>
-    		  <th colspan="5" style="background:#d4edda">التسميع (٥×١٠)</th>
-    		  <th rowspan="2">التجويد</th><th rowspan="2">الترتيل</th>
-    		  <th rowspan="2">السلوك</th><th rowspan="2">المداومة</th><th rowspan="2">الحفظ</th>
-    		  <th rowspan="2" style="background:#d4edda">المجموع</th><th rowspan="2">التقدير</th>
-    		</tr>
-    		<tr><th>ف١</th><th>ف٢</th><th>ف٣</th><th>ف٤</th><th>ف٥</th></tr>
-    	  </thead><tbody>${rows}</tbody></table>
-    	</body></html>`);
-    	win.document.close();
-    	win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
-    	return;
+        const halqaEl = document.getElementById('ex-halqa');
+        const halqaName = halqaEl.options[halqaEl.selectedIndex].text;
+        const month = document.getElementById('ex-month').value;
+        const teacher = document.getElementById('ex-teacher-disp').value;
+        const s1=g('ex-surah-1'),s2=g('ex-surah-2'),s3=g('ex-surah-3'),s4=g('ex-surah-4'),s5=g('ex-surah-5');
+        const rows = getExamRows().map((r,i)=>{
+          const total=r.total||''; const g2=total!==''?exGradeLabel(total):{lbl:'—',cls:''};
+          return `<tr><td>${i+1}</td><td style="text-align:right;font-weight:700">${r.student_name||''}</td>
+            <td>${r.s1||''}</td><td>${r.s2||''}</td><td>${r.s3||''}</td><td>${r.s4||''}</td><td>${r.s5||''}</td>
+            <td>${r.tajweed||''}</td><td>${r.tarteel||''}</td><td>${r.solok||''}</td><td>${r.mudawama||''}</td><td>${r.hifz||''}</td>
+            <td style="font-weight:900;font-size:1rem">${total}</td><td>${g2.lbl}</td></tr>`;
+        }).join('');
+        const win = window.open('','_blank');
+        win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><title>كشف الاختبار</title>
+          <style>@page{size:A4 landscape;margin:8mm;}</style>${PRINT_HEAD.replace('font-size:.9rem','font-size:.78rem')}
+          <style>th{font-size:.74rem;padding:7px 5px;}td{padding:6px 5px;}</style>
+        </head><body>
+          ${buildPrintHeader(`كشف الاختبار الشهري — ${halqaName}`, `شهر: ${month} | المعلم: ${teacher}`)}
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;font-size:.8rem">
+            ${[s1,s2,s3,s4,s5].map((s,i)=>`<span style="background:#e8f5e9;padding:3px 10px;border-radius:12px;color:#166040">ف${i+1}: ${s||'—'}</span>`).join('')}
+          </div>
+          <table style="min-width:700px"><thead>
+            <tr>
+              <th rowspan="2">#</th><th rowspan="2" style="min-width:80px">اسم الطالب</th>
+              <th colspan="5" style="background:#d4edda">التسميع (٥×١٠)</th>
+              <th rowspan="2">التجويد</th><th rowspan="2">الترتيل</th>
+              <th rowspan="2">السلوك</th><th rowspan="2">المداومة</th><th rowspan="2">الحفظ</th>
+              <th rowspan="2" style="background:#d4edda">المجموع</th><th rowspan="2">التقدير</th>
+            </tr>
+            <tr><th>ف١</th><th>ف٢</th><th>ف٣</th><th>ف٤</th><th>ف٥</th></tr>
+          </thead><tbody>${rows}</tbody></table>
+        </body></html>`);
+        win.document.close();
+        win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
+        return;
       }
 
       // ─── حلقات ───
       if (type === 'halaqat') {
-    	const title = document.getElementById('hq-detail-title').textContent;
-    	const date  = document.getElementById('hq-session-date').value;
-    	const rows  = getTableRows().map((r,i)=>`<tr>
-    	  <td>${i+1}</td><td style="text-align:right;font-weight:700">${r.student||''}</td>
-    	  <td>${r.from||''}</td><td>${r.to||''}</td><td>${r.surah||''}</td>
-    	  <td style="font-weight:700">${r.grade||''}</td><td>${r.grade?gradeLabel(r.grade):'—'}</td>
-    	</tr>`).join('');
-    	openPrintWin('A4 portrait', buildPrintHeader(`${title} — سجل الجلسة`, `تاريخ الجلسة: ${fmtDate(date)} | المعلم: ${CU?CU.name:'-'}`) +
-    	  `<table><thead><tr><th>#</th><th>اسم الطالب</th><th>من</th><th>إلى</th><th>السورة</th><th>الدرجة</th><th>التقدير</th></tr></thead><tbody>${rows}</tbody></table>`);
-    	return;
+        const title = document.getElementById('hq-detail-title').textContent;
+        const date  = document.getElementById('hq-session-date').value;
+        const rows  = getTableRows().map((r,i)=>`<tr>
+          <td>${i+1}</td><td style="text-align:right;font-weight:700">${r.student||''}</td>
+          <td>${r.from||''}</td><td>${r.to||''}</td><td>${r.surah||''}</td>
+          <td style="font-weight:700">${r.grade||''}</td><td>${r.grade?gradeLabel(r.grade):'—'}</td>
+        </tr>`).join('');
+        openPrintWin('A4 portrait', buildPrintHeader(`${title} — سجل الجلسة`, `تاريخ الجلسة: ${fmtDate(date)} | المعلم: ${CU?CU.name:'-'}`) +
+          `<table><thead><tr><th>#</th><th>اسم الطالب</th><th>من</th><th>إلى</th><th>السورة</th><th>الدرجة</th><th>التقدير</th></tr></thead><tbody>${rows}</tbody></table>`);
+        return;
       }
 
       // ─── طلاب ───
       if (type === 'students') {
-    	const rows = SD.map((s,i)=>`<tr>
-    	  <td>${i+1}</td><td style="text-align:right;font-weight:700">${s.name}</td>
-    	  <td>${s.age||'-'}</td><td>${s.level||'-'}</td>
-    	  <td dir="ltr">${fmtPhone(s.phone)}</td><td>${fmtDate(s.registration_date)}</td>
-    	</tr>`).join('');
-    	openPrintWin('A4 portrait', buildPrintHeader('قاعدة بيانات الطلاب المسجلين', `إجمالي الطلاب: ${SD.length} | تاريخ الطباعة: ${todayStr()}`) +
-    	  `<table><thead><tr><th>#</th><th>الاسم</th><th>العمر</th><th>المستوى</th><th>هاتف ولي الأمر</th><th>تاريخ التسجيل</th></tr></thead><tbody>${rows}</tbody></table>`);
-    	return;
+        const rows = SD.map((s,i)=>`<tr>
+          <td>${i+1}</td><td style="text-align:right;font-weight:700">${s.name}</td>
+          <td>${s.age||'-'}</td><td>${s.level||'-'}</td>
+          <td dir="ltr">${fmtPhone(s.phone)}</td><td>${fmtDate(s.registration_date)}</td>
+        </tr>`).join('');
+        openPrintWin('A4 portrait', buildPrintHeader('قاعدة بيانات الطلاب المسجلين', `إجمالي الطلاب: ${SD.length} | تاريخ الطباعة: ${todayStr()}`) +
+          `<table><thead><tr><th>#</th><th>الاسم</th><th>العمر</th><th>المستوى</th><th>هاتف ولي الأمر</th><th>تاريخ التسجيل</th></tr></thead><tbody>${rows}</tbody></table>`);
+        return;
       }
 
       // ─── معلمون ───
       if (type === 'teachers') {
-    	const rows = TD.map((t,i)=>`<tr>
-    	  <td>${i+1}</td><td style="text-align:right;font-weight:700">${t.profiles?.full_name||'-'}</td>
-    	  <td style="font-size:.78rem" dir="ltr">${t.profiles?.email||'-'}</td>
-    	  <td dir="ltr">${t.phone||'-'}</td><td>${t.specialization||'-'}</td><td>${t.quran_parts||'-'}</td>
-    	</tr>`).join('');
-    	openPrintWin('A4 portrait', buildPrintHeader('هيئة التدريس', `تاريخ الطباعة: ${todayStr()}`) +
-    	  `<table><thead><tr><th>#</th><th>الاسم</th><th>البريد الإلكتروني</th><th>الهاتف</th><th>التخصص</th><th>مقدار الحفظ</th></tr></thead><tbody>${rows}</tbody></table>`);
-    	return;
+        const rows = TD.map((t,i)=>`<tr>
+          <td>${i+1}</td><td style="text-align:right;font-weight:700">${t.profiles?.full_name||'-'}</td>
+          <td style="font-size:.78rem" dir="ltr">${t.profiles?.email||'-'}</td>
+          <td dir="ltr">${t.phone||'-'}</td><td>${t.specialization||'-'}</td><td>${t.quran_parts||'-'}</td>
+        </tr>`).join('');
+        openPrintWin('A4 portrait', buildPrintHeader('هيئة التدريس', `تاريخ الطباعة: ${todayStr()}`) +
+          `<table><thead><tr><th>#</th><th>الاسم</th><th>البريد الإلكتروني</th><th>الهاتف</th><th>التخصص</th><th>مقدار الحفظ</th></tr></thead><tbody>${rows}</tbody></table>`);
+        return;
       }
 
       // ─── نشرة ───
       if (type === 'news') {
-    	const txt = document.getElementById('news-txt').innerHTML;
-    	const src = document.getElementById('news-src').textContent;
-    	const win = window.open('','_blank');
-    	win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><title>النشرة</title>
-    	  <style>@page{size:A4 portrait;margin:0;}</style>
-    	  <style>${ISLAMIC_PRINT_CSS}</style>
-    	</head><body>
-    	  <div class="page-wrap">
-    		${buildIslamicPrintHeader('النشرة الأسبوعية','تاريخ: '+todayStr())}
-    		<div style="position:relative;margin-top:20px;border:1.5px solid rgba(154,114,48,0.3);border-radius:12px;padding:28px 24px;background:rgba(154,114,48,0.02);">
-    		  <div style="position:absolute;top:-20px;right:20px;font-size:70px;opacity:.06;color:#9a7230;font-family:serif;line-height:1">❝</div>
-    		  <div class="star-sep" style="margin-bottom:14px">✦ ✦ ✦ ✦ ✦</div>
-    		  <div style="font-family:'Amiri',serif;font-size:1.3rem;line-height:2.4;text-align:justify;">${txt}</div>
-    		  <div class="star-sep" style="margin-top:14px">✦ ✦ ✦ ✦ ✦</div>
-    		  ${src?`<p style="margin-top:12px;text-align:left;font-size:.9rem;color:#9a7230;font-weight:700;">${src}</p>`:''}
-    		</div>
-    		<div class="print-footer">${CENTER_NAME} — ${todayStr()}</div>
-    	  </div>
-    	</body></html>`);
-    	win.document.close();
-    	win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
-    	return;
+        const txt = document.getElementById('news-txt').innerHTML;
+        const src = document.getElementById('news-src').textContent;
+        const win = window.open('','_blank');
+        win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><title>النشرة</title>
+          <style>@page{size:A4 portrait;margin:0;}</style>
+          <style>${ISLAMIC_PRINT_CSS}</style>
+        </head><body>
+          <div class="page-wrap">
+            ${buildIslamicPrintHeader('النشرة الأسبوعية','تاريخ: '+todayStr())}
+            <div style="position:relative;margin-top:20px;border:1.5px solid rgba(154,114,48,0.3);border-radius:12px;padding:28px 24px;background:rgba(154,114,48,0.02);">
+              <div style="position:absolute;top:-20px;right:20px;font-size:70px;opacity:.06;color:#9a7230;font-family:serif;line-height:1">❝</div>
+              <div class="star-sep" style="margin-bottom:14px">✦ ✦ ✦ ✦ ✦</div>
+              <div style="font-family:'Amiri',serif;font-size:1.3rem;line-height:2.4;text-align:justify;">${txt}</div>
+              <div class="star-sep" style="margin-top:14px">✦ ✦ ✦ ✦ ✦</div>
+              ${src?`<p style="margin-top:12px;text-align:left;font-size:.9rem;color:#9a7230;font-weight:700;">${src}</p>`:''}
+            </div>
+            <div class="print-footer">${CENTER_NAME} — ${todayStr()}</div>
+          </div>
+        </body></html>`);
+        win.document.close();
+        win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
+        return;
       }
 
       // ─── مقرأة المعلمين ───
       if (type === 'teacher-rev') {
-    	const rows = [];
-    	document.querySelectorAll('#tb-teacher-rev tr').forEach((tr,i) => {
-    	  rows.push(tr.outerHTML);
-    	});
-    	openPrintWin('A4 portrait', buildPrintHeader('مقرأة المعلمين — سجل المراجعات', `تاريخ الطباعة: ${todayStr()}`) +
-    	  `<table><thead><tr><th>#</th><th>المقرئ</th><th>المستمع</th><th>من</th><th>إلى</th><th>السورة/الأجزاء</th><th>الدرجة</th><th>التاريخ</th></tr></thead><tbody>${rows.join('')}</tbody></table>`);
-    	return;
+        const rows = [];
+        document.querySelectorAll('#tb-teacher-rev tr').forEach((tr,i) => {
+          rows.push(tr.outerHTML);
+        });
+        openPrintWin('A4 portrait', buildPrintHeader('مقرأة المعلمين — سجل المراجعات', `تاريخ الطباعة: ${todayStr()}`) +
+          `<table><thead><tr><th>#</th><th>المقرئ</th><th>المستمع</th><th>من</th><th>إلى</th><th>السورة/الأجزاء</th><th>الدرجة</th><th>التاريخ</th></tr></thead><tbody>${rows.join('')}</tbody></table>`);
+        return;
       }
     }
 
@@ -4917,7 +4985,8 @@
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       const newTheme = isDark ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
-      document.getElementById('theme-icon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      const iconUse = document.getElementById('theme-icon-use');
+      if (iconUse) iconUse.setAttribute('href', newTheme === 'dark' ? '#i-sun' : '#i-moon');
       localStorage.setItem('qc-theme', newTheme);
     }
 
@@ -5009,10 +5078,21 @@
     // DAILY DHIKR
     // ══════════════════════════════════════════════
     const ADHKAR = [
-      'سبحان الله وبحمده سبحان الله العظيم','اللهم صلِّ وسلم على نبينا محمد',
-      'أستغفر الله العظيم وأتوب إليه','لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير',
-      'سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر','حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم',
+      'سبحان الله وبحمده سبحان الله العظيم',
+      'اللهم صلِّ وسلم على نبينا محمد ﷺ',
+      'أستغفر الله العظيم وأتوب إليه',
+      'لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير',
+      'سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر',
+      'حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم',
       'اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب أحزاننا وهمومنا',
+      'اللهم إنا نسألك علماً نافعاً ورزقاً طيباً وعملاً متقبلاً',
+      'رب اشرح لي صدري ويسر لي أمري واحلل عقدة من لساني يفقهوا قولي',
+      'اللهم إني أعوذ بك من الهم والحزن والعجز والكسل والجبن والبخل',
+      'يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين',
+      'سبحانك اللهم وبحمدك، أشهد أن لا إله إلا أنت، أستغفرك وأتوب إليك',
+      'اللهم اجعلنا من أهل القرآن الذين هم أهلك وخاصتك',
+      'لا حول ولا قوة إلا بالله العلي العظيم',
+      'اللهم بارك لنا في أوقاتنا وأعمارنا وأعمالنا واجعلها في طاعتك',
     ];
     function setDhikrOfDay() {
       const el = document.getElementById('dhikr-of-day');
@@ -5045,108 +5125,108 @@
     // ─── طلاب ───
     function exportStudentsExcel() {
       loadXLSX(() => {
-    	const wb = XLSX.utils.book_new();
-    	const data = [
-    	  ...xlsxMeta('قاعدة بيانات الطلاب'),
-    	  ['#','الاسم الكامل','العمر','المستوى الدراسي','هاتف ولي الأمر','تاريخ التسجيل'],
-    	  ...SD.map((s,i)=>[i+1, s.name, s.age||'', s.level||'', fmtPhone(s.phone), fmtDate(s.registration_date)])
-    	];
-    	const ws = XLSX.utils.aoa_to_sheet(data);
-    	applyBaseStyle(ws,[4,28,8,18,18,16]);
-    	ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:5}},{s:{r:1,c:0},e:{r:1,c:5}},{s:{r:2,c:0},e:{r:2,c:5}}];
-    	XLSX.utils.book_append_sheet(wb, ws, 'الطلاب');
-    	dlXlsx(wb, `طلاب_مركز_ابن_عباس_${todayISO()}.xlsx`);
+        const wb = XLSX.utils.book_new();
+        const data = [
+          ...xlsxMeta('قاعدة بيانات الطلاب'),
+          ['#','الاسم الكامل','العمر','المستوى الدراسي','هاتف ولي الأمر','تاريخ التسجيل'],
+          ...SD.map((s,i)=>[i+1, s.name, s.age||'', s.level||'', fmtPhone(s.phone), fmtDate(s.registration_date)])
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        applyBaseStyle(ws,[4,28,8,18,18,16]);
+        ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:5}},{s:{r:1,c:0},e:{r:1,c:5}},{s:{r:2,c:0},e:{r:2,c:5}}];
+        XLSX.utils.book_append_sheet(wb, ws, 'الطلاب');
+        dlXlsx(wb, `طلاب_مركز_ابن_عباس_${todayISO()}.xlsx`);
       });
     }
 
     // ─── حضور ───
     function exportAttendanceExcel() {
       loadXLSX(() => {
-    	const monthEl = document.getElementById('att-month');
-    	const monthName = monthEl.options[monthEl.selectedIndex].text;
-    	const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'];
-    	const wb = XLSX.utils.book_new();
+        const monthEl = document.getElementById('att-month');
+        const monthName = monthEl.options[monthEl.selectedIndex].text;
+        const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'];
+        const wb = XLSX.utils.book_new();
 
-    	// شيت الحضور التفصيلي
-    	const hdr1 = ['#','اسم الطالب'];
-    	for(let w=1;w<=4;w++) days.forEach(d=>hdr1.push(`أ${w}/${d.slice(0,2)}`));
-    	hdr1.push('مجموع الحضور','مجموع الغياب','نسبة الحضور');
-    	const rows1 = SD.map((s,i)=>{
-    	  const row=[i+1,s.name]; let p=0,a=0;
-    	  for(let w=1;w<=4;w++) days.forEach((d,di)=>{
-    		const v=AD[`${s.id}_w${w}_d${di}`]||'';
-    		row.push(v==='P'?'حاضر':v==='A'?'غائب':'-');
-    		if(v==='P') p++; if(v==='A') a++;
-    	  });
-    	  row.push(p,a,`${Math.round((p/20)*100)}%`);
-    	  return row;
-    	});
-    	const ws1 = XLSX.utils.aoa_to_sheet([...xlsxMeta(`كشف الحضور — شهر ${monthName}`),[],hdr1,...rows1]);
-    	ws1['!cols']=[{wch:4},{wch:24},...Array(20).fill({wch:7}),{wch:10},{wch:10},{wch:10}];
-    	ws1['!merges']=[{s:{r:0,c:0},e:{r:0,c:22}},{s:{r:1,c:0},e:{r:1,c:22}},{s:{r:2,c:0},e:{r:2,c:22}}];
-    	XLSX.utils.book_append_sheet(wb, ws1, 'الحضور التفصيلي');
+        // شيت الحضور التفصيلي
+        const hdr1 = ['#','اسم الطالب'];
+        for(let w=1;w<=4;w++) days.forEach(d=>hdr1.push(`أ${w}/${d.slice(0,2)}`));
+        hdr1.push('مجموع الحضور','مجموع الغياب','نسبة الحضور');
+        const rows1 = SD.map((s,i)=>{
+          const row=[i+1,s.name]; let p=0,a=0;
+          for(let w=1;w<=4;w++) days.forEach((d,di)=>{
+            const v=AD[`${s.id}_w${w}_d${di}`]||'';
+            row.push(v==='P'?'حاضر':v==='A'?'غائب':'-');
+            if(v==='P') p++; if(v==='A') a++;
+          });
+          row.push(p,a,`${Math.round((p/20)*100)}%`);
+          return row;
+        });
+        const ws1 = XLSX.utils.aoa_to_sheet([...xlsxMeta(`كشف الحضور — شهر ${monthName}`),[],hdr1,...rows1]);
+        ws1['!cols']=[{wch:4},{wch:24},...Array(20).fill({wch:7}),{wch:10},{wch:10},{wch:10}];
+        ws1['!merges']=[{s:{r:0,c:0},e:{r:0,c:22}},{s:{r:1,c:0},e:{r:1,c:22}},{s:{r:2,c:0},e:{r:2,c:22}}];
+        XLSX.utils.book_append_sheet(wb, ws1, 'الحضور التفصيلي');
 
-    	// شيت الملخص
-    	const hdr2=['#','اسم الطالب','أيام الحضور','أيام الغياب','لم يُسجَّل','نسبة الحضور'];
-    	const rows2=SD.map((s,i)=>{
-    	  let p=0,a=0;
-    	  for(let w=1;w<=4;w++) for(let di=0;di<5;di++) { if(AD[`${s.id}_w${w}_d${di}`]==='P') p++; if(AD[`${s.id}_w${w}_d${di}`]==='A') a++; }
-    	  return [i+1,s.name,p,a,20-p-a,`${Math.round((p/20)*100)}%`];
-    	});
-    	const ws2=XLSX.utils.aoa_to_sheet([...xlsxMeta(`ملخص الحضور — شهر ${monthName}`),[],hdr2,...rows2]);
-    	ws2['!cols']=[{wch:4},{wch:26},{wch:12},{wch:12},{wch:12},{wch:12}];
-    	XLSX.utils.book_append_sheet(wb,ws2,'ملخص الحضور');
-    	dlXlsx(wb,`حضور_مركز_ابن_عباس_${monthName}_${todayISO()}.xlsx`);
+        // شيت الملخص
+        const hdr2=['#','اسم الطالب','أيام الحضور','أيام الغياب','لم يُسجَّل','نسبة الحضور'];
+        const rows2=SD.map((s,i)=>{
+          let p=0,a=0;
+          for(let w=1;w<=4;w++) for(let di=0;di<5;di++) { if(AD[`${s.id}_w${w}_d${di}`]==='P') p++; if(AD[`${s.id}_w${w}_d${di}`]==='A') a++; }
+          return [i+1,s.name,p,a,20-p-a,`${Math.round((p/20)*100)}%`];
+        });
+        const ws2=XLSX.utils.aoa_to_sheet([...xlsxMeta(`ملخص الحضور — شهر ${monthName}`),[],hdr2,...rows2]);
+        ws2['!cols']=[{wch:4},{wch:26},{wch:12},{wch:12},{wch:12},{wch:12}];
+        XLSX.utils.book_append_sheet(wb,ws2,'ملخص الحضور');
+        dlXlsx(wb,`حضور_مركز_ابن_عباس_${monthName}_${todayISO()}.xlsx`);
       });
     }
 
     // ─── حلقات ───
     function exportHalaqatExcel() {
       loadXLSX(() => {
-    	const wb = XLSX.utils.book_new();
-    	HALAQAT.forEach(hq=>{
-    	  const rows=HQ_ALL.filter(r=>r.halqa===hq.id);
-    	  const ws=XLSX.utils.aoa_to_sheet([
-    		...xlsxMeta(hq.label),[],
-    		['#','التاريخ','اسم الطالب','من','إلى','السورة','الدرجة','التقدير','المعلم'],
-    		...rows.map((r,i)=>[i+1,fmtDate(r.date),r.student||'',r.from_verse||'',r.to_verse||'',r.surah||'',r.grade||'',r.grade?gradeLabel(r.grade):'',r.teacher||''])
-    	  ]);
-    	  ws['!cols']=[{wch:4},{wch:14},{wch:24},{wch:14},{wch:14},{wch:16},{wch:8},{wch:12},{wch:24}];
-    	  XLSX.utils.book_append_sheet(wb,ws,hq.label.replace('الحلقة ','ح'));
-    	});
-    	dlXlsx(wb,`حلقات_مركز_ابن_عباس_${todayISO()}.xlsx`);
+        const wb = XLSX.utils.book_new();
+        HALAQAT.forEach(hq=>{
+          const rows=HQ_ALL.filter(r=>r.halqa===hq.id);
+          const ws=XLSX.utils.aoa_to_sheet([
+            ...xlsxMeta(hq.label),[],
+            ['#','التاريخ','اسم الطالب','من','إلى','السورة','الدرجة','التقدير','المعلم'],
+            ...rows.map((r,i)=>[i+1,fmtDate(r.date),r.student||'',r.from_verse||'',r.to_verse||'',r.surah||'',r.grade||'',r.grade?gradeLabel(r.grade):'',r.teacher||''])
+          ]);
+          ws['!cols']=[{wch:4},{wch:14},{wch:24},{wch:14},{wch:14},{wch:16},{wch:8},{wch:12},{wch:24}];
+          XLSX.utils.book_append_sheet(wb,ws,hq.label.replace('الحلقة ','ح'));
+        });
+        dlXlsx(wb,`حلقات_مركز_ابن_عباس_${todayISO()}.xlsx`);
       });
     }
 
     // ─── اختبارات ───
     function exportExamsExcel() {
       loadXLSX(() => {
-    	const halqaEl=document.getElementById('ex-halqa');
-    	const halqaName=halqaEl.options[halqaEl.selectedIndex].text;
-    	const month=document.getElementById('ex-month').value;
-    	const s1=g('ex-surah-1'),s2=g('ex-surah-2'),s3=g('ex-surah-3'),s4=g('ex-surah-4'),s5=g('ex-surah-5');
-    	const wb=XLSX.utils.book_new();
-    	const hdr=['#','اسم الطالب',`ف١ (${s1||'—'})`,`ف٢ (${s2||'—'})`,`ف٣ (${s3||'—'})`,`ف٤ (${s4||'—'})`,`ف٥ (${s5||'—'})`,
-    	  'التجويد/١٠','الترتيل/١٠','السلوك/١٠','المداومة/١٠','الحفظ/١٠','المجموع/١٠٠','التقدير'];
-    	const rows=getExamRows().map((r,i)=>[i+1,r.student_name||'',r.s1||'',r.s2||'',r.s3||'',r.s4||'',r.s5||'',
-    	  r.tajweed||'',r.tarteel||'',r.solok||'',r.mudawama||'',r.hifz||'',r.total||'',r.taqdeer||'']);
-    	const ws=XLSX.utils.aoa_to_sheet([...xlsxMeta(`كشف الاختبار — ${halqaName} — ${month}`),[],hdr,...rows]);
-    	ws['!cols']=[{wch:4},{wch:24},...Array(11).fill({wch:10}),{wch:12}];
-    	XLSX.utils.book_append_sheet(wb,ws,'الاختبار');
-    	dlXlsx(wb,`اختبار_${halqaName}_${month}.xlsx`);
+        const halqaEl=document.getElementById('ex-halqa');
+        const halqaName=halqaEl.options[halqaEl.selectedIndex].text;
+        const month=document.getElementById('ex-month').value;
+        const s1=g('ex-surah-1'),s2=g('ex-surah-2'),s3=g('ex-surah-3'),s4=g('ex-surah-4'),s5=g('ex-surah-5');
+        const wb=XLSX.utils.book_new();
+        const hdr=['#','اسم الطالب',`ف١ (${s1||'—'})`,`ف٢ (${s2||'—'})`,`ف٣ (${s3||'—'})`,`ف٤ (${s4||'—'})`,`ف٥ (${s5||'—'})`,
+          'التجويد/١٠','الترتيل/١٠','السلوك/١٠','المداومة/١٠','الحفظ/١٠','المجموع/١٠٠','التقدير'];
+        const rows=getExamRows().map((r,i)=>[i+1,r.student_name||'',r.s1||'',r.s2||'',r.s3||'',r.s4||'',r.s5||'',
+          r.tajweed||'',r.tarteel||'',r.solok||'',r.mudawama||'',r.hifz||'',r.total||'',r.taqdeer||'']);
+        const ws=XLSX.utils.aoa_to_sheet([...xlsxMeta(`كشف الاختبار — ${halqaName} — ${month}`),[],hdr,...rows]);
+        ws['!cols']=[{wch:4},{wch:24},...Array(11).fill({wch:10}),{wch:12}];
+        XLSX.utils.book_append_sheet(wb,ws,'الاختبار');
+        dlXlsx(wb,`اختبار_${halqaName}_${month}.xlsx`);
       });
     }
 
     // ─── معلمون ───
     function exportTeachersExcel() {
       loadXLSX(() => {
-    	const wb=XLSX.utils.book_new();
-    	const hdr=['#','الاسم','البريد الإلكتروني','رقم الهاتف','التخصص','مقدار الحفظ','العمر','الحالة الاجتماعية','عدد الأبناء','مكان السكن'];
-    	const rows=TD.map((t,i)=>[i+1,t.profiles?.full_name||'',t.profiles?.email||'',t.phone||'',t.specialization||'',t.quran_parts||'',t.age||'',t.marital_status||'',t.children||'',t.residence||'']);
-    	const ws=XLSX.utils.aoa_to_sheet([...xlsxMeta('هيئة التدريس'),[],hdr,...rows]);
-    	ws['!cols']=[{wch:4},{wch:24},{wch:28},{wch:16},{wch:20},{wch:14},{wch:8},{wch:14},{wch:10},{wch:24}];
-    	XLSX.utils.book_append_sheet(wb,ws,'المعلمون');
-    	dlXlsx(wb,`معلمون_مركز_ابن_عباس_${todayISO()}.xlsx`);
+        const wb=XLSX.utils.book_new();
+        const hdr=['#','الاسم','البريد الإلكتروني','رقم الهاتف','التخصص','مقدار الحفظ','العمر','الحالة الاجتماعية','عدد الأبناء','مكان السكن'];
+        const rows=TD.map((t,i)=>[i+1,t.profiles?.full_name||'',t.profiles?.email||'',t.phone||'',t.specialization||'',t.quran_parts||'',t.age||'',t.marital_status||'',t.children||'',t.residence||'']);
+        const ws=XLSX.utils.aoa_to_sheet([...xlsxMeta('هيئة التدريس'),[],hdr,...rows]);
+        ws['!cols']=[{wch:4},{wch:24},{wch:28},{wch:16},{wch:20},{wch:14},{wch:8},{wch:14},{wch:10},{wch:24}];
+        XLSX.utils.book_append_sheet(wb,ws,'المعلمون');
+        dlXlsx(wb,`معلمون_مركز_ابن_عباس_${todayISO()}.xlsx`);
       });
     }
 
@@ -5158,12 +5238,12 @@
       const saved = localStorage.getItem('qc-theme');
       if (saved === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        const btn = document.getElementById('theme-icon');
-        if (btn) btn.textContent = '☀️';
+        const iconUse = document.getElementById('theme-icon-use');
+        if (iconUse) iconUse.setAttribute('href', '#i-sun');
       }
       ['login-logo-img','hdr-logo-img'].forEach(id => {
-    	const img = document.getElementById(id); if(!img) return;
-    	img.onerror = () => { img.parentElement.innerHTML = '<svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M8 22 Q22 6 36 22 Q22 38 8 22Z" fill="rgba(201,168,76,0.8)"/><circle cx="22" cy="22" r="5" fill="rgba(13,17,23,0.9)"/></svg>'; };
+        const img = document.getElementById(id); if(!img) return;
+        img.onerror = () => { img.parentElement.innerHTML = '<svg width="36" height="36" viewBox="0 0 44 44" fill="none"><path d="M8 22 Q22 6 36 22 Q22 38 8 22Z" fill="rgba(201,168,76,0.8)"/><circle cx="22" cy="22" r="5" fill="rgba(13,17,23,0.9)"/></svg>'; };
       });
     });
 
@@ -5175,27 +5255,27 @@
       const stDate=document.getElementById('st-date'); if(stDate) stDate.textContent=todayStr();
 
       try {
-    	const { data: { session } } = await sb.auth.getSession();
-    	if (session) {
-    	  try {
-    		const { data: profileData } = await sb.from('profiles').select('account_status, full_name, roles(role_name)').eq('id', session.user.id).single();
-    		if (profileData && (profileData.account_status==='pending'||profileData.account_status==='rejected')) {
-    		  await sb.auth.signOut();
-    		  document.getElementById('ls').style.display='none';
-    		  document.getElementById('lp').style.display='flex';
-    		  toast('عذراً، حسابك قيد المراجعة أو مرفوض.','error'); return;
-    		}
-    		CU = { id:session.user.id, email:session.user.email||'', name:profileData?.full_name||(session.user.email?session.user.email.split('@')[0]:'مستخدم'), type:(profileData&&profileData.roles)?profileData.roles.role_name:'user' };
-    	  } catch(e) { CU={id:session.user.id,email:session.user.email||'',name:session.user.email?session.user.email.split('@')[0]:'مستخدم',type:'user'}; }
-    	}
-    	const ls=document.getElementById('ls'); if(ls) ls.style.opacity='0';
-    	setTimeout(() => {
-    	  if(ls) ls.style.display='none';
-    	  if(session&&CU) showApp(); else { const lp=document.getElementById('lp'); if(lp) lp.style.display='flex'; }
-    	}, 700);
+        const { data: { session } } = await sb.auth.getSession();
+        if (session) {
+          try {
+            const { data: profileData } = await sb.from('profiles').select('account_status, full_name, roles(role_name)').eq('id', session.user.id).single();
+            if (profileData && (profileData.account_status==='pending'||profileData.account_status==='rejected')) {
+              await sb.auth.signOut();
+              document.getElementById('ls').style.display='none';
+              document.getElementById('lp').style.display='flex';
+              toast('عذراً، حسابك قيد المراجعة أو مرفوض.','error'); return;
+            }
+            CU = { id:session.user.id, email:session.user.email||'', name:profileData?.full_name||(session.user.email?session.user.email.split('@')[0]:'مستخدم'), type:(profileData&&profileData.roles)?profileData.roles.role_name:'user' };
+          } catch(e) { CU={id:session.user.id,email:session.user.email||'',name:session.user.email?session.user.email.split('@')[0]:'مستخدم',type:'user'}; }
+        }
+        const ls=document.getElementById('ls'); if(ls) ls.style.opacity='0';
+        setTimeout(() => {
+          if(ls) ls.style.display='none';
+          if(session&&CU) showApp(); else { const lp=document.getElementById('lp'); if(lp) lp.style.display='flex'; }
+        }, 700);
       } catch(e) {
-    	document.getElementById('ls').style.display='none';
-    	document.getElementById('lp').style.display='flex';
+        document.getElementById('ls').style.display='none';
+        document.getElementById('lp').style.display='flex';
       }
       const pi=document.getElementById('li-pass'); if(pi) pi.addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
       const ei=document.getElementById('li-email'); if(ei) ei.addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('li-pass').focus(); });
@@ -5211,14 +5291,14 @@
       if(!email||!password){ err.textContent='الرجاء إدخال البريد وكلمة المرور'; err.style.display='block'; return; }
       btn.textContent='جاري التحقق...'; btn.disabled=true;
       try {
-    	const {data:authData,error:authError}=await sb.auth.signInWithPassword({email,password});
-    	if(authError){ btn.textContent='دخول'; btn.disabled=false; err.textContent='بيانات الدخول غير صحيحة.'; err.style.display='block'; return; }
-    	const {data:profileData}=await sb.from('profiles').select('account_status, full_name, roles(role_name)').eq('id',authData.user.id).single();
-    	if(profileData&&profileData.account_status==='pending'){ await sb.auth.signOut(); btn.textContent='دخول'; btn.disabled=false; err.textContent='حسابك قيد المراجعة.'; err.style.display='block'; return; }
-    	if(profileData&&profileData.account_status==='rejected'){ await sb.auth.signOut(); btn.textContent='دخول'; btn.disabled=false; err.textContent='تم رفض طلب الانضمام.'; err.style.display='block'; return; }
-    	btn.textContent='دخول'; btn.disabled=false;
-    	CU={id:authData.user.id,email:authData.user.email,name:profileData?.full_name||authData.user.email.split('@')[0],type:profileData?.roles?.role_name||'user'};
-    	showApp();
+        const {data:authData,error:authError}=await sb.auth.signInWithPassword({email,password});
+        if(authError){ btn.textContent='دخول'; btn.disabled=false; err.textContent='بيانات الدخول غير صحيحة.'; err.style.display='block'; return; }
+        const {data:profileData}=await sb.from('profiles').select('account_status, full_name, roles(role_name)').eq('id',authData.user.id).single();
+        if(profileData&&profileData.account_status==='pending'){ await sb.auth.signOut(); btn.textContent='دخول'; btn.disabled=false; err.textContent='حسابك قيد المراجعة.'; err.style.display='block'; return; }
+        if(profileData&&profileData.account_status==='rejected'){ await sb.auth.signOut(); btn.textContent='دخول'; btn.disabled=false; err.textContent='تم رفض طلب الانضمام.'; err.style.display='block'; return; }
+        btn.textContent='دخول'; btn.disabled=false;
+        CU={id:authData.user.id,email:authData.user.email,name:profileData?.full_name||authData.user.email.split('@')[0],type:profileData?.roles?.role_name||'user'};
+        showApp();
       } catch(e){ btn.textContent='دخول'; btn.disabled=false; err.textContent='حدث خطأ في الاتصال.'; err.style.display='block'; }
     }
 
@@ -5279,12 +5359,12 @@
     function buildQuickActions(isAdmin) {
       const qa=document.getElementById('qa-grid'); if(!qa) return; let items='';
       if(isAdmin) {
-    	items+=`<div class="qi" onclick="showPage('students')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">الطلاب</div></div>`;
-    	items+=`<div class="qi" onclick="openAddStuModal()"><svg width="26" height="26" color="var(--gold2)"><use href="#i-plus"/></svg><div class="ql">إضافة طالب</div></div>`;
-    	items+=`<div class="qi" onclick="showPage('teachers')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">المعلمون</div></div>`;
-    	items+=`<div class="qi" onclick="showPage('fin')"><svg width="26" height="26" color="var(--gold2)"><use href="#i-heart"/></svg><div class="ql">المالية</div></div>`;
-    	items+=`<div class="qi" onclick="showPage('accs')"><svg width="26" height="26" color="var(--green2)"><use href="#i-cog"/></svg><div class="ql">الحسابات</div></div>`;
-    	items+=`<div class="qi" onclick="showPage('certs');updateCert();"><svg width="26" height="26" color="var(--gold2)"><use href="#i-award"/></svg><div class="ql">الشهادات</div></div>`;
+        items+=`<div class="qi" onclick="showPage('students')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">الطلاب</div></div>`;
+        items+=`<div class="qi" onclick="openAddStuModal()"><svg width="26" height="26" color="var(--gold2)"><use href="#i-plus"/></svg><div class="ql">إضافة طالب</div></div>`;
+        items+=`<div class="qi" onclick="showPage('teachers')"><svg width="26" height="26" color="var(--green2)"><use href="#i-users"/></svg><div class="ql">المعلمون</div></div>`;
+        items+=`<div class="qi" onclick="showPage('fin')"><svg width="26" height="26" color="var(--gold2)"><use href="#i-heart"/></svg><div class="ql">المالية</div></div>`;
+        items+=`<div class="qi" onclick="showPage('accs')"><svg width="26" height="26" color="var(--green2)"><use href="#i-cog"/></svg><div class="ql">الحسابات</div></div>`;
+        items+=`<div class="qi" onclick="showPage('certs');updateCert();"><svg width="26" height="26" color="var(--gold2)"><use href="#i-award"/></svg><div class="ql">الشهادات</div></div>`;
       }
       items+=`<div class="qi" onclick="showPage('halaqat')"><svg width="26" height="26" color="var(--green2)"><use href="#i-book"/></svg><div class="ql">الحلقات</div></div>`;
       items+=`<div class="qi" onclick="showPage('attend')"><svg width="26" height="26" color="var(--green2)"><use href="#i-cal"/></svg><div class="ql">الحضور</div></div>`;
@@ -5331,24 +5411,188 @@
     // ── CERTIFICATES ──
     let certZoom = 1;
     function updateCert() {
-      const type=g('c-type'), stu=g('c-stu')||'.......................', teacher=g('c-teacher')||'.......................', halqa=g('c-halqa')||'.......................', parts=g('c-parts')||'.......................';
-      const pw=document.getElementById('c-parts-wrap'); if(pw) pw.style.display=type==='hifz'?'flex':'none';
-      let title='', text='';
+      const type=g('c-type');
+      const stu=g('c-stu')||'.......................';
+      const teacher=g('c-teacher')||'.......................';
+      const halqa=g('c-halqa')||'.......................';
+      const parts=g('c-parts')||'.......................';
+      const pw=document.getElementById('c-parts-wrap');
+      if(pw) pw.style.display=type==='hifz'?'flex':'none';
+      // Update named span elements directly (no innerHTML replacement of whole body)
+      const dispStu=document.getElementById('disp-stu'); if(dispStu) dispStu.textContent=stu;
+      const dispHalqa=document.getElementById('disp-halqa'); if(dispHalqa) dispHalqa.textContent=halqa;
+      const dispTeacher=document.getElementById('disp-teacher'); if(dispTeacher) dispTeacher.textContent=teacher;
+      const dispParts=document.getElementById('disp-parts'); if(dispParts) dispParts.textContent=parts;
+      const sEl=document.getElementById('cert-t-sign'); if(sEl) sEl.textContent=teacher!=='.......................'?teacher:'.......................';
+      let title='', bodyHTML='';
       if(type==='hifz') {
-    	  title = 'شهادة حفظ وتفوق';
-    	  text = `يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>قد أتم بحمد الله حفظ ( <strong>${parts}</strong> ) من القرآن الكريم.<br>سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.`;
+        title='شهادة حفظ وتفوق';
+        bodyHTML=`يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / <strong id="disp-stu">${stu}</strong><br>
+        المقيد في <strong id="disp-halqa">${halqa}</strong> عند المعلم / <strong id="disp-teacher">${teacher}</strong><br>
+        قد أتم بحمد الله حفظ ( <strong id="disp-parts">${parts}</strong> ) من القرآن الكريم.<br>
+        سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.`;
       } else if(type==='shokr') {
-    	  title = 'شهادة شكر وتقدير';
-    	  text = `تتقدم إدارة مركز عبدالله بن عباس بخالص الشكر والتقدير للطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>وذلك لجهوده المباركة وتميزه الملحوظ ومثابرته في الحلقات.<br>نسأل الله أن يبارك فيه وينفع به الإسلام والمسلمين.`;
+        title='شهادة شكر وتقدير';
+        bodyHTML=`تتقدم إدارة مركز عبدالله بن عباس بخالص الشكر والتقدير للطالب / <strong id="disp-stu">${stu}</strong><br>
+        المقيد في <strong id="disp-halqa">${halqa}</strong> عند المعلم / <strong id="disp-teacher">${teacher}</strong><br>
+        وذلك لجهوده المباركة وتميزه الملحوظ ومثابرته في الحلقات.<br>
+        نسأل الله أن يبارك فيه وينفع به الإسلام والمسلمين.`;
       } else if(type==='solok') {
-    	  title = 'شهادة حسن سيرة وسلوك';
-    	  text = `تشهد إدارة مركز عبدالله بن عباس بأن الطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>يتصف بحسن السيرة والسلوك والأخلاق الفاضلة والالتزام بالآداب طيلة فترة دراسته بالمركز.<br>مع تمنياتنا له بدوام التوفيق والنجاح.`;
+        title='شهادة حسن سيرة وسلوك';
+        bodyHTML=`تشهد إدارة مركز عبدالله بن عباس بأن الطالب / <strong id="disp-stu">${stu}</strong><br>
+        المقيد في <strong id="disp-halqa">${halqa}</strong> عند المعلم / <strong id="disp-teacher">${teacher}</strong><br>
+        يتصف بحسن السيرة والسلوك والأخلاق الفاضلة والالتزام بالآداب طيلة فترة دراسته بالمركز.<br>
+        مع تمنياتنا له بدوام التوفيق والنجاح.`;
       }
-      const tEl = document.getElementById('cert-title'); if(tEl) tEl.innerHTML = title;
-      const bEl = document.getElementById('cert-text'); if(bEl) bEl.innerHTML = text;
-      const sEl = document.getElementById('cert-t-sign'); if(sEl) sEl.innerHTML = teacher !== '.......................' ? teacher : '.......................';
+      const tEl=document.getElementById('cert-title'); if(tEl) tEl.textContent=title;
+      const bEl=document.getElementById('cert-text'); if(bEl) bEl.innerHTML=bodyHTML;
     }
-    function zoomCert(step) { certZoom += step; if(certZoom < 0.6) certZoom = 0.6; if(certZoom > 1.6) certZoom = 1.6; document.getElementById('cert-print-area').style.setProperty('--z', certZoom); }
+    function zoomCert(step) {
+      certZoom=Math.min(1.6,Math.max(0.6,certZoom+step));
+      document.getElementById('cert-print-area').style.setProperty('--z',certZoom);
+    }
+
+    // ── CERT PRINT — Perfect A4 Landscape ──
+    function printCertLandscape() {
+      const type=g('c-type');
+      const stu=g('c-stu')||'.......................';
+      const teacher=g('c-teacher')||'.......................';
+      const halqa=g('c-halqa')||'.......................';
+      const parts=g('c-parts')||'.......................';
+      let titleText='', bodyText='';
+      if(type==='hifz') {
+        titleText='شهادة حفظ وتفوق';
+        bodyText=`يشهد مركز عبدالله بن عباس لتحفيظ القرآن الكريم بأن الطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>قد أتم بحمد الله حفظ ( <strong>${parts}</strong> ) من القرآن الكريم.<br>سائلين الله له التوفيق والسداد وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.`;
+      } else if(type==='shokr') {
+        titleText='شهادة شكر وتقدير';
+        bodyText=`تتقدم إدارة مركز عبدالله بن عباس بخالص الشكر والتقدير للطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>وذلك لجهوده المباركة وتميزه الملحوظ ومثابرته في الحلقات.<br>نسأل الله أن يبارك فيه وينفع به الإسلام والمسلمين.`;
+      } else {
+        titleText='شهادة حسن سيرة وسلوك';
+        bodyText=`تشهد إدارة مركز عبدالله بن عباس بأن الطالب / <strong>${stu}</strong><br>المقيد في <strong>${halqa}</strong> عند المعلم / <strong>${teacher}</strong><br>يتصف بحسن السيرة والسلوك والأخلاق الفاضلة والالتزام بالآداب طيلة فترة دراسته بالمركز.<br>مع تمنياتنا له بدوام التوفيق والنجاح.`;
+      }
+      const GOLD='#9a7230'; const GREEN2='#166040';
+      const win=window.open('','_blank');
+      win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+      <meta charset="UTF-8">
+      <title>شهادة — ${stu}</title>
+      <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+      <style>
+        @page { size: A4 landscape; margin: 0; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html, body { width:297mm; height:210mm; overflow:hidden; background:white; font-family:'Tajawal',sans-serif; direction:rtl; }
+        body { display:flex; align-items:center; justify-content:center; }
+        .cert-outer {
+          width:287mm; height:200mm;
+          border:8px double ${GOLD};
+          position:relative;
+          display:flex; align-items:stretch;
+          background:white;
+        }
+        .cert-outer::before {
+          content:''; position:absolute;
+          inset:10px; border:1.5px solid rgba(154,114,48,.22);
+          pointer-events:none;
+        }
+        /* Watermark */
+        .wm { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+        .wm img { width:220px; height:220px; opacity:.035; }
+        /* Corner ornaments */
+        .co { position:absolute; width:40px; height:40px; }
+        .co svg { width:40px; height:40px; }
+        .co.tl { top:14px; right:14px; }
+        .co.tr { top:14px; left:14px; transform:scaleX(-1); }
+        .co.bl { bottom:14px; right:14px; transform:scaleY(-1); }
+        .co.br { bottom:14px; left:14px; transform:scale(-1,-1); }
+        /* Content */
+        .cert-body-wrap {
+          flex:1; padding:18mm 22mm;
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+          position:relative; z-index:1; text-align:center;
+        }
+        .logo-circle { width:72px; height:72px; border-radius:50%; border:2px solid ${GREEN2}; display:block; margin:0 auto 12px; }
+        .ch1 { font-family:'Amiri',serif; font-size:${certZoom*1.05}rem; font-weight:700; color:${GREEN2}; line-height:1.5; }
+        .ch2 { font-size:${certZoom*0.78}rem; color:${GOLD}; font-weight:700; margin-top:2px; }
+        .star-line { color:${GOLD}; letter-spacing:6px; font-size:.7rem; margin:10px 0; opacity:.7; }
+        .cert-title { font-family:'Amiri',serif; font-size:${certZoom*1.9}rem; color:${GREEN2}; font-weight:700; margin:8px 0 16px; }
+        .cert-text { font-family:'Amiri',serif; font-size:${certZoom*1.1}rem; color:#111; line-height:2.15; }
+        .cert-text strong { color:${GREEN2}; border-bottom:1px dashed ${GOLD}; padding:0 4px; }
+        .cert-footer { display:flex; justify-content:space-between; width:100%; margin-top:20px; }
+        .cert-sign { text-align:center; }
+        .sign-line { width:110px; height:1px; background:rgba(0,0,0,.3); margin:0 auto 6px; }
+        .sign-name { font-family:'Amiri',serif; font-size:${certZoom*0.92}rem; color:#333; }
+        .sign-role { font-size:${certZoom*0.78}rem; color:#666; margin-top:2px; }
+        .sign-director { font-family:'Amiri',serif; font-size:${certZoom*1.0}rem; color:${GREEN2}; font-weight:700; }
+        .date-line { font-size:${certZoom*0.74}rem; color:#888; margin-top:12px; }
+      </style></head><body>
+      <div class="cert-outer">
+        <div class="wm"><img src="${LOGO}" onerror="this.style.display='none'"></div>
+        <!-- Corner ornaments -->
+        <div class="co tl"><svg viewBox="0 0 40 40" fill="none" stroke="${GOLD}" stroke-width="1.5" opacity=".6"><path d="M2 2L18 2L18 8L8 8L8 18L2 18Z"/><circle cx="18" cy="18" r="4" fill="rgba(154,114,48,.2)" stroke="${GOLD}"/><line x1="18" y1="14" x2="18" y2="2" stroke-dasharray="2 2" opacity=".5"/><line x1="14" y1="18" x2="2" y2="18" stroke-dasharray="2 2" opacity=".5"/></svg></div>
+        <div class="co tr"><svg viewBox="0 0 40 40" fill="none" stroke="${GOLD}" stroke-width="1.5" opacity=".6"><path d="M2 2L18 2L18 8L8 8L8 18L2 18Z"/><circle cx="18" cy="18" r="4" fill="rgba(154,114,48,.2)" stroke="${GOLD}"/><line x1="18" y1="14" x2="18" y2="2" stroke-dasharray="2 2" opacity=".5"/><line x1="14" y1="18" x2="2" y2="18" stroke-dasharray="2 2" opacity=".5"/></svg></div>
+        <div class="co bl"><svg viewBox="0 0 40 40" fill="none" stroke="${GOLD}" stroke-width="1.5" opacity=".6"><path d="M2 2L18 2L18 8L8 8L8 18L2 18Z"/><circle cx="18" cy="18" r="4" fill="rgba(154,114,48,.2)" stroke="${GOLD}"/><line x1="18" y1="14" x2="18" y2="2" stroke-dasharray="2 2" opacity=".5"/><line x1="14" y1="18" x2="2" y2="18" stroke-dasharray="2 2" opacity=".5"/></svg></div>
+        <div class="co br"><svg viewBox="0 0 40 40" fill="none" stroke="${GOLD}" stroke-width="1.5" opacity=".6"><path d="M2 2L18 2L18 8L8 8L8 18L2 18Z"/><circle cx="18" cy="18" r="4" fill="rgba(154,114,48,.2)" stroke="${GOLD}"/><line x1="18" y1="14" x2="18" y2="2" stroke-dasharray="2 2" opacity=".5"/><line x1="14" y1="18" x2="2" y2="18" stroke-dasharray="2 2" opacity=".5"/></svg></div>
+        <div class="cert-body-wrap">
+          <img class="logo-circle" src="${LOGO}" onerror="this.style.display='none'">
+          <div class="ch1">مركز عبدالله بن عباس لتحفيظ القرآن الكريم</div>
+          <div class="ch2">حي النسيم / الحاج يوسف</div>
+          <div class="star-line">❖ ❖ ❖ ❖ ❖</div>
+          <div class="cert-title">${titleText}</div>
+          <div class="cert-text">${bodyText}</div>
+          <div class="cert-footer">
+            <div class="cert-sign">
+              <div class="sign-role">معلم الحلقة</div>
+              <div class="sign-line" style="margin-top:28px"></div>
+              <div class="sign-name">${teacher!=='.......................'?teacher:'.....................'}</div>
+            </div>
+            <div class="date-line">التاريخ: ${todayStr()}</div>
+            <div class="cert-sign">
+              <div class="sign-role">المدير العام</div>
+              <div class="sign-line" style="margin-top:28px"></div>
+              <div class="sign-director">النذير صديق مخير</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </body></html>`);
+      win.document.close();
+      win.onload = () => setTimeout(() => { win.print(); win.close(); }, 700);
+    }
+
+    // ── WHATSAPP CERT ──
+    function sendCertWhatsApp() {
+      const stuName = g('c-stu').trim();
+      if (!stuName) return toast('الرجاء إدخال اسم الطالب أولاً', 'error');
+      const student = SD.find(s => s.name === stuName);
+      if (!student) return toast('الطالب غير موجود في قاعدة البيانات', 'error');
+      if (!student.phone) return toast('لا يوجد رقم هاتف مسجل لولي أمر هذا الطالب', 'error');
+      let phone = String(student.phone).replace(/[\s\-\(\)]/g,'');
+      if (phone.startsWith('0')) phone = '249' + phone.slice(1);
+      else if (phone.startsWith('+')) phone = phone.slice(1);
+      if (!/^\d{10,15}$/.test(phone)) return toast('رقم الهاتف غير صحيح: ' + phone, 'error');
+      const type = g('c-type');
+      const nameParts = student.name.split(' ');
+      const familyName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : student.name;
+      let text = '';
+      if (type === 'hifz') {
+        text = `السلام عليكم ورحمة الله وبركاته.. أسرة [ ${familyName} ] الكريمة،\n\n` +
+               `عن بريدة رضي الله عنه، قال رسول الله ﷺ:\n«مَنْ قَرَأَ الْقُرْآنَ وَتَعَلَّمَهُ وَعَمِلَ بِهِ، أُلْبِسَ وَالِدَاهُ يَوْمَ الْقِيَامَةِ تَاجًا مِنْ نُورٍ ضَوْؤُهُ مِثْلُ ضَوْءِ الشَّمْسِ».\n\n` +
+               `يسعدنا إرفاق شهادة تفوق وحفظ للإبن: [ ${student.name} ] 🎓\n\n` +
+               `نسأل الله له التوفيق والسداد، وأن يجعله من أهل القرآن الذين هم أهل الله وخاصته.\n\n` +
+               `إدارة مركز عبدالله بن عباس لتحفيظ القرآن الكريم`;
+      } else if (type === 'shokr') {
+        text = `السلام عليكم ورحمة الله وبركاته.. أسرة الطالب [ ${student.name} ]،\n\n` +
+               `يسعدنا أن نرفق شهادة (شكر وتقدير) تقديراً لجهود ابنكم وتميزه الملحوظ في الحلقات.\n` +
+               `نسأل الله أن يبارك فيه وينفع به الإسلام والمسلمين.\n\n` +
+               `إدارة مركز عبدالله بن عباس لتحفيظ القرآن الكريم`;
+      } else {
+        text = `السلام عليكم ورحمة الله وبركاته.. أسرة الطالب [ ${student.name} ]،\n\n` +
+               `يسعدنا أن نرفق شهادة (حسن سيرة وسلوك)، حيث كان ابنكم مثالاً للأخلاق الفاضلة والالتزام.\n` +
+               `مع تمنياتنا له بدوام التوفيق والنجاح.\n\n` +
+               `إدارة مركز عبدالله بن عباس لتحفيظ القرآن الكريم`;
+      }
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+      toast('تم فتح واتساب — لا تنسَ إرفاق الشهادة يدوياً 📎', 'success');
+    }
 
     // ── STUDENTS ──
     let editStuId = null;
@@ -5357,31 +5601,31 @@
     async function loadStu() {
       const { data, error } = await sb.from('students').select('*').order('name');
       if(!error) {
-    	SD = data || [];
-    	renderStu(SD);
-    	const sEl = document.getElementById('st-stu');
-    	if(sEl) sEl.textContent = SD.length;
-    	
-    	// بناء قائمة الطلاب المنسدلة
-    	let dl = document.getElementById('student-list');
-    	if (!dl) {
-    	  dl = document.createElement('datalist');
-    	  dl.id = 'student-list';
-    	  document.body.appendChild(dl);
-    	}
-    	dl.innerHTML = SD.map(s => `<option value="${s.name}">`).join('');
+        SD = data || [];
+        renderStu(SD);
+        const sEl = document.getElementById('st-stu');
+        if(sEl) sEl.textContent = SD.length;
+        
+        // بناء قائمة الطلاب المنسدلة
+        let dl = document.getElementById('student-list');
+        if (!dl) {
+          dl = document.createElement('datalist');
+          dl.id = 'student-list';
+          document.body.appendChild(dl);
+        }
+        dl.innerHTML = SD.map(s => `<option value="${s.name}">`).join('');
       } else toast('خطأ في تحميل الطلاب', 'error');
     }
     function renderStu(data) {
       const isMobile = window.innerWidth < 900; const list = document.getElementById('stu-list');
       if(isMobile && list) {
-    	if(!data.length) { list.innerHTML = `<div class="es"><p>لا يوجد طلاب مسجلون</p></div>`; return; }
-    	list.innerHTML = data.map(s => `<div class="mobile-card"><div class="mc-avatar">${(s.name||'؟')[0]}</div><div class="mc-info"><div class="mc-name">${s.name}</div><div class="mc-sub">${s.level ? `<span class="badge bg-g">${s.level}</span>` : ''} ${s.age ? `<span>${s.age} سنة</span>` : ''}</div></div><div class="mc-actions"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="14" height="14"><use href="#i-edit"/></svg></button><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="14" height="14"><use href="#i-trash"/></svg></button></div></div>`).join('');
+        if(!data.length) { list.innerHTML = `<div class="es"><p>لا يوجد طلاب مسجلون</p></div>`; return; }
+        list.innerHTML = data.map(s => `<div class="mobile-card"><div class="mc-avatar">${(s.name||'؟')[0]}</div><div class="mc-info"><div class="mc-name">${s.name}</div><div class="mc-sub">${s.level ? `<span class="badge bg-g">${s.level}</span>` : ''} ${s.age ? `<span>${s.age} سنة</span>` : ''}</div></div><div class="mc-actions"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="14" height="14"><use href="#i-edit"/></svg></button><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="14" height="14"><use href="#i-trash"/></svg></button></div></div>`).join('');
       }
       const tb = document.getElementById('tb-stu');
       if(tb) {
-    	if(!data.length) { tb.innerHTML = eRow(8,'لا يوجد طلاب مسجلون'); return; }
-    	tb.innerHTML = data.map((s,i) => `<tr><td>${i+1}</td><td><strong>${s.name}</strong></td><td>${s.age||'-'}</td><td><span class="badge bg-g">${s.level||'-'}</span></td><td dir="ltr">${fmtPhone(s.phone)}</td><td>${fmtDate(s.registration_date)}</td><td class="no-print"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg></button></td><td class="no-print"><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="13" height="13"><use href="#i-trash"/></svg></button></td></tr>`).join('');
+        if(!data.length) { tb.innerHTML = eRow(8,'لا يوجد طلاب مسجلون'); return; }
+        tb.innerHTML = data.map((s,i) => `<tr><td>${i+1}</td><td><strong>${s.name}</strong></td><td>${s.age||'-'}</td><td><span class="badge bg-g">${s.level||'-'}</span></td><td dir="ltr">${fmtPhone(s.phone)}</td><td>${fmtDate(s.registration_date)}</td><td class="no-print"><button class="btn bo bsm" onclick="editStu('${s.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg></button></td><td class="no-print"><button class="btn bd bsm" onclick="delStu('${s.id}')"><svg width="13" height="13"><use href="#i-trash"/></svg></button></td></tr>`).join('');
       }
     }
     function filterStu(q) { renderStu(SD.filter(s => s.name.includes(q) || (s.phone||'').includes(q))); }
@@ -5418,19 +5662,19 @@
     async function loadAccs() {
       const { data, error } = await sb.from('profiles').select('id, full_name, email, account_status, roles(role_name)').order('account_status', {ascending: false});
       if (!error && data) {
-    	ACCS_DATA = data.map(p => ({ id: p.id, name: p.full_name, email: p.email, status: p.account_status || 'approved', type: p.roles?.role_name || 'user' }));
-    	const tb = document.getElementById('tb-accs'); if(!tb) return;
-    	if(!ACCS_DATA.length) { tb.innerHTML = eRow(6,'لا توجد حسابات'); return; }
-    	tb.innerHTML = ACCS_DATA.map((a,i) => `<tr><td>${i+1}</td><td><strong>${a.name||'-'}</strong></td><td dir="ltr" style="font-size:.78rem">${a.email}</td><td>${a.status === 'pending' ? '<span class="badge bg-o">قيد المراجعة</span>' : a.status === 'rejected' ? '<span class="badge bg-r">مرفوض</span>' : `<span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span>`}</td><td class="no-print">${a.status === 'pending' ? `<button class="btn bp bsm" onclick="changeAccStatus('${a.id}', 'approved')">قبول</button><button class="btn bd bsm" onclick="changeAccStatus('${a.id}', 'rejected')">رفض</button>` : `<span style="color:var(--text3);font-size:.75rem">مكتمل</span>`}</td><td class="no-print">${a.id === CU.id ? '-' : `<button class="btn bd bsm" onclick="delAcc('${a.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>`}</td></tr>`).join('');
+        ACCS_DATA = data.map(p => ({ id: p.id, name: p.full_name, email: p.email, status: p.account_status || 'approved', type: p.roles?.role_name || 'user' }));
+        const tb = document.getElementById('tb-accs'); if(!tb) return;
+        if(!ACCS_DATA.length) { tb.innerHTML = eRow(6,'لا توجد حسابات'); return; }
+        tb.innerHTML = ACCS_DATA.map((a,i) => `<tr><td>${i+1}</td><td><strong>${a.name||'-'}</strong></td><td dir="ltr" style="font-size:.78rem">${a.email}</td><td>${a.status === 'pending' ? '<span class="badge bg-o">قيد المراجعة</span>' : a.status === 'rejected' ? '<span class="badge bg-r">مرفوض</span>' : `<span class="badge ${a.type==='admin'?'bg-o':'bg-g'}">${a.type==='admin'?'مدير':'معلم'}</span>`}</td><td class="no-print">${a.status === 'pending' ? `<button class="btn bp bsm" onclick="changeAccStatus('${a.id}', 'approved')">قبول</button><button class="btn bd bsm" onclick="changeAccStatus('${a.id}', 'rejected')">رفض</button>` : `<span style="color:var(--text3);font-size:.75rem">مكتمل</span>`}</td><td class="no-print">${a.id === CU.id ? '-' : `<button class="btn bd bsm" onclick="delAcc('${a.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>`}</td></tr>`).join('');
       } else toast('خطأ في تحميل الحسابات','error');
     }
     async function changeAccStatus(id, newStatus) { 
       const { error } = await sb.from('profiles').update({ account_status: newStatus }).eq('id', id); 
       if(!error) { 
-    	toast('تم التحديث', 'success'); 
-    	if(newStatus === 'approved') await sb.from('teachers').upsert([{ id: id }], { onConflict: 'id' });
-    	loadAccs(); 
-    	if(document.getElementById('pg-teachers') && document.getElementById('pg-teachers').classList.contains('active')) loadTeachers();
+        toast('تم التحديث', 'success'); 
+        if(newStatus === 'approved') await sb.from('teachers').upsert([{ id: id }], { onConflict: 'id' });
+        loadAccs(); 
+        if(document.getElementById('pg-teachers') && document.getElementById('pg-teachers').classList.contains('active')) loadTeachers();
       } else toast('خطأ في التحديث', 'error'); 
     }
     function openAddAcc() { toast('لأسباب أمنية: أرسل رابط النظام للمعلم ليسجل، ثم قم بقبوله من هنا.', 'info'); }
@@ -5440,11 +5684,11 @@
     async function loadTeachers() {
       const { data, error } = await sb.from('teachers').select('id, phone, specialization, quran_parts, age, marital_status, children, residence, hire_date, profiles(full_name, email)');
       if(!error && data) {
-    	TD = data; const tb = document.getElementById('tb-teachers'); if(!tb) return;
-    	if(!TD.length) { tb.innerHTML = `<tr><td colspan="7"><div class="es"><p>لا توجد بيانات معلمين.<br><br><button class="btn bp" onclick="syncExistingTeachers()">مزامنة المعلمين من الحسابات 🔄</button></p></div></td></tr>`; return; }
-    	tb.innerHTML = TD.map((t, i) => `<tr>
-    	  <td>${i+1}</td><td><strong>${t.profiles?.full_name || '-'}</strong></td><td dir="ltr" style="font-size:.75rem">${t.profiles?.email || '-'}</td><td dir="ltr">${t.phone || '-'}</td><td><span class="badge bg-g">${t.specialization || 'لم يُحدد'}</span></td><td><span class="badge bg-o">${t.quran_parts || '-'}</span></td><td class="no-print"><button class="btn bo bsm" onclick="openEditTeacher('${t.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg> إكمال البيانات</button></td>
-    	</tr>`).join('');
+        TD = data; const tb = document.getElementById('tb-teachers'); if(!tb) return;
+        if(!TD.length) { tb.innerHTML = `<tr><td colspan="7"><div class="es"><p>لا توجد بيانات معلمين.<br><br><button class="btn bp" onclick="syncExistingTeachers()">مزامنة المعلمين من الحسابات 🔄</button></p></div></td></tr>`; return; }
+        tb.innerHTML = TD.map((t, i) => `<tr>
+          <td>${i+1}</td><td><strong>${t.profiles?.full_name || '-'}</strong></td><td dir="ltr" style="font-size:.75rem">${t.profiles?.email || '-'}</td><td dir="ltr">${t.phone || '-'}</td><td><span class="badge bg-g">${t.specialization || 'لم يُحدد'}</span></td><td><span class="badge bg-o">${t.quran_parts || '-'}</span></td><td class="no-print"><button class="btn bo bsm" onclick="openEditTeacher('${t.id}')"><svg width="13" height="13"><use href="#i-edit"/></svg> إكمال البيانات</button></td>
+        </tr>`).join('');
       } else toast('خطأ في جلب المعلمين', 'error');
     }
 
@@ -5485,12 +5729,12 @@
       if(!SD.length) await loadStu();
       const body = document.getElementById('att-body'); if(!body) return;
       body.innerHTML = SD.map(s => {
-    	let cells='', cnt=0;
-    	for(let w=1;w<=4;w++) days.forEach((d,di) => {
-    	  const key=`${s.id}_w${w}_d${di}`, val=AD[key]||''; if(val==='P') cnt++;
-    	  cells+=`<td><button class="ab ${val==='P'?'present':val==='A'?'absent':''}" onclick="togAtt('${s.id}',${w},${di},this)" data-k="${key}">${val==='P'?'ح':val==='A'?'غ':'-'}</button></td>`;
-    	});
-    	return `<tr><td class="nc"><strong>${s.name}</strong></td>${cells}<td><span class="badge bg-g">${cnt}</span></td></tr>`;
+        let cells='', cnt=0;
+        for(let w=1;w<=4;w++) days.forEach((d,di) => {
+          const key=`${s.id}_w${w}_d${di}`, val=AD[key]||''; if(val==='P') cnt++;
+          cells+=`<td><button class="ab ${val==='P'?'present':val==='A'?'absent':''}" onclick="togAtt('${s.id}',${w},${di},this)" data-k="${key}">${val==='P'?'ح':val==='A'?'غ':'-'}</button></td>`;
+        });
+        return `<tr><td class="nc"><strong>${s.name}</strong></td>${cells}<td><span class="badge bg-g">${cnt}</span></td></tr>`;
       }).join('');
     }
     function togAtt(sid,w,di,btn) { const key=btn.dataset.k, cur=AD[key]||''; const nxt = cur===''?'P':cur==='P'?'A':''; AD[key]=nxt; btn.className='ab'+(nxt==='P'?' present':nxt==='A'?' absent':''); btn.textContent=nxt==='P'?'ح':nxt==='A'?'غ':'-'; }
@@ -5522,9 +5766,9 @@
       const sd = document.getElementById('hq-session-date');
       HQ_DATE = sd ? (sd.value || todayISO()) : todayISO();
       const rows = HQ_ALL.filter(r => {
-    	const isSameHalqaAndDate = r.halqa === HQ_ACTIVE && r.date === HQ_DATE;
-    	const isAuthorized = (CU.type === 'admin') ? true : (r.teacher === CU.email);
-    	return isSameHalqaAndDate && isAuthorized;
+        const isSameHalqaAndDate = r.halqa === HQ_ACTIVE && r.date === HQ_DATE;
+        const isAuthorized = (CU.type === 'admin') ? true : (r.teacher === CU.email);
+        return isSameHalqaAndDate && isAuthorized;
       });
       renderHalaqaTable(rows);
     }
@@ -5545,16 +5789,16 @@
       const finalTeacherId = existingRecord ? existingRecord.teacher_id : CU.id;
       
       const payload = rows.map(r=>({
-    	halqa: HQ_ACTIVE, date: HQ_DATE, teacher: finalTeacherEmail, teacher_id: finalTeacherId,
-    	student: r.student, from_verse: r.from, to_verse: r.to, surah: r.surah, grade: r.grade || null
+        halqa: HQ_ACTIVE, date: HQ_DATE, teacher: finalTeacherEmail, teacher_id: finalTeacherId,
+        student: r.student, from_verse: r.from, to_verse: r.to, surah: r.surah, grade: r.grade || null
       }));
       
      // أضفنا onConflict لكي يعرف النظام متى يقوم بالتحديث بدلاً من التكرار
      const { error } = await sb.from('halaqat').upsert(payload, { onConflict: 'student,date,halqa' });
       if(!error) {
-    	toast('تم الحفظ ✓','success');
-    	const { data } = await sb.from('halaqat').select('*');
-    	HQ_ALL = data || [];
+        toast('تم الحفظ ✓','success');
+        const { data } = await sb.from('halaqat').select('*');
+        HQ_ALL = data || [];
       } else toast('خطأ في الحفظ','error');
     }
     async function submitHalaqaRow() { const halqa=g('hq-sel-halqa'), student=g('hq-new-student').trim(); if(!student) return toast('الرجاء إدخال اسم الطالب','error'); const grade=g('hq-new-grade'); const payload = [{ halqa, teacher: CU.email, teacher_id: CU.id, date: todayISO(), student, from_verse: g('hq-new-from').trim(), to_verse: g('hq-new-to').trim(), surah: g('hq-new-surah').trim(), grade: grade||null }]; const { error } = await sb.from('halaqat').upsert(payload); if(!error) { closeModal('m-add-hq-row'); toast('تمت الإضافة ✓','success'); ['hq-new-student','hq-new-from','hq-new-to','hq-new-surah','hq-new-grade'].forEach(clr); loadHalaqat(); } else toast('خطأ في الإضافة','error'); }
@@ -5566,12 +5810,12 @@
 
       let tl = document.getElementById('teacher-list');
       if (!tl) {
-    	tl = document.createElement('datalist');
-    	tl.id = 'teacher-list';
-    	document.body.appendChild(tl);
+        tl = document.createElement('datalist');
+        tl.id = 'teacher-list';
+        document.body.appendChild(tl);
       }
       if(ACCS_DATA && ACCS_DATA.length > 0) {
-    	tl.innerHTML = ACCS_DATA.map(a => `<option value="${a.name}">`).join('');
+        tl.innerHTML = ACCS_DATA.map(a => `<option value="${a.name}">`).join('');
       }
 
       const { data, error } = await sb.from('teacher_revisions').select('*').order('date', { ascending: false }).order('id', { ascending: false });
@@ -5580,27 +5824,27 @@
       if(!tb) return;
       
       if(!error && data) {
-    	if(!data.length) { tb.innerHTML = eRow(9, 'لا توجد جلسات مراجعة مسجلة بعد'); return; }
-    	
-    	tb.innerHTML = data.map((r, i) => {
-    	  const gColor = gradeColor(r.grade);
-    	  const gLabel = gradeLabel(r.grade);
-    	  return `<tr>
-    		<td>${i+1}</td>
-    		<td><strong>${r.reciter_name}</strong></td>
-    		<td style="font-size:0.8rem; color:var(--text3)">${r.listener_name || '-'}</td>
-    		<td>${r.from_verse || '-'}</td>
-    		<td>${r.to_verse || '-'}</td>
-    		<td>${r.surah || '-'}</td>
-    		<td><span class="badge ${gColor}">${r.grade} (${gLabel})</span></td>
-    		<td dir="ltr">${fmtDate(r.date)}</td>
-    		<td class="no-print">
-    		  <button class="btn bd bsm" style="padding:6px" onclick="deleteTeacherRevision('${r.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>
-    		</td>
-    	  </tr>`;
-    	}).join('');
+        if(!data.length) { tb.innerHTML = eRow(9, 'لا توجد جلسات مراجعة مسجلة بعد'); return; }
+        
+        tb.innerHTML = data.map((r, i) => {
+          const gColor = gradeColor(r.grade);
+          const gLabel = gradeLabel(r.grade);
+          return `<tr>
+            <td>${i+1}</td>
+            <td><strong>${r.reciter_name}</strong></td>
+            <td style="font-size:0.8rem; color:var(--text3)">${r.listener_name || '-'}</td>
+            <td>${r.from_verse || '-'}</td>
+            <td>${r.to_verse || '-'}</td>
+            <td>${r.surah || '-'}</td>
+            <td><span class="badge ${gColor}">${r.grade} (${gLabel})</span></td>
+            <td dir="ltr">${fmtDate(r.date)}</td>
+            <td class="no-print">
+              <button class="btn bd bsm" style="padding:6px" onclick="deleteTeacherRevision('${r.id}')"><svg width="12" height="12"><use href="#i-trash"/></svg></button>
+            </td>
+          </tr>`;
+        }).join('');
       } else {
-    	toast('خطأ في جلب سجل المراجعات', 'error');
+        toast('خطأ في جلب سجل المراجعات', 'error');
       }
     }
 
@@ -5613,14 +5857,14 @@
       if(!grade) return toast('الرجاء إدخال الدرجة', 'error');
 
     const payload = {
-    	  reciter_name: reciter,
-    	  listener_name: CU.name, // 💡 التعديل هنا: استخدام CU.name بدلاً من CU.email
-    	  date: date || todayISO(),
-    	  from_verse: g('tr-from').trim(),
-    	  to_verse: g('tr-to').trim(),
-    	  surah: g('tr-surah').trim(),
-    	  grade: parseInt(grade)
-    	};
+          reciter_name: reciter,
+          listener_name: CU.name, // 💡 التعديل هنا: استخدام CU.name بدلاً من CU.email
+          date: date || todayISO(),
+          from_verse: g('tr-from').trim(),
+          to_verse: g('tr-to').trim(),
+          surah: g('tr-surah').trim(),
+          grade: parseInt(grade)
+        };
 
       const btn = event.target; 
       btn.disabled = true; 
@@ -5632,12 +5876,12 @@
       btn.innerHTML = '<svg width="14" height="14"><use href="#i-save"/></svg> حفظ الجلسة';
 
       if(!error) {
-    	toast('تم تسجيل جلسة المراجعة ✓', 'success');
-    	['tr-reciter', 'tr-from', 'tr-to', 'tr-surah', 'tr-grade'].forEach(clr);
-    	loadTeacherRevisions();
+        toast('تم تسجيل جلسة المراجعة ✓', 'success');
+        ['tr-reciter', 'tr-from', 'tr-to', 'tr-surah', 'tr-grade'].forEach(clr);
+        loadTeacherRevisions();
       } else {
-    	toast('خطأ في الحفظ', 'error');
-    	console.error(error);
+        toast('خطأ في الحفظ', 'error');
+        console.error(error);
       }
     }
 
@@ -5645,10 +5889,10 @@
       if(!confirm('هل أنت متأكد من حذف هذه الجلسة؟')) return;
       const { error } = await sb.from('teacher_revisions').delete().eq('id', id);
       if(!error) {
-    	toast('تم الحذف', 'success');
-    	loadTeacherRevisions();
+        toast('تم الحذف', 'success');
+        loadTeacherRevisions();
       } else {
-    	toast('خطأ في الحذف', 'error');
+        toast('خطأ في الحذف', 'error');
       }
     }
 
