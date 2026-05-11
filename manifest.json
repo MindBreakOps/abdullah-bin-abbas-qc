@@ -1,7 +1,7 @@
 {
   "name": "مركز عبدالله بن عباس",
   "short_name": "ابن عباس",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f0f4f0",
   "theme_color": "#f0f4f0",
