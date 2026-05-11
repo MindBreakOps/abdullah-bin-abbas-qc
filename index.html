@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<script src="https://unpkg.com/dexie/dist/dexie.js"></script>
 	<meta name="theme-color" content="#f0f4f0">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -4579,6 +4580,77 @@
 	const SUPABASE_URL = 'https://tjvfyozhquzzjqbseagw.supabase.co';
 	const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqdmZ5b3pocXV6empxYnNlYWd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MzA5MDUsImV4cCI6MjA5MTEwNjkwNX0.GAy-J2nTgQL35vkJrnAA5sXNCnLiyZHk5mLtJ8szJPo';
 	const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+	
+	// ══════════════════════════════════════════════
+	// OFFLINE DATABASE (DEXIE) SETUP
+	// ══════════════════════════════════════════════
+	const db = new Dexie("QuranCenterDB");
+	
+	// Define your local tables. The first item in the string is the Primary Key.
+	// 'sync_status' will track if a record is 'synced', 'pending_insert', 'pending_update', or 'pending_delete'
+	db.version(1).stores({
+		students: 'id, name, age, level, phone, registration_date, sync_status',
+		attendance: 'key, month, status, sync_status',
+		halaqat: 'id, student, date, halqa, teacher, from_verse, to_verse, surah, grade, sync_status',
+		financials: 'id, category, item_desc, type, amount, donor_name, transaction_date, sync_status',
+		monthly_exams: 'id, halqa_name, exam_month, student_name, total, taqdeer, sync_status',
+		teacher_revisions: 'id, reciter_name, listener_name, date, surah, grade, sync_status',
+		newspaper: 'id, type, text, source, date, sync_status'
+	});
+	
+	// ══════════════════════════════════════════════
+	// OFFLINE SYNC ENGINE & NETWORK LISTENERS
+	// ══════════════════════════════════════════════
+	window.addEventListener('online', handleOnline);
+	window.addEventListener('offline', handleOffline);
+	
+	function handleOffline() {
+		toast('أنت الآن غير متصل بالإنترنت. سيتم حفظ التغييرات محلياً.', 'error');
+	}
+	
+	function handleOnline() {
+		toast('عاد الاتصال! جاري مزامنة البيانات...', 'success');
+		syncWithSupabase();
+	}
+	
+	async function syncWithSupabase() {
+	  if (!navigator.onLine) return;
+	
+	  try {
+		// --- 1. PUSH LOCAL INSERTS TO SUPABASE ---
+		const inserts = await db.students.where('sync_status').equals('pending_insert').toArray();
+		if (inserts.length > 0) {
+		  const payload = inserts.map(({sync_status, ...rest}) => rest);
+		  const { error } = await sb.from('students').upsert(payload);
+		  if (!error) await db.students.where('sync_status').equals('pending_insert').modify({sync_status: 'synced'});
+		}
+	
+		// --- 2. PUSH LOCAL UPDATES TO SUPABASE ---
+		const updates = await db.students.where('sync_status').equals('pending_update').toArray();
+		if (updates.length > 0) {
+		  const payload = updates.map(({sync_status, ...rest}) => rest);
+		  const { error } = await sb.from('students').upsert(payload);
+		  if (!error) await db.students.where('sync_status').equals('pending_update').modify({sync_status: 'synced'});
+		}
+	
+		// --- 3. PULL FRESH DATA FROM SUPABASE ---
+		const { data, error } = await sb.from('students').select('*');
+		if (data && !error) {
+		   // Overwrite local DB with the absolute truth from the server
+		   const freshData = data.map(item => ({...item, sync_status: 'synced'}));
+		   await db.students.clear(); // Clear old local data
+		   await db.students.bulkPut(freshData); // Put fresh data
+		   
+		   // Only re-render if the user is actually looking at the students page
+		   if(document.getElementById('pg-students').classList.contains('active')) {
+			   SD = freshData;
+			   renderStu(SD);
+		   }
+		}
+	  } catch (err) {
+		console.error("Sync failed:", err);
+	  }
+	}
 
 	const LOGO = 'https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png';
 	const CENTER_NAME = 'مركز عبدالله بن عباس لتحفيظ القرآن الكريم';
@@ -4610,6 +4682,7 @@
 	function gradeColor(g) { const n=parseFloat(g||0); if(n>=85) return 'bg-g'; if(n>=65) return 'bg-o'; if(n>=50) return 'bg-b'; return 'bg-r'; }
 	function exGradeLabel(n) { n=parseFloat(n||0); if(n>=95) return {lbl:'ممتاز+',cls:'bg-g'}; if(n>=85) return {lbl:'ممتاز',cls:'bg-g'}; if(n>=75) return {lbl:'جيد جداً',cls:'bg-o'}; if(n>=65) return {lbl:'جيد',cls:'bg-o'}; if(n>=50) return {lbl:'مقبول',cls:'bg-b'}; return {lbl:'ضعيف',cls:'bg-r'}; }
 
+ 
 	// ── PRINT HEADER BUILDER (uses Islamic border style) ──
 	function buildPrintHeader(subtitle='', date='') {
 	  return buildIslamicPrintHeader(subtitle, date);
@@ -5537,22 +5610,30 @@
 				function openAddStuModal() { editStuId = null; ['s-name','s-age','s-level','s-phone'].forEach(clr); document.getElementById('s-date').value = todayISO(); openModal('m-add-stu'); }
 				function editStu(id) { const s = SD.find(x => x.id === id); if(!s) return; editStuId = id; document.getElementById('s-name').value = s.name || ''; document.getElementById('s-age').value = s.age || ''; document.getElementById('s-level').value = s.level || ''; document.getElementById('s-phone').value = s.phone || ''; document.getElementById('s-date').value = s.registration_date || todayISO(); openModal('m-add-stu'); }
 				async function loadStu() {
-				  const { data, error } = await sb.from('students').select('*').order('name');
-				  if(!error) {
-					SD = data || [];
-					renderStu(SD);
-					const sEl = document.getElementById('st-stu');
-					if(sEl) sEl.textContent = SD.length;
-					
-					// بناء قائمة الطلاب المنسدلة
-					let dl = document.getElementById('student-list');
-					if (!dl) {
-					  dl = document.createElement('datalist');
-					  dl.id = 'student-list';
-					  document.body.appendChild(dl);
-					}
-					dl.innerHTML = SD.map(s => `<option value="${s.name}">`).join('');
-				  } else toast('خطأ في تحميل الطلاب', 'error');
+				  // 1. Read from local database first (super fast, works offline)
+				  SD = await db.students.filter(s => s.sync_status !== 'pending_delete').toArray();
+				  
+				  // Sort alphabetically by name
+				  SD.sort((a, b) => a.name.localeCompare(b.name));
+				  
+				  renderStu(SD);
+				  
+				  const sEl = document.getElementById('st-stu');
+				  if(sEl) sEl.textContent = SD.length;
+				  
+				  // Build the dropdown list
+				  let dl = document.getElementById('student-list');
+				  if (!dl) {
+					dl = document.createElement('datalist');
+					dl.id = 'student-list';
+					document.body.appendChild(dl);
+				  }
+				  dl.innerHTML = SD.map(s => `<option value="${s.name}">`).join('');
+				
+				  // 2. Fetch fresh data from server behind the scenes if online
+				  if (navigator.onLine) {
+					syncWithSupabase();
+				  }
 				}
 				function renderStu(data) {
 				  const isMobile = window.innerWidth < 900; const list = document.getElementById('stu-list');
@@ -5567,12 +5648,40 @@
 				  }
 				}
 				function filterStu(q) { renderStu(SD.filter(s => s.name.includes(q) || (s.phone||'').includes(q))); }
-				async function addStu() {
-				  if(!CU || CU.type!=='admin') return; const name = g('s-name').trim(); if(!name) { toast('الرجاء إدخال اسم الطالب','error'); return; }
-				  const payload = { name, age: g('s-age'), level: g('s-level'), phone: g('s-phone'), registration_date: g('s-date') || todayISO() }; const btn = event.target; btn.disabled = true; let error;
-				  if(editStuId) { const res = await sb.from('students').update(payload).eq('id', editStuId); error = res.error; } else { const res = await sb.from('students').insert([payload]); error = res.error; }
-				  btn.disabled = false; if(!error) { closeModal('m-add-stu'); toast('تم الحفظ بنجاح ✓','success'); loadStu(); } else toast('خطأ في الحفظ','error');
-				}
+			async function addStu() {
+			  if(!CU || CU.type!=='admin') return; 
+			  const name = g('s-name').trim(); 
+			  if(!name) { toast('الرجاء إدخال اسم الطالب','error'); return; }
+			
+			  const btn = event.target; 
+			  btn.disabled = true; 
+			
+			  // Create the payload with a local ID and a sync flag
+			  const payload = { 
+				id: editStuId || crypto.randomUUID(), // Use existing ID if editing, or create new
+				name: name, 
+				age: g('s-age'), 
+				level: g('s-level'), 
+				phone: g('s-phone'), 
+				registration_date: g('s-date') || todayISO(),
+				sync_status: editStuId ? 'pending_update' : 'pending_insert' 
+			  };
+			
+			  // 1. Save locally to Dexie (works instantly, offline or online)
+			  await db.students.put(payload); // .put() handles both adding and updating
+			  
+			  btn.disabled = false;
+			  closeModal('m-add-stu');
+			  toast('تم الحفظ محلياً ✓', 'success');
+			  
+			  // Refresh the UI from local database
+			  loadStu(); 
+			
+			  // 2. Try to sync with Supabase immediately if online
+			  if (navigator.onLine) {
+				syncWithSupabase();
+			  }
+			}
 				async function delStu(id) { if(!CU || CU.type!=='admin') return; if(!confirm('حذف هذا الطالب؟')) return; const { error } = await sb.from('students').delete().eq('id', id); if(!error) { toast('تم الحذف'); loadStu(); } else toast('خطأ في الحذف','error'); }
 			
 				// ── FINANCIALS ──
@@ -5992,6 +6101,15 @@
 				function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('open'); }
 				let toastT;
 				function toast(msg,type) { const t=document.getElementById('toast'); if(!t) return; t.textContent=msg; t.className='toast'+(type?' '+type:''); t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000); }
+				
+				if ('serviceWorker' in navigator) {
+				  window.addEventListener('load', () => {
+					navigator.serviceWorker.register('/sw.js')
+					  .then(reg => console.log('Service Worker Registered'))
+					  .catch(err => console.error('Service Worker Error', err));
+				  });
+				}
+				
 				</script>
 			</body>
 			</html>
