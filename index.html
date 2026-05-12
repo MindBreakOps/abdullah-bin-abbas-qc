@@ -5059,8 +5059,8 @@ if (location.protocol !== 'https:' && location.hostname !== 'localhost' && locat
 				  if (badge && nextName) { badge.textContent='القادمة: '+nextName; badge.style.display='inline-flex'; }
 				}
 			
-				 // ══════════════════════════════════════════════
-// QIBLA DIRECTION & LIVE COMPASS
+	// ══════════════════════════════════════════════
+// QIBLA DIRECTION, LIVE COMPASS & HAPTICS (ANDROID + iOS)
 // ══════════════════════════════════════════════
 let qiblaBearing = 0;
 let lastVibration = 0;
@@ -5078,42 +5078,43 @@ function calcQiblaDirection(lat, lon) {
 function handleOrientation(event) {
     let heading = null;
     
-    // أجهزة iOS تعطيك الشمال الحقيقي مباشرة من هذا المتغير
+    // 1. نظام أبل (iOS)
     if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
         heading = event.webkitCompassHeading;
     } 
-    // أجهزة أندرويد
+    // 2. نظام أندرويد (يستخدم المستشعر المطلق Absolute Alpha)
     else if (event.alpha !== null) {
+        // تحويل الدرجات لتتناسب مع اتجاه الشمال
         heading = 360 - event.alpha;
     }
 
     if (heading !== null) {
-        // حساب حركة الإبرة
         let needleAngle = qiblaBearing - heading;
         const needle = document.getElementById('qibla-needle');
         if (needle) needle.style.transform = `rotate(${needleAngle}deg)`;
 
-        // التحقق مما إذا كان الهاتف موجه للقبلة بدقة (أقل من 5 درجات خطأ)
+        // التحقق من المطابقة (بهامش خطأ 4 درجات)
         let diff = Math.abs((needleAngle % 360 + 360) % 360);
         if (diff > 180) diff = 360 - diff;
 
         const qSection = document.getElementById('qibla-section');
         
-        if (diff < 5) { 
-            // 1. تأثير بصري ممتاز (يعمل على آيفون وأندرويد)
+        if (diff < 4) { 
+            // 💡 التأثير البصري (إضاءة المربع بالأخضر)
             if(qSection) {
                 qSection.style.borderColor = 'var(--green)';
-                qSection.style.boxShadow = '0 0 20px rgba(30, 122, 80, 0.5)';
+                qSection.style.boxShadow = '0 0 25px rgba(30, 122, 80, 0.6)';
             }
             
-            // 2. تأثير الاهتزاز (يعمل على أندرويد فقط لأن أبل تمنعه في الويب)
+            // 📳 الاهتزاز الدقيق (Haptics) - سيعمل بامتياز على أندرويد!
             const now = Date.now();
-            if (now - lastVibration > 2000 && navigator.vibrate) {
-                navigator.vibrate([60, 60, 60]); 
+            if (now - lastVibration > 1500 && navigator.vibrate) {
+                // نمط اهتزاز: نبضة قوية قصيرة، توقف، نبضة خفيفة (تشبه قفل الخزنة)
+                navigator.vibrate([70, 50, 40]); 
                 lastVibration = now;
             }
         } else {
-            // إعادة الصندوق للونه الطبيعي إذا انحرف عن القبلة
+            // إعادة الشكل الطبيعي عند الانحراف عن القبلة
             if(qSection) {
                 qSection.style.borderColor = 'var(--border)';
                 qSection.style.boxShadow = 'var(--shadow)';
@@ -5122,47 +5123,33 @@ function handleOrientation(event) {
     }
 }
 
-// 🔥 تم إعادة هندسة هذه الدالة لتعمل مع Safari 🔥
-async function initQibla() {
+function initQibla() {
     const locEl = document.getElementById('qibla-location');
-    if (locEl) locEl.textContent = 'جاري التشغيل...';
-    
-    // 1. 🚨 طلب إذن البوصلة يجب أن يحدث "فوراً" بمجرد نقر المستخدم لتجنب حظر Safari 🚨
-    let orientationAllowed = false;
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        try {
-            const permission = await DeviceOrientationEvent.requestPermission();
-            if (permission === 'granted') {
-                orientationAllowed = true;
-            } else {
-                toast('تم رفض صلاحية البوصلة من النظام', 'error');
-            }
-        } catch (error) {
-            console.error('Permission error:', error);
-        }
-    } else {
-        orientationAllowed = true; // للأجهزة التي لا تطلب الإذن مسبقاً
-    }
+    if (locEl) locEl.textContent = 'جاري تفعيل المستشعرات...';
 
-    // 2. تشغيل استشعار الحركة إذا تم السماح به
-    if (orientationAllowed) {
+    // 1. تفعيل مستشعرات أندرويد (تستخدم deviceorientationabsolute للحصول على الشمال الحقيقي)
+    if (window.ondeviceorientationabsolute !== undefined) {
         window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+    } else {
         window.addEventListener('deviceorientation', handleOrientation, true);
     }
 
-    // 3. الآن وبعد أن ضمّنا عمل البوصلة، نتحقق من الـ GPS والـ HTTPS
-    if (!navigator.geolocation) {
-        if(locEl) locEl.textContent = 'الموقع غير مدعوم';
-        return;
+    // 2. تفعيل مستشعرات الآيفون (إن وجدت)
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(permission => {
+                if (permission === 'granted') {
+                    window.addEventListener('deviceorientation', handleOrientation, true);
+                }
+            })
+            .catch(console.error);
     }
 
-    if (!window.isSecureContext) {
-        if(locEl) locEl.textContent = 'يتطلب اتصالاً آمناً (HTTPS)';
-        toast('الخدمة تتطلب اتصال HTTPS', 'error');
-        return;
+    // 3. تحديد الموقع لضبط زاوية القبلة
+    if (!navigator.geolocation) {
+        toast('الـ GPS غير مدعوم', 'error'); return;
     }
-    
-    // 4. جلب الموقع الدقيق
+
     navigator.geolocation.getCurrentPosition(pos => {
         const lat = pos.coords.latitude;
         const lon = pos.coords.longitude;
@@ -5176,11 +5163,7 @@ async function initQibla() {
         
     }, (error) => {
         if(locEl) locEl.textContent = 'تعذّر تحديد الموقع';
-        if (error.code === error.PERMISSION_DENIED) {
-            toast('تم رفض صلاحية الموقع.', 'error');
-        } else {
-            toast('حدث خطأ أثناء تحديد الموقع.', 'error');
-        }
+        toast('يرجى التأكد من تشغيل الموقع (GPS)', 'error');
     }, { enableHighAccuracy: true });
 }
 				// ══════════════════════════════════════════════
