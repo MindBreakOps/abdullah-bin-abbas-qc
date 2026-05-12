@@ -357,9 +357,10 @@
 	}
 
 	.qibla-needle {
-		transform-origin: 80px 80px;
-		transition: transform 1s cubic-bezier(.34, 1.56, .64, 1);
-	}
+	transform-origin: 80px 80px;
+	/* تقليل وقت الحركة ليصبح 0.1 ثانية فقط لتتجاوب مع حركة يدك فوراً */
+	transition: transform 0.1s ease-out;
+    }
 
 	.qibla-info {
 		text-align: center;
@@ -5053,40 +5054,118 @@
 				}
 			
 				// ══════════════════════════════════════════════
-				// QIBLA DIRECTION
-				// ══════════════════════════════════════════════
-				function calcQiblaDirection(lat, lon) {
-				  const KAABA_LAT=21.4225, KAABA_LON=39.8262;
-				  const latR=lat*Math.PI/180, kLatR=KAABA_LAT*Math.PI/180, lonDiff=(KAABA_LON-lon)*Math.PI/180;
-				  const y=Math.sin(lonDiff)*Math.cos(kLatR);
-				  const x=Math.cos(latR)*Math.sin(kLatR)-Math.sin(latR)*Math.cos(kLatR)*Math.cos(lonDiff);
-				  return (Math.atan2(y,x)*180/Math.PI+360)%360;
-				}
-				function applyQibla(lat, lon) {
-				  const angle = calcQiblaDirection(lat, lon);
-				  const needle = document.getElementById('qibla-needle');
-				  if (needle) needle.style.transform = `rotate(${angle}deg)`;
-				  const degEl = document.getElementById('qibla-deg');
-				  if (degEl) degEl.textContent = Math.round(angle)+'°';
-				}
-				function initQibla() {
-				  const locEl = document.getElementById('qibla-location');
-				  if (locEl) locEl.textContent = 'جاري تحديد الموقع...';
-				  if (!navigator.geolocation) {
-					if(locEl) locEl.textContent='الموقع غير متاح - الخرطوم افتراضي';
-					applyQibla(15.5007, 32.5599); return;
-				  }
-				  navigator.geolocation.getCurrentPosition(pos => {
-					const lat=pos.coords.latitude, lon=pos.coords.longitude;
-					applyQibla(lat, lon);
-					if(locEl) locEl.textContent=`${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`;
-					loadPrayerTimes(lat, lon);
-				  }, () => {
-					if(locEl) locEl.textContent='تعذّر تحديد الموقع - الخرطوم';
-					applyQibla(15.5007, 32.5599);
-				  });
-				}
-			
+// QIBLA DIRECTION & LIVE COMPASS
+// ══════════════════════════════════════════════
+let qiblaBearing = 0;
+let lastVibration = 0;
+
+function calcQiblaDirection(lat, lon) {
+    const KAABA_LAT = 21.4225, KAABA_LON = 39.8262;
+    const latR = lat * Math.PI / 180;
+    const kLatR = KAABA_LAT * Math.PI / 180;
+    const lonDiff = (KAABA_LON - lon) * Math.PI / 180;
+    const y = Math.sin(lonDiff) * Math.cos(kLatR);
+    const x = Math.cos(latR) * Math.sin(kLatR) - Math.sin(latR) * Math.cos(kLatR) * Math.cos(lonDiff);
+    return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+}
+
+async function startLiveCompass(lat, lon) {
+    qiblaBearing = calcQiblaDirection(lat, lon);
+    const degEl = document.getElementById('qibla-deg');
+    if (degEl) degEl.textContent = Math.round(qiblaBearing) + '°';
+
+    // طلب إذن حساسات الحركة (مهم جداً ومطلوب برمجياً لأجهزة الآيفون الحديثة)
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+            const permission = await DeviceOrientationEvent.requestPermission();
+            if (permission === 'granted') {
+                window.addEventListener('deviceorientation', handleOrientation);
+            } else {
+                toast('يرجى السماح بالوصول لمستشعرات الحركة لتعمل البوصلة', 'error');
+            }
+        } catch (error) {
+            console.error('Compass Permission Error:', error);
+        }
+    } else {
+        // أجهزة الأندرويد والأنظمة الأخرى
+        window.addEventListener('deviceorientationabsolute', handleOrientation);
+        window.addEventListener('deviceorientation', handleOrientation);
+    }
+}
+
+function handleOrientation(event) {
+    let heading = null;
+    
+    // أجهزة iOS تعطينا الاتجاه الدقيق مباشرة
+    if (event.webkitCompassHeading) {
+        heading = event.webkitCompassHeading;
+    } 
+    // أجهزة أندرويد
+    else if (event.alpha !== null) {
+        heading = 360 - event.alpha;
+    }
+
+    if (heading !== null) {
+        // حساب زاوية الإبرة (درجة القبلة ناقص الدرجة التي يشير إليها الهاتف حالياً)
+        let needleAngle = qiblaBearing - heading;
+        
+        const needle = document.getElementById('qibla-needle');
+        if (needle) needle.style.transform = `rotate(${needleAngle}deg)`;
+
+        // حساب الفرق لمعرفة هل الهاتف موجه للقبلة بدقة؟ (نهمل الإشارات السالبة)
+        let diff = Math.abs((needleAngle % 360 + 360) % 360);
+        if (diff > 180) diff = 360 - diff; // أخذ أقصر مسافة للقبلة
+
+        const qSection = document.getElementById('qibla-section');
+        
+        // إذا كان الهاتف موجهاً للقبلة (بهامش خطأ 4 درجات يميناً أو يساراً)
+        if (diff < 4) { 
+            // 1. تأثير بصري (توهج أخضر للصندوق)
+            if(qSection) {
+                qSection.style.borderColor = 'var(--green)';
+                qSection.style.boxShadow = '0 0 20px rgba(30, 122, 80, 0.4)';
+            }
+            
+            // 2. تأثير الاهتزاز (للأندرويد) - نبضتان متتاليتان كل ثانيتين
+            const now = Date.now();
+            if (now - lastVibration > 2000 && navigator.vibrate) {
+                navigator.vibrate([60, 60, 60]); 
+                lastVibration = now;
+            }
+        } else {
+            // إعادة الصندوق لشكله الطبيعي إذا انحرف عن القبلة
+            if(qSection) {
+                qSection.style.borderColor = 'var(--border)';
+                qSection.style.boxShadow = 'var(--shadow)';
+            }
+        }
+    }
+}
+
+function initQibla() {
+    const locEl = document.getElementById('qibla-location');
+    if (locEl) locEl.textContent = 'جاري تحديد الموقع وتشغيل البوصلة...';
+    
+    if (!navigator.geolocation) {
+        if(locEl) locEl.textContent = 'الموقع غير مدعوم في جهازك';
+        return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        if(locEl) locEl.textContent = `${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`;
+        
+        loadPrayerTimes(lat, lon);
+        
+        // تشغيل مستشعرات الحركة والبوصلة بعد تحديد الموقع
+        startLiveCompass(lat, lon);
+        
+    }, () => {
+        if(locEl) locEl.textContent = 'تعذّر تحديد الموقع';
+        toast('يرجى تفعيل خدمة الموقع (GPS) في هاتفك', 'error');
+    });
+}
 				// ══════════════════════════════════════════════
 				// DAILY DHIKR
 				// ══════════════════════════════════════════════
