@@ -6241,23 +6241,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. LONG PRESS MENU (Applies only to a specific button)
     // Make sure to change 'my-special-button' to the actual ID of your button
-    const specialBtn = document.getElementById('my-special-button');
+   const specialBtn = document.getElementById('btn-reminders'); // الزر الحقيقي
     
-    if (specialBtn) { // This check prevents errors if the button doesn't exist
+    if (specialBtn) { 
         let pressTimer;
 
         specialBtn.addEventListener('pointerdown', () => {
-            // Start a timer when the finger touches
             pressTimer = setTimeout(() => {
-                // Trigger a heavier vibration for the "Long Press"
                 if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
                 
-                // Open your modal here! (Change 'secret-menu' to your modal ID)
-                openModal('secret-menu');
-            }, 600); // 600 milliseconds hold time
+                // النافذة المنبثقة الحقيقية الخاصة بك
+                openModal('m-reminders'); 
+            }, 600); 
         });
 
-        // Cancel the long press if they lift their finger or scroll away early
         specialBtn.addEventListener('pointerup', () => clearTimeout(pressTimer));
         specialBtn.addEventListener('pointerleave', () => clearTimeout(pressTimer));
     }
