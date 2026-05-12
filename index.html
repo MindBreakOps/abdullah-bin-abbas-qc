@@ -360,7 +360,7 @@
 	transform-origin: 80px 80px;
 	/* تقليل وقت الحركة ليصبح 0.1 ثانية فقط لتتجاوب مع حركة يدك فوراً */
 	transition: transform 0.1s ease-out;
-    }
+	}
 
 	.qibla-info {
 		text-align: center;
@@ -2629,20 +2629,20 @@
 	}
 		/* Apply to all buttons and any elements you use as buttons (like .blo) */
 button, .blo, .btn {
-    /* Smooth but snappy transition */
-    transition: transform 0.1s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.1s !important;
-    /* Optimize performance so it doesn't lag */
-    will-change: transform; 
-    /* Prevent text highlighting when holding down */
-    user-select: none; 
-    -webkit-user-select: none;
+	/* Smooth but snappy transition */
+	transition: transform 0.1s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.1s !important;
+	/* Optimize performance so it doesn't lag */
+	will-change: transform; 
+	/* Prevent text highlighting when holding down */
+	user-select: none; 
+	-webkit-user-select: none;
 }
 
 /* The magic "Press" effect */
 button:active, .blo:active, .btn:active {
-    /* Shrink the button slightly to simulate depth */
-    transform: scale(0.92) !important;
-    opacity: 0.8;
+	/* Shrink the button slightly to simulate depth */
+	transform: scale(0.92) !important;
+	opacity: 0.8;
 }
 	</style>
 </head>
@@ -3925,7 +3925,65 @@ button:active, .blo:active, .btn:active {
 					</div>
 				</div>
 			</div>
-
+<div id="pg-honors" class="pg">
+				<div class="ph no-print">
+					<div class="pt">
+						<div class="pi">
+							<svg width="20" height="20" color="var(--gold2)">
+								<use href="#i-award"/>
+							</svg>
+						</div>
+						<div>
+							<h2>لوحة الشرف للمتفوقين</h2>
+							<p>استخراج آلي بناءً على الحضور، الحفظ اليومي، والاختبارات</p>
+						</div>
+					</div>
+					<div class="ph-actions">
+						<button class="btn bo bsm" onclick="saveHonorsAsImage()">
+							<svg width="13" height="13">
+								<use href="#i-save"/>
+							</svg>
+							 حفظ كصورة
+						</button>
+						<button class="btn bpr bsm" onclick="doPrint('honors')">
+							<svg width="13" height="13">
+								<use href="#i-print"/>
+							</svg>
+							 طباعة اللوحة
+						</button>
+					</div>
+				</div>
+			
+			<div class="card no-print" style="margin-bottom:16px; border-top: 3px solid var(--gold);">
+				<div class="fr" style="margin-bottom:0">
+					<div class="ff">
+						<label>اختر الشهر</label>
+						<select id="hn-month" style="padding:9px 12px;border:1px solid var(--border2);border-radius:10px;font-family:'Tajawal',sans-serif;font-size:.9rem;background:white;color:var(--text);min-height:46px;-webkit-appearance:none;">
+							<option value="1">يناير</option>
+							<option value="2">فبراير</option>
+							<option value="3">مارس</option>
+							<option value="4" selected>أبريل</option>
+							<option value="5">مايو</option>
+							<option value="6">يونيو</option>
+							<option value="7">يوليو</option>
+							<option value="8">أغسطس</option>
+							<option value="9">سبتمبر</option>
+							<option value="10">أكتوبر</option>
+							<option value="11">نوفمبر</option>
+							<option value="12">ديسمبر</option>
+						</select>
+					</div>
+					<div class="ff" style="justify-content:flex-end">
+						<button class="btn bp" onclick="generateHonorsBoard()" style="height:46px;justify-content:center; font-size:1rem;">
+							<svg width="16" height="16"><use href="#i-check"/></svg> استخراج النتائج
+						</button>
+					</div>
+				</div>
+			</div>
+			
+				<div id="honors-board-area" style="background:var(--surface); border: 6px double var(--gold); border-radius: 16px; padding: 25px; position: relative; min-height: 200px; display:none; overflow:hidden;">
+					</div>
+			</div>
 			<div id="pg-teacher-rev" class="pg">
 				<div class="ph no-print">
 					<div class="pt">
@@ -4593,12 +4651,13 @@ button:active, .blo:active, .btn:active {
 	<div class="toast" id="toast"></div>
 
 	<script>
-		// ══════════════════════════════════════════════
-// FORCE HTTPS (مطلوب لتشغيل الموقع والبوصلة)
-// ══════════════════════════════════════════════
-if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-    location.replace(`https:${location.href.substring(location.protocol.length)}`);
-}
+	// ══════════════════════════════════════════════
+	// FORCE HTTPS (مطلوب لتشغيل الموقع والبوصلة)
+	// ══════════════════════════════════════════════
+	if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+		location.replace(`https:${location.href.substring(location.protocol.length)}`);
+	}
+	
 	// ══════════════════════════════════════════════
 	// CONFIG & SUPABASE
 	// ══════════════════════════════════════════════
@@ -4771,8 +4830,11 @@ if (location.protocol !== 'https:' && location.hostname !== 'localhost' && locat
 	// ══════════════════════════════════════════════
 	// PRINT SYSTEM
 	// ══════════════════════════════════════════════
+	// ══════════════════════════════════════════════
+	// PRINT SYSTEM
+	// ══════════════════════════════════════════════
 	function doPrint(type) {
-
+	
 	  // ─── شهادة: A4 landscape في نافذة مستقلة ───
 	  if (type === 'cert') {
 		const certInner = document.getElementById('cert-print-area').innerHTML;
@@ -4816,76 +4878,96 @@ if (location.protocol !== 'https:' && location.hostname !== 'localhost' && locat
 			.cert-body strong{color:var(--green2);border-bottom:1px dashed var(--gold);padding:0 6px;}
 			.cert-footer{display:flex;justify-content:space-between;width:100%;font-family:'Tajawal',sans-serif;font-size:calc(0.95rem * var(--z));color:var(--text2);font-weight:700;padding:0 16mm;position:relative;z-index:1;}
 			.cert-sign{text-align:center;}
-						.cert-sign span{display:block;margin-top:40px;font-family:'Amiri',serif;color:var(--text);font-size:calc(1.3rem * var(--z));}
-						.cert-sign .cs-mgr{font-size:calc(1.4rem * var(--z));color:var(--green2);}
-					  </style>
-					</head><body>
-					  <div class="cert-wrap">${certInner}</div>
-					</body></html>`);
-					win.document.close();
-					win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
-					return;
-				}
+			.cert-sign span{display:block;margin-top:40px;font-family:'Amiri',serif;color:var(--text);font-size:calc(1.3rem * var(--z));}
+			.cert-sign .cs-mgr{font-size:calc(1.4rem * var(--z));color:var(--green2);}
+		  </style>
+		</head><body>
+		  <div class="cert-wrap">${certInner}</div>
+		</body></html>`);
+		win.document.close();
+		win.onload = () => setTimeout(() => { win.print(); win.close(); }, 500);
+		return;
+	  }
+	
+	  // ─── باقي الطباعات (للأقسام الأخرى) ───
+	  let content = '';
+	  let title = '';
+	
+	  if (type === 'students') {
+		title = 'قائمة الطلاب';
+		content = `<table>
+		  <thead><tr><th>#</th><th>الاسم</th><th>العمر</th><th>المستوى</th><th>الهاتف</th><th>تاريخ التسجيل</th></tr></thead>
+		  <tbody>${SD.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.age||'-'}</td><td>${s.level||'-'}</td><td dir="ltr">${s.phone||'-'}</td><td>${fmtDate(s.join_date)}</td></tr>`).join('')}</tbody>
+		</table>`;
+	  } else if (type === 'attend') {
+		title = `سجل الحضور - شهر ${g('att-month')}`;
+		const head = document.getElementById('att-head').innerHTML;
+		const body = document.getElementById('att-body').innerHTML;
+		content = `<table class="att"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+	  } else if (type === 'exam') {
+		title = `الاختبار الشهري - ${g('ex-halqa')} - شهر ${g('ex-month')}`;
+		const head = document.querySelector('#ex-main-table thead').innerHTML.replace(/<th rowspan="3" class="no-print" style="width:36px"><\/th>/g,'');
+		const body = document.getElementById('tb-ex').innerHTML.replace(/<td class="no-print">.*?<\/td>/g,'');
+		content = `<table><thead>${head}</thead><tbody>${body}</tbody></table>`;
+	  } else if (type === 'news') {
+		title = 'النشرة الأسبوعية';
+		content = `<table>
+		  <thead><tr><th>#</th><th>المحتوى</th><th>النوع</th><th>المصدر</th><th>التاريخ</th></tr></thead>
+		  <tbody>${ND.map((n,i)=>`<tr><td>${i+1}</td><td>${n.text}</td><td>${n.type==='feqh'?'فقه':'حديث'}</td><td>${n.source||'-'}</td><td>${fmtDate(n.date)}</td></tr>`).join('')}</tbody>
+		</table>`;
+	  } else if (type === 'fin-invoice') {
+		title = 'سند مالي';
+		content = `
+		<div style="padding:20px; text-align:center;">
+		   <h3 style="margin-bottom:20px;">الرصيد المتاح: ${document.getElementById('fin-bal').innerText}</h3>
+		   <table style="margin-bottom:20px;">
+			   <tr><th>إجمالي التبرعات</th><th>إجمالي المصروفات</th></tr>
+			   <tr><td>${document.getElementById('fin-dons').innerText}</td><td>${document.getElementById('fin-exps').innerText}</td></tr>
+		   </table>
+		</div>`;
+	  } else if (type === 'halaqat') {
+		title = `تقرير الحلقة: ${document.getElementById('hq-detail-title').innerText} - ${document.getElementById('hq-session-date').value}`;
+		content = `<table>
+		  <thead><tr><th>#</th><th>اسم الطالب</th><th>من</th><th>إلى</th><th>السورة</th><th>الدرجة</th><th>التقدير</th></tr></thead>
+		  <tbody>${document.getElementById('hq-tbody').innerHTML.replace(/<td class="no-print">.*?<\/td>/g,'')}</tbody>
+		</table>`;
+	  } else if (type === 'teacher-rev') {
+		title = 'سجل مقرأة المعلمين';
+		content = `<table>
+		  <thead><tr><th>#</th><th>المقرئ</th><th>المستمع</th><th>من</th><th>إلى</th><th>السورة/الأجزاء</th><th>الدرجة</th><th>التاريخ</th></tr></thead>
+		  <tbody>${document.getElementById('tb-teacher-rev').innerHTML.replace(/<td class="no-print">.*?<\/td>/g,'')}</tbody>
+		</table>`;
+	  } else if (type === 'teachers') {
+		title = 'بيانات هيئة التدريس';
+		content = `<table>
+		  <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>التخصص</th><th>مقدار الحفظ</th><th>العمر</th><th>السكن</th></tr></thead>
+		  <tbody>${TD.map((t,i)=>`<tr><td>${i+1}</td><td>${t.name||'-'}</td><td dir="ltr">${t.phone||'-'}</td><td>${t.specialty||'-'}</td><td>${t.quran_parts||'-'}</td><td>${t.age||'-'}</td><td>${t.residence||'-'}</td></tr>`).join('')}</tbody>
+		</table>`;
+	  } else if (type === 'honors') {
+		const monthVal = document.getElementById('hn-month').value;
+		title = `لوحة الشرف للمتفوقين - ${monthVal}`;
+		const boardContent = document.getElementById('honors-board-area').innerHTML;
+		if(!boardContent || boardContent.includes('جاري تحليل')) return toast('الرجاء استخراج النتائج أولاً', 'error');
+		
+		let printHTML = boardContent
+			.replace(/var\(--green\)/g, '#1e7a50')
+			.replace(/var\(--green2\)/g, '#166040')
+			.replace(/var\(--gold\)/g, '#9a7230')
+			.replace(/var\(--gold2\)/g, '#7a5a20')
+			.replace(/var\(--gold3\)/g, 'rgba(154,114,48,0.1)')
+			.replace(/var\(--text\)/g, '#111')
+			.replace(/var\(--text3\)/g, '#555')
+			.replace(/var\(--border\)/g, '#ddd')
+			.replace(/var\(--surface\)/g, '#fff');
+		
+		content = `<div style="padding: 20px; border: 6px double #9a7230; border-radius: 16px; background: #fffcf5;">${printHTML}</div>`;
+	  }
+	  
+	  // 🚨 هذا هو السطر الذي يفتح نافذة الطباعة (تم وضعه خارج الأقواس ليعمل للجميع) 🚨
+	  openPrintWin('A4', buildPrintHeader(title) + content);
+	}
 			
-				// ─── باقي الطباعات (للأقسام الأخرى) ───
-				let content = '';
-				let title = '';
-			
-				if (type === 'students') {
-					title = 'قائمة الطلاب';
-					content = `<table>
-					  <thead><tr><th>#</th><th>الاسم</th><th>العمر</th><th>المستوى</th><th>الهاتف</th><th>تاريخ التسجيل</th></tr></thead>
-					  <tbody>${SD.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.age||'-'}</td><td>${s.level||'-'}</td><td dir="ltr">${s.phone||'-'}</td><td>${fmtDate(s.join_date)}</td></tr>`).join('')}</tbody>
-					</table>`;
-				} else if (type === 'attend') {
-					title = `سجل الحضور - شهر ${g('att-month')}`;
-					const head = document.getElementById('att-head').innerHTML;
-					const body = document.getElementById('att-body').innerHTML;
-					content = `<table class="att"><thead>${head}</thead><tbody>${body}</tbody></table>`;
-				} else if (type === 'exam') {
-					title = `الاختبار الشهري - ${g('ex-halqa')} - شهر ${g('ex-month')}`;
-					const head = document.querySelector('#ex-main-table thead').innerHTML.replace(/<th rowspan="3" class="no-print" style="width:36px"><\/th>/g,'');
-					const body = document.getElementById('tb-ex').innerHTML.replace(/<td class="no-print">.*?<\/td>/g,'');
-					content = `<table><thead>${head}</thead><tbody>${body}</tbody></table>`;
-				} else if (type === 'news') {
-					title = 'النشرة الأسبوعية';
-					content = `<table>
-					  <thead><tr><th>#</th><th>المحتوى</th><th>النوع</th><th>المصدر</th><th>التاريخ</th></tr></thead>
-					  <tbody>${ND.map((n,i)=>`<tr><td>${i+1}</td><td>${n.text}</td><td>${n.type==='feqh'?'فقه':'حديث'}</td><td>${n.source||'-'}</td><td>${fmtDate(n.date)}</td></tr>`).join('')}</tbody>
-					</table>`;
-				} else if (type === 'fin-invoice') {
-					title = 'سند مالي';
-					content = `
-					<div style="padding:20px; text-align:center;">
-					   <h3 style="margin-bottom:20px;">الرصيد المتاح: ${document.getElementById('fin-bal').innerText}</h3>
-					   <table style="margin-bottom:20px;">
-						   <tr><th>إجمالي التبرعات</th><th>إجمالي المصروفات</th></tr>
-						   <tr><td>${document.getElementById('fin-dons').innerText}</td><td>${document.getElementById('fin-exps').innerText}</td></tr>
-					   </table>
-					</div>`;
-				} else if (type === 'halaqat') {
-					title = `تقرير الحلقة: ${document.getElementById('hq-detail-title').innerText} - ${document.getElementById('hq-session-date').value}`;
-					content = `<table>
-					  <thead><tr><th>#</th><th>اسم الطالب</th><th>من</th><th>إلى</th><th>السورة</th><th>الدرجة</th><th>التقدير</th></tr></thead>
-					  <tbody>${document.getElementById('hq-tbody').innerHTML.replace(/<td class="no-print">.*?<\/td>/g,'')}</tbody>
-					</table>`;
-				} else if (type === 'teacher-rev') {
-					title = 'سجل مقرأة المعلمين';
-					content = `<table>
-					  <thead><tr><th>#</th><th>المقرئ</th><th>المستمع</th><th>من</th><th>إلى</th><th>السورة/الأجزاء</th><th>الدرجة</th><th>التاريخ</th></tr></thead>
-					  <tbody>${document.getElementById('tb-teacher-rev').innerHTML.replace(/<td class="no-print">.*?<\/td>/g,'')}</tbody>
-					</table>`;
-				} else if (type === 'teachers') {
-					title = 'بيانات هيئة التدريس';
-					content = `<table>
-					  <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>التخصص</th><th>مقدار الحفظ</th><th>العمر</th><th>السكن</th></tr></thead>
-					  <tbody>${TD.map((t,i)=>`<tr><td>${i+1}</td><td>${t.name||'-'}</td><td dir="ltr">${t.phone||'-'}</td><td>${t.specialty||'-'}</td><td>${t.quran_parts||'-'}</td><td>${t.age||'-'}</td><td>${t.residence||'-'}</td></tr>`).join('')}</tbody>
-					</table>`;
-				}
-				
-				openPrintWin('A4', buildPrintHeader(title) + content);
-			}
-			
+		
 			// ══════════════════════════════════════════════
 			// دالة حفظ الشهادة كصورة (A4 Landscape بجودة عالية)
 			// ══════════════════════════════════════════════
@@ -5083,105 +5165,295 @@ let qiblaBearing = 0;
 let lastVibration = 0;
 
 function calcQiblaDirection(lat, lon) {
-    const KAABA_LAT = 21.4225, KAABA_LON = 39.8262;
-    const latR = lat * Math.PI / 180;
-    const kLatR = KAABA_LAT * Math.PI / 180;
-    const lonDiff = (KAABA_LON - lon) * Math.PI / 180;
-    const y = Math.sin(lonDiff) * Math.cos(kLatR);
-    const x = Math.cos(latR) * Math.sin(kLatR) - Math.sin(latR) * Math.cos(kLatR) * Math.cos(lonDiff);
-    return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+	const KAABA_LAT = 21.4225, KAABA_LON = 39.8262;
+	const latR = lat * Math.PI / 180;
+	const kLatR = KAABA_LAT * Math.PI / 180;
+	const lonDiff = (KAABA_LON - lon) * Math.PI / 180;
+	const y = Math.sin(lonDiff) * Math.cos(kLatR);
+	const x = Math.cos(latR) * Math.sin(kLatR) - Math.sin(latR) * Math.cos(kLatR) * Math.cos(lonDiff);
+	return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
 }
 
 function handleOrientation(event) {
-    let heading = null;
-    
-    // 1. نظام أبل (iOS)
-    if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
-        heading = event.webkitCompassHeading;
-    } 
-    // 2. نظام أندرويد (يستخدم المستشعر المطلق Absolute Alpha)
-    else if (event.alpha !== null) {
-        // تحويل الدرجات لتتناسب مع اتجاه الشمال
-        heading = 360 - event.alpha;
-    }
+	let heading = null;
+	
+	// 1. نظام أبل (iOS)
+	if (event.webkitCompassHeading !== undefined && event.webkitCompassHeading !== null) {
+		heading = event.webkitCompassHeading;
+	} 
+	// 2. نظام أندرويد (يستخدم المستشعر المطلق Absolute Alpha)
+	else if (event.alpha !== null) {
+		// تحويل الدرجات لتتناسب مع اتجاه الشمال
+		heading = 360 - event.alpha;
+	}
 
-    if (heading !== null) {
-        let needleAngle = qiblaBearing - heading;
-        const needle = document.getElementById('qibla-needle');
-        if (needle) needle.style.transform = `rotate(${needleAngle}deg)`;
+	if (heading !== null) {
+		let needleAngle = qiblaBearing - heading;
+		const needle = document.getElementById('qibla-needle');
+		if (needle) needle.style.transform = `rotate(${needleAngle}deg)`;
 
-        // التحقق من المطابقة (بهامش خطأ 4 درجات)
-        let diff = Math.abs((needleAngle % 360 + 360) % 360);
-        if (diff > 180) diff = 360 - diff;
+		// التحقق من المطابقة (بهامش خطأ 4 درجات)
+		let diff = Math.abs((needleAngle % 360 + 360) % 360);
+		if (diff > 180) diff = 360 - diff;
 
-        const qSection = document.getElementById('qibla-section');
-        
-        if (diff < 4) { 
-            // 💡 التأثير البصري (إضاءة المربع بالأخضر)
-            if(qSection) {
-                qSection.style.borderColor = 'var(--green)';
-                qSection.style.boxShadow = '0 0 25px rgba(30, 122, 80, 0.6)';
-            }
-            
-            // 📳 الاهتزاز الدقيق (Haptics) - سيعمل بامتياز على أندرويد!
-            const now = Date.now();
-            if (now - lastVibration > 1500 && navigator.vibrate) {
-                // نمط اهتزاز: نبضة قوية قصيرة، توقف، نبضة خفيفة (تشبه قفل الخزنة)
-                navigator.vibrate([70, 50, 40]); 
-                lastVibration = now;
-            }
-        } else {
-            // إعادة الشكل الطبيعي عند الانحراف عن القبلة
-            if(qSection) {
-                qSection.style.borderColor = 'var(--border)';
-                qSection.style.boxShadow = 'var(--shadow)';
-            }
-        }
-    }
+		const qSection = document.getElementById('qibla-section');
+		
+		if (diff < 4) { 
+			// 💡 التأثير البصري (إضاءة المربع بالأخضر)
+			if(qSection) {
+				qSection.style.borderColor = 'var(--green)';
+				qSection.style.boxShadow = '0 0 25px rgba(30, 122, 80, 0.6)';
+			}
+			
+			// 📳 الاهتزاز الدقيق (Haptics) - سيعمل بامتياز على أندرويد!
+			const now = Date.now();
+			if (now - lastVibration > 1500 && navigator.vibrate) {
+				// نمط اهتزاز: نبضة قوية قصيرة، توقف، نبضة خفيفة (تشبه قفل الخزنة)
+				navigator.vibrate([70, 50, 40]); 
+				lastVibration = now;
+			}
+		} else {
+			// إعادة الشكل الطبيعي عند الانحراف عن القبلة
+			if(qSection) {
+				qSection.style.borderColor = 'var(--border)';
+				qSection.style.boxShadow = 'var(--shadow)';
+			}
+		}
+	}
 }
 
 function initQibla() {
-    const locEl = document.getElementById('qibla-location');
-    if (locEl) locEl.textContent = 'جاري تفعيل المستشعرات...';
+	const locEl = document.getElementById('qibla-location');
+	if (locEl) locEl.textContent = 'جاري تفعيل المستشعرات...';
 
-    // 1. تفعيل مستشعرات أندرويد (تستخدم deviceorientationabsolute للحصول على الشمال الحقيقي)
-    if (window.ondeviceorientationabsolute !== undefined) {
-        window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-    } else {
-        window.addEventListener('deviceorientation', handleOrientation, true);
-    }
+	// 1. تفعيل مستشعرات أندرويد (تستخدم deviceorientationabsolute للحصول على الشمال الحقيقي)
+	if (window.ondeviceorientationabsolute !== undefined) {
+		window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+	} else {
+		window.addEventListener('deviceorientation', handleOrientation, true);
+	}
 
-    // 2. تفعيل مستشعرات الآيفون (إن وجدت)
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-            .then(permission => {
-                if (permission === 'granted') {
-                    window.addEventListener('deviceorientation', handleOrientation, true);
-                }
-            })
-            .catch(console.error);
-    }
+	// 2. تفعيل مستشعرات الآيفون (إن وجدت)
+	if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+		DeviceOrientationEvent.requestPermission()
+			.then(permission => {
+				if (permission === 'granted') {
+					window.addEventListener('deviceorientation', handleOrientation, true);
+				}
+			})
+			.catch(console.error);
+	}
 
-    // 3. تحديد الموقع لضبط زاوية القبلة
-    if (!navigator.geolocation) {
-        toast('الـ GPS غير مدعوم', 'error'); return;
-    }
+	// 3. تحديد الموقع لضبط زاوية القبلة
+	if (!navigator.geolocation) {
+		toast('الـ GPS غير مدعوم', 'error'); return;
+	}
 
-    navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
-        if(locEl) locEl.textContent = `${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`;
-        
-        loadPrayerTimes(lat, lon);
-        
-        qiblaBearing = calcQiblaDirection(lat, lon);
-        const degEl = document.getElementById('qibla-deg');
-        if (degEl) degEl.textContent = Math.round(qiblaBearing) + '°';
-        
-    }, (error) => {
-        if(locEl) locEl.textContent = 'تعذّر تحديد الموقع';
-        toast('يرجى التأكد من تشغيل الموقع (GPS)', 'error');
-    }, { enableHighAccuracy: true });
+	navigator.geolocation.getCurrentPosition(pos => {
+		const lat = pos.coords.latitude;
+		const lon = pos.coords.longitude;
+		if(locEl) locEl.textContent = `${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E`;
+		
+		loadPrayerTimes(lat, lon);
+		
+		qiblaBearing = calcQiblaDirection(lat, lon);
+		const degEl = document.getElementById('qibla-deg');
+		if (degEl) degEl.textContent = Math.round(qiblaBearing) + '°';
+		
+	}, (error) => {
+		if(locEl) locEl.textContent = 'تعذّر تحديد الموقع';
+		toast('يرجى التأكد من تشغيل الموقع (GPS)', 'error');
+	}, { enableHighAccuracy: true });
+}
+
+// ══════════════════════════════════════════════
+// HONORS BOARD ENGINE (Direct Supabase Fetch)
+// ══════════════════════════════════════════════
+async function generateHonorsBoard() {
+	const monthSelect = document.getElementById('hn-month');
+	const selectedMonthNum = parseInt(monthSelect.value, 10);
+	const monthName = monthSelect.options[monthSelect.selectedIndex].text;
+
+	const board = document.getElementById('honors-board-area');
+	board.style.display = 'block';
+	board.innerHTML = '<div class="lm" style="padding:40px;text-align:center;">جاري جلب وتحليل البيانات من الخادم، يرجى الانتظار...</div>';
+
+	try {
+		// 🚀 جلب كل البيانات الحقيقية من السيرفر مباشرة (Supabase) 🚀
+		const [hqRes, exRes, attRes] = await Promise.all([
+			sb.from('halaqat').select('*'),
+			sb.from('monthly_exams').select('*'),
+			sb.from('attendance').select('*')
+		]);
+
+		const allHalaqat = hqRes.data || [];
+		const allExams = exRes.data || [];
+		const allAtt = attRes.data || [];
+
+		if (allHalaqat.length === 0 && allExams.length === 0) {
+			board.innerHTML = '<div class="lm" style="padding:40px;text-align:center;color:var(--text3);">لا توجد أي بيانات مسجلة في قاعدة البيانات حتى الآن.</div>';
+			return;
+		}
+
+		// التأكد من تحميل قائمة المعلمين والطلاب لمعرفة أسمائهم
+		if(!TD.length) await loadTeachers();
+		if(!SD.length) await loadStu();
+
+		// تصفية السجلات حسب الشهر المحدد بذكاء
+		const halaqatData = allHalaqat.filter(r => {
+			if(!r.date) return false;
+			let m = r.date.includes('-') ? r.date.split('-')[1] : (r.date.includes('/') ? r.date.split('/')[1] : null);
+			return m ? parseInt(m, 10) === selectedMonthNum : false;
+		});
+
+		const examsData = allExams.filter(r => {
+			if(!r.exam_month) return false;
+			let m = r.exam_month.includes('-') ? (r.exam_month.split('-').length > 1 ? r.exam_month.split('-')[1] : r.exam_month.split('-')[0]) : r.exam_month;
+			return parseInt(m, 10) === selectedMonthNum;
+		});
+
+		const attData = allAtt.filter(r => parseInt(r.month, 10) === selectedMonthNum);
+
+		const halqaNames = ['الحلقة-الاولى', 'الحلقة-الثانية', 'الحلقة-الثالثة'];
+		const labels = {'الحلقة-الاولى':'الحلقة الأولى', 'الحلقة-الثانية':'الحلقة الثانية', 'الحلقة-الثالثة':'الحلقة الثالثة'};
+
+		// دالة توحيد وتجاهل الأخطاء الإملائية
+		const norm = (s) => (s || '').replace(/-/g, ' ').replace(/[أإآا]/g, 'ا').trim();
+
+		let html = `
+		<div style="text-align:center; margin-bottom: 25px; position:relative; z-index:2;">
+			<img src="${typeof LOGO !== 'undefined' ? LOGO : ''}" style="width:70px; height:70px; border-radius:50%; border:2px solid var(--green2); margin-bottom:10px;" onerror="this.style.display='none'">
+			<h2 style="font-family:'Amiri',serif; color:var(--green2); font-size:2rem; margin-bottom:5px;">لوحة الشرف للمتفوقين</h2>
+			<div style="font-size:1.1rem; color:var(--gold2); font-weight:bold;">لشهر ${monthName}</div>
+			<div class="islamic-sep">✦ ✦ ✦</div>
+		</div>
+		<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; position:relative; z-index:2;">`;
+
+		for(const hq of halqaNames) {
+			const hqRecords = halaqatData.filter(r => norm(r.halqa) === norm(hq) || norm(r.halqa) === norm(labels[hq]));
+			const hqExams = examsData.filter(r => norm(r.halqa_name) === norm(hq) || norm(r.halqa_name) === norm(labels[hq]));
+
+			let teacherName = 'غير محدد';
+			if(hqRecords.length > 0) {
+				const tRecord = hqRecords.find(r => r.teacher);
+				if(tRecord) {
+					const tObj = TD.find(t => t.profiles?.email === tRecord.teacher);
+					teacherName = tObj ? (tObj.profiles?.full_name || tObj.name || tObj.profiles?.email) : tRecord.teacher.split('@')[0];
+				}
+			}
+
+			const studentsSet = new Set();
+			hqRecords.forEach(r => { if(r.student) studentsSet.add(r.student); });
+			hqExams.forEach(r => { if(r.student_name) studentsSet.add(r.student_name); });
+
+			let studentsScores = [];
+
+			studentsSet.forEach(stuName => {
+				const stuHq = hqRecords.filter(r => r.student === stuName && r.grade !== null && r.grade !== '');
+				let hqAvg = 0;
+				if(stuHq.length > 0) {
+					hqAvg = stuHq.reduce((acc, r) => acc + parseFloat(r.grade), 0) / stuHq.length;
+				}
+
+				const stuEx = hqExams.find(r => r.student_name === stuName);
+				let exScore = stuEx && stuEx.total ? parseFloat(stuEx.total) : null;
+
+				let attScore = 100; 
+				const stuObj = typeof SD !== 'undefined' ? SD.find(s => norm(s.name) === norm(stuName)) : null;
+				if(stuObj) {
+					const stuAtt = attData.filter(a => a.key && a.key.startsWith(stuObj.id + '_'));
+					if(stuAtt.length > 0) {
+						let pCount = 0; let totalDays = 0;
+						stuAtt.forEach(a => {
+							if(a.status === 'P') pCount++;
+							if(a.status === 'P' || a.status === 'A') totalDays++;
+						});
+						if(totalDays > 0) attScore = (pCount / totalDays) * 100;
+					}
+				}
+
+				let finalScore = 0;
+				if(exScore !== null && stuHq.length > 0) {
+					finalScore = (hqAvg * 0.4) + (exScore * 0.5) + (attScore * 0.1);
+				} else if(exScore !== null) {
+					finalScore = (exScore * 0.8) + (attScore * 0.2); 
+				} else if(stuHq.length > 0) {
+					finalScore = (hqAvg * 0.8) + (attScore * 0.2); 
+				} else {
+					finalScore = attScore; 
+				}
+
+				studentsScores.push({ name: stuName, score: finalScore, hqAvg, exScore });
+			});
+
+			studentsScores.sort((a,b) => b.score - a.score);
+			const top3 = studentsScores.slice(0, 3);
+
+			html += `<div style="background:var(--surface); border: 1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.05);">
+				<div style="background:linear-gradient(135deg, var(--green), #28a068); color:white; padding:16px 12px; text-align:center; border-bottom: 3px solid var(--gold);">
+					<h3 style="font-family:'Amiri',serif; margin:0; font-size:1.3rem;">${labels[hq]}</h3>
+					<div style="font-size:0.85rem; opacity:0.9; margin-top:4px;">معلم الحلقة: <strong>${teacherName}</strong></div>
+				</div>
+				<div style="padding:15px;">`;
+
+			if(top3.length === 0) {
+				html += `<div style="text-align:center; color:var(--text3); font-size:0.85rem; padding:20px 0;">لا توجد بيانات مسجلة في هذا الشهر</div>`;
+			} else {
+				top3.forEach((stu, idx) => {
+					const colors = ['#f59e0b', '#94a3b8', '#b45309']; 
+					const rankColor = colors[idx] || '#cbd5e1';
+					const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
+
+					html += `<div style="display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px dashed var(--border); ${idx===top3.length-1?'border:none;':''}">
+						<div style="width:40px; height:40px; border-radius:50%; background:${rankColor}15; border:2px solid ${rankColor}; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
+							${medal}
+						</div>
+						<div style="flex:1; min-width:0;">
+							<div style="font-weight:bold; color:var(--text); font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${stu.name}</div>
+							<div style="font-size:0.7rem; color:var(--text3); display:flex; gap:8px; margin-top:4px;">
+								<span>يومي: ${stu.hqAvg > 0 ? stu.hqAvg.toFixed(1) : '-'}</span>
+								<span>اختبار: ${stu.exScore !== null ? stu.exScore.toFixed(1) : '-'}</span>
+							</div>
+						</div>
+						<div style="background:var(--gold3); color:var(--gold2); font-weight:900; font-size:1.05rem; padding:6px 12px; border-radius:10px;">
+							${stu.score.toFixed(1)}%
+						</div>
+					</div>`;
+				});
+			}
+			html += `</div></div>`;
+		}
+
+		html += `</div>`;
+		board.innerHTML = html;
+
+	} catch (err) {
+		console.error(err);
+		board.innerHTML = '<div class="lm" style="padding:40px;text-align:center;color:red;">حدث خطأ أثناء جلب البيانات. الرجاء التأكد من اتصال الإنترنت.</div>';
+	}
+}
+
+// دالة استخراج لوحة الشرف كصورة عالية الجودة
+function saveHonorsAsImage() {
+	const board = document.getElementById('honors-board-area');
+	if (!board.innerHTML || board.innerHTML.includes('جاري تحليل')) return toast('الرجاء استخراج النتائج أولاً', 'error');
+	
+	toast('جاري تجهيز الصورة بجودة عالية...', 'success');
+	
+	setTimeout(() => {
+		html2canvas(board, {
+			scale: 2, 
+			useCORS: true,
+			backgroundColor: '#ffffff'
+		}).then(canvas => {
+			const link = document.createElement('a');
+			const monthVal = document.getElementById('hn-month').value;
+			link.download = `لوحة_الشرف_${monthVal}.png`;
+			link.href = canvas.toDataURL('image/png', 1.0);
+			link.click();
+			toast('تم حفظ الصورة بنجاح ✓', 'success');
+		}).catch(err => toast('حدث خطأ أثناء استخراج الصورة', 'error'));
+	}, 500);
 }
 				// ══════════════════════════════════════════════
 				// DAILY DHIKR
@@ -5486,6 +5758,7 @@ function initQibla() {
 				  const grid=document.getElementById('more-items-grid'); if(!grid) return; let items='';
 				  const add=(page,icon,label,gold=false)=>`<button class="more-item ${gold?'gold-item':''}" onclick="tabNav('${page}');closeMoreDrawer()"><div class="mi-icon"><svg width="22" height="22" color="${gold?'var(--gold2)':'var(--green2)'}"><use href="#i-${icon}"/></svg></div><span>${label}</span></button>`;
 				  items+=add('news','news','النشرة');
+				  items+=add('honors','award','لوحة الشرف', true);
 				  if(isAdmin){ items+=add('students','users','الطلاب'); items+=add('teachers','users','المعلمون'); items+=add('fin','money','المالية',true); items+=add('certs','award','الشهادات',true); items+=add('accs','cog','الحسابات'); items+=add('teacher-rev','book','مقرأة الكادر'); }
 				  grid.innerHTML=items;
 				  const dot=document.getElementById('tab-more-dot'); if(isAdmin&&dot) dot.classList.add('show');
@@ -6226,20 +6499,37 @@ function initQibla() {
 // GLOBAL HAPTIC TOUCH ENGINE & LONG PRESS
 // ══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. GLOBAL HAPTIC CLICK (Applies to all buttons)
-    const interactiveElements = document.querySelectorAll('button, .blo, .btn, a');
-    
-    interactiveElements.forEach(el => {
-        el.addEventListener('pointerdown', () => {
-            // Give a very short, sharp 15-millisecond tick (Android only)
-            if (navigator.vibrate) {
-                navigator.vibrate(15); 
-            }
-        });
-    });
-
-    
+	
+	// 1. GLOBAL HAPTIC CLICK (Applies to all buttons)
+	const interactiveElements = document.querySelectorAll('button, .blo, .btn, a');
+	
+	interactiveElements.forEach(el => {
+		el.addEventListener('pointerdown', () => {
+			// Give a very short, sharp 15-millisecond tick (Android only)
+			if (navigator.vibrate) {
+				navigator.vibrate(15); 
+			}
+		});
+	});
+// 2. LONG PRESS MENU (لزر التذكيرات)
+	const specialBtn = document.getElementById('btn-reminders'); // الزر الحقيقي
+	
+	if (specialBtn) { 
+		let pressTimer;
+	
+		specialBtn.addEventListener('pointerdown', () => {
+			pressTimer = setTimeout(() => {
+				if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+				
+				// النافذة المنبثقة الحقيقية الخاصة بك
+				openModal('m-reminders'); 
+			}, 600); 
+		});
+	
+		specialBtn.addEventListener('pointerup', () => clearTimeout(pressTimer));
+		specialBtn.addEventListener('pointerleave', () => clearTimeout(pressTimer));
+	}
+	
 				// 2. حقن المانيفست في الصفحة مباشرة
 				const blob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/manifest+json'});
 				const manifestURL = URL.createObjectURL(blob);
@@ -6249,13 +6539,14 @@ document.addEventListener('DOMContentLoaded', () => {
 				document.head.appendChild(link);
 
 				// 3. تشغيل الـ Service Worker
-				if ('serviceWorker' in navigator) {
-					window.addEventListener('load', () => {
-						navigator.serviceWorker.register('./sw.js')
-							.then(reg => console.log('Service Worker Registered'))
-							.catch(err => console.error('Service Worker Error', err));
-					});
-				}
-	</script>
-</body>
-</html>
+								if ('serviceWorker' in navigator) {
+									window.addEventListener('load', () => {
+										navigator.serviceWorker.register('./sw.js')
+											.then(reg => console.log('Service Worker Registered'))
+											.catch(err => console.error('Service Worker Error', err));
+									});
+								}
+							}); // <-- تأكد من وجود هذا القوس لإغلاق دالة الاهتزاز
+					</script>
+				</body>
+				</html>
