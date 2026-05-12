@@ -6239,26 +6239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. LONG PRESS MENU (Applies only to a specific button)
-    // Make sure to change 'my-special-button' to the actual ID of your button
-   const specialBtn = document.getElementById('btn-reminders'); // الزر الحقيقي
     
-    if (specialBtn) { 
-        let pressTimer;
-
-        specialBtn.addEventListener('pointerdown', () => {
-            pressTimer = setTimeout(() => {
-                if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
-                
-                // النافذة المنبثقة الحقيقية الخاصة بك
-                openModal('m-reminders'); 
-            }, 600); 
-        });
-
-        specialBtn.addEventListener('pointerup', () => clearTimeout(pressTimer));
-        specialBtn.addEventListener('pointerleave', () => clearTimeout(pressTimer));
-    }
-});
 				// 2. حقن المانيفست في الصفحة مباشرة
 				const blob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/manifest+json'});
 				const manifestURL = URL.createObjectURL(blob);
