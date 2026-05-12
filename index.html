@@ -6097,46 +6097,52 @@
 						}, 1000); 
 					});
 				}
+				// ── MODALS & TOASTS ──
+				function openModal(id){ const el = document.getElementById(id); if(el) el.classList.add('open'); }
+				function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('open'); }
+				let toastT;
+				function toast(msg,type) { const t=document.getElementById('toast'); if(!t) return; t.textContent=msg; t.className='toast'+(type?' '+type:''); t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000); }
+				
 				// 1. توليد المانيفست داخلياً (Inline Manifest)
-const manifestJSON = {
-    "name": "مركز عبدالله بن عباس",
-    "short_name": "ابن عباس",
-    "start_url": window.location.href.split('?')[0], // يضمن استخدام الرابط الصحيح 100%
-    "display": "standalone",
-    "background_color": "#f0f4f0",
-    "theme_color": "#f0f4f0",
-    "icons": [
-        {
-            "src": "https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
-        }
-    ]
-};
+				const manifestJSON = {
+					"name": "مركز عبدالله بن عباس",
+					"short_name": "ابن عباس",
+					"start_url": window.location.href.split('?')[0],
+					"display": "standalone",
+					"background_color": "#f0f4f0",
+					"theme_color": "#f0f4f0",
+					"icons": [
+						{
+							"src": "https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png",
+							"sizes": "192x192",
+							"type": "image/png",
+							"purpose": "any"
+						},
+						{
+							"src": "https://raw.githubusercontent.com/MindBreakOps/OpSystem/main/aba.png",
+							"sizes": "512x512",
+							"type": "image/png",
+							"purpose": "maskable"
+						}
+					]
+				};
 
-// 2. حقن المانيفست في الصفحة مباشرة
-const blob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/manifest+json'});
-const manifestURL = URL.createObjectURL(blob);
-const link = document.createElement('link');
-link.rel = 'manifest';
-link.href = manifestURL;
-document.head.appendChild(link);
+				// 2. حقن المانيفست في الصفحة مباشرة
+				const blob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/manifest+json'});
+				const manifestURL = URL.createObjectURL(blob);
+				const link = document.createElement('link');
+				link.rel = 'manifest';
+				link.href = manifestURL;
+				document.head.appendChild(link);
 
-// 3. تشغيل الـ Service Worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('Service Worker Registered'))
-            .catch(err => console.error('Service Worker Error', err));
-    });
-}
-				</script>
-			</body>
-			</html>
+				// 3. تشغيل الـ Service Worker
+				if ('serviceWorker' in navigator) {
+					window.addEventListener('load', () => {
+						navigator.serviceWorker.register('./sw.js')
+							.then(reg => console.log('Service Worker Registered'))
+							.catch(err => console.error('Service Worker Error', err));
+					});
+				}
+	</script>
+</body>
+</html>
