@@ -2627,6 +2627,23 @@
 			font-size: 1.4rem !important;
 		}
 	}
+		/* Apply to all buttons and any elements you use as buttons (like .blo) */
+button, .blo, .btn {
+    /* Smooth but snappy transition */
+    transition: transform 0.1s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.1s !important;
+    /* Optimize performance so it doesn't lag */
+    will-change: transform; 
+    /* Prevent text highlighting when holding down */
+    user-select: none; 
+    -webkit-user-select: none;
+}
+
+/* The magic "Press" effect */
+button:active, .blo:active, .btn:active {
+    /* Shrink the button slightly to simulate depth */
+    transform: scale(0.92) !important;
+    opacity: 0.8;
+}
 	</style>
 </head>
 <body>
@@ -6205,7 +6222,46 @@ function initQibla() {
 						}
 					]
 				};
+// ══════════════════════════════════════════════
+// GLOBAL HAPTIC TOUCH ENGINE & LONG PRESS
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. GLOBAL HAPTIC CLICK (Applies to all buttons)
+    const interactiveElements = document.querySelectorAll('button, .blo, .btn, a');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('pointerdown', () => {
+            // Give a very short, sharp 15-millisecond tick (Android only)
+            if (navigator.vibrate) {
+                navigator.vibrate(15); 
+            }
+        });
+    });
 
+    // 2. LONG PRESS MENU (Applies only to a specific button)
+    // Make sure to change 'my-special-button' to the actual ID of your button
+    const specialBtn = document.getElementById('my-special-button');
+    
+    if (specialBtn) { // This check prevents errors if the button doesn't exist
+        let pressTimer;
+
+        specialBtn.addEventListener('pointerdown', () => {
+            // Start a timer when the finger touches
+            pressTimer = setTimeout(() => {
+                // Trigger a heavier vibration for the "Long Press"
+                if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+                
+                // Open your modal here! (Change 'secret-menu' to your modal ID)
+                openModal('secret-menu');
+            }, 600); // 600 milliseconds hold time
+        });
+
+        // Cancel the long press if they lift their finger or scroll away early
+        specialBtn.addEventListener('pointerup', () => clearTimeout(pressTimer));
+        specialBtn.addEventListener('pointerleave', () => clearTimeout(pressTimer));
+    }
+});
 				// 2. حقن المانيفست في الصفحة مباشرة
 				const blob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/manifest+json'});
 				const manifestURL = URL.createObjectURL(blob);
